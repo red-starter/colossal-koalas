@@ -1,0 +1,46 @@
+“Life Calendar” -- life expectancy w/ stats
+
+- Milestones
+  - Basics
+    - Start UI in Angular
+    - Server with database, tracking users who have many feelposts
+    - Front page with a friendly, variable prompt, asking user to express their mental state on a spectrum of emoji
+    - Variable prompt after selection of emoji, friendlily inviting user to record some thoughts about the emotion they picked
+    - At least one visualization of this data after collection
+  - Stretch
+    - Machine learning for different tones in extension prompts
+    - Mobile reminders?
+    - Sentiment analysis
+    - Reflection reminders from past
+    - Refactor to React
+- Stack
+  - Angular vs. React vs. Backbone
+    - Backbone
+      - Pros: familiarity, simplicity
+      - Cons: don’t want to use it, bad, unproductive
+    - Angular
+      - Pros: fast, easy, looks nice, might be on test, works with D3
+      - Cons: doesn’t scale well, can be confusing, 
+    - React
+      - Pros: more intuitive organization and structure
+      - Cons: have to learn it
+  - D3
+  - Node, Express, Passport
+  - Sequelize vs. native driver
+  - Postgres vs. MySQL vs. Firebase
+  - Gulp
+- Design Principles
+  - Two halves: 
+    - user interaction, input, health, etc.
+    - [COMPLETE] visualization of data, life expectancy, risk, etc.
+- Brainstorm Notes
+  - How habits affect life expectancy
+  - Dark, funny
+  - Perspective on habits
+  - “Positive” messages from one area of screen (popup bubbles?), “negative” messages from another area of screen
+    - Use conversational metaphor for reflecting on choices and keeping a log of thoughts, decisions etc.
+  - Statistics on risks visualized through the days of the calendar
+  - Asks what you had for lunch, what you did over the weekend, etc.
+    - Time context, place context
+    - API for data collection? Fitbit?
+  - NOT social -- highly personal
