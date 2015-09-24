@@ -18,19 +18,15 @@ var Prompt = orm.define('Prompt', {
 
 // foreign key constraints
 
-// Post.belongsTo(User);
-// User.hasMany(Post);
+Feel.belongsTo(User);
+User.hasMany(Feel);
 
-// Feel.belongsTo(User);
-// User.hasMany(Feel);
-
-// Feel.belongsTo(Post);
-// Post.hasOne(Feel);
+// create foreign keys for prompt - feel
 
 // create tables
-User.sync();
-Feel.sync();
-Prompt.sync();
+User.sync({force: true}); // force: true clears tables for testing
+Feel.sync({force: true});
+Prompt.sync({force: true});
 
 exports.User = User;
 exports.Feel = Feel;

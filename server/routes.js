@@ -1,5 +1,4 @@
 var models = require('./database/models');
-var controller = require('./database/controller')
 var _ = require('underscore');
 var router = require('express').Router();
 
@@ -27,16 +26,16 @@ var api = {
 	},
 	prompts: {
 		get: function(req, res) {
-			models.Post.findAll().then(function(posts) {
+			models.Prompt.findAll().then(function(posts) {
 				res.json(posts);
 			})
 		},
 
 		post: function(req, res) {
-			models.Post.create({
-				body: req.body.body
-			}).then(function(post) {
-				console.log('Post created: ', post);
+			models.Prompt.create({
+				text: req.body.text
+			}).then(function(prompt) {
+				console.log('Prompt created: ', prompt);
 				res.sendStatus(201);
 			})
 		}
@@ -50,7 +49,8 @@ var api = {
 
 		post: function(req, res) {
 			models.Feel.create({
-				emotion: req.body.emotion
+				emotion: req.body.emotion,
+				text: req.body.text
 			}).then(function(feel) {
 				console.log('Feel created: ', feel);
 				res.sendStatus(201);
@@ -58,14 +58,10 @@ var api = {
 		}
 	}
 };
-var apiArr = ['users','prompts','feels']
-// router.route('/feels')
-// 		.get(api['feels'].get)
-// 		.post(api['feels'].post);
-_.each(apiArr, function(route) {
-	router.route('/' + route)
-		.get(api[route].get)
-		.post(api[route].post);
+_.each(api, function(route, key) {
+	router.route('/' + key)
+		.get(route.get)
+		.post(route.post);
 });
 
 module.exports = router;
