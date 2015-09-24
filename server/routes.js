@@ -6,68 +6,59 @@ var router = require('express').Router();
 var api = {
 	users: {
 		get: function(req, res) {
-			controller.users.get(function(err, results) {
-				if (err) {
-					console.log('Error retrieving users: ', err);
-				} else {
-					res.json(results);
-				}
-			});
-		}, 
-		post: function(req, res) {
-			controller.users.post([req.body.username, req.body.password], function(err, results) {
-				if (err) {
-					console.log('Error creating user: ', err);
-				} else {
-					res.sendStatus(201);
-				}
-			});
+			models.User.findAll().then(function(users) {
+				res.json(users);
+			})
+		},
+		post: function(req, res,cb) {
+			console.log('request', req);
+			models.User.findOrCreate({ 
+				where: {username: req.body.username}
+			}).then(function(user) {
+				models.User.create({
+					username: req.body.username,
+					password: req.body.password
+				})
+			}).then(function(user) {
+				console.log('User created: ', user);
+				res.sendStatus(201);
+			})
 		}
 	},
-
-	posts: {
+	prompts: {
 		get: function(req, res) {
-			controller.posts.get(function(err, results) {
-				if (err) {
-					console.log('Error retrieving posts: ', err);
-				} else {
-					res.json(results);
-				}
-			});			
-		}, 
-		post: function(req, res) {
-			controller.posts.post([req.body.body], function(err, results) {
-				if (err) {
-					console.log('Error creating post: ', err);
-				} else {
-					res.sendStatus(201);
-				}				
-			});
-		}
-	},
+			models.Post.findAll().then(function(posts) {
+				res.json(posts);
+			})
+		},
 
+		post: function(req, res) {
+			models.Post.create({
+				body: req.body.body
+			}).then(function(post) {
+				console.log('Post created: ', post);
+				res.sendStatus(201);
+			})
+		}
+	}, 
 	feels: {
 		get: function(req, res) {
-			controller.feels.get(function(err, results) {
-				if (err) {
-					console.log('Error retrieving feels: ', err);
-				} else {
-					res.json(results);
-				}
-			});			
-		}, 
+			models.Feel.findAll().then(function(feels) {
+				res.json(feels);
+			})
+		},
+
 		post: function(req, res) {
-			controller.feels.post([req.body.emotion], function(err, results) {
-				if (err) {
-					console.log('Error creating feel: ', err);
-				} else {
-					res.sendStatus(201);
-				}				
-			});
+			models.Feel.create({
+				emotion: req.body.emotion
+			}).then(function(feel) {
+				console.log('Feel created: ', feel);
+				res.sendStatus(201);
+			})
 		}
 	}
 };
-apiArr = ['users','posts','feels']
+var apiArr = ['users','prompts','feels']
 // router.route('/feels')
 // 		.get(api['feels'].get)
 // 		.post(api['feels'].post);
@@ -78,3 +69,7 @@ _.each(apiArr, function(route) {
 });
 
 module.exports = router;
+
+
+
+

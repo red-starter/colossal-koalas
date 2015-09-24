@@ -6,12 +6,14 @@ var User = orm.define('User', {
 	password: Sequelize.STRING
 });
 
-var Post = orm.define('Post', {
-	body: Sequelize.STRING
+var Feel = orm.define('Feel', {
+	emotion: Sequelize.INTEGER,
+	text: Sequelize.STRING
 });
 
-var Feel = orm.define('Feel', {
-	emotion: Sequelize.STRING
+var Prompt = orm.define('Prompt', {
+	// id
+	text: Sequelize.STRING
 });
 
 // foreign key constraints
@@ -27,9 +29,9 @@ var Feel = orm.define('Feel', {
 
 // create tables
 User.sync();
-Post.sync();
 Feel.sync();
+Prompt.sync();
 
 exports.User = User;
-exports.Post = Post;
 exports.Feel = Feel;
+exports.Prompt = Prompt;
