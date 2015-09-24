@@ -1,4 +1,6 @@
-<p class="prompt"> {{ prompt }} </p>
+<div ui-view="initial"></div>
+
+<!-- Spectrum stays on screen -->
 <ul class="emotion-spectrum"> 
 
   <li class="emoji"><a ui-sref="selected"><img src="" alt="">😄</a></li>
@@ -11,3 +13,6 @@
   <li class="emoji"><a ui-sref="selected"><img src="" alt="">😣</a></li>
 
  </ul>
+
+
+ <div ui-view="selected"></div>
