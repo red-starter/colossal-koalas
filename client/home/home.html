@@ -1,18 +1,22 @@
-<div ui-view="initial"></div>
+<div ng-controller="HomeController">
 
-<!-- Spectrum stays on screen -->
-<ul class="emotion-spectrum"> 
+  <div ui-view="initial"></div>
 
-  <li class="emoji"><a ui-sref="selected"><img src="" alt="">😄</a></li>
-  <li class="emoji"><a ui-sref="selected"><img src="" alt="">😊</a></li>
-  <li class="emoji"><a ui-sref="selected"><img src="" alt="">😌</a></li>
-  <li class="emoji"><a ui-sref="selected"><img src="" alt="">😐</a></li>
-  <li class="emoji"><a ui-sref="selected"><img src="" alt="">😕</a></li>
-  <li class="emoji"><a ui-sref="selected"><img src="" alt="">😒</a></li>
-  <li class="emoji"><a ui-sref="selected"><img src="" alt="">😞</a></li>
-  <li class="emoji"><a ui-sref="selected"><img src="" alt="">😣</a></li>
+  <!-- Spectrum stays on screen -->
+  <ul class="emotion-spectrum"> 
 
- </ul>
+    <li class="emoji" ng-click="selectHandler($event)" data-emotion-id="0"><button>😄</button></li>
+    <li class="emoji" ng-click="selectHandler($event)" data-emotion-id="1"><button>😊</button></li>
+    <li class="emoji" ng-click="selectHandler($event)" data-emotion-id="2"><button>😌</button></li>
+    <li class="emoji" ng-click="selectHandler($event)" data-emotion-id="3"><button>😐</button></li>
+    <li class="emoji" ng-click="selectHandler($event)" data-emotion-id="4"><button>😕</button></li>
+    <li class="emoji" ng-click="selectHandler($event)" data-emotion-id="5"><button>😒</button></li>
+    <li class="emoji" ng-click="selectHandler($event)" data-emotion-id="6"><button>😞</button></li>
+    <li class="emoji" ng-click="selectHandler($event)" data-emotion-id="7"><button>😣</button></li>
+
+   </ul>
 
 
- <div ui-view="selected"></div>
+   <div ui-view="selected"></div>
+
+ </div>

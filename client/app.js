@@ -4,7 +4,10 @@ app.config(["$stateProvider, $urlRouteProvider", function($stateProvider, $urlRo
 
   $stateProvider
     .state("home", {
-
+      // Parent state of home; load home.html, set controller, use initial state (first prompt)
+    })
+    .state("home.selected", {
+      // Selected state of home; load second prompt, display text input and submit button
     })
     .state("journal", {
 
