@@ -28,7 +28,7 @@ angular.module('greenfeels.services', [])
   return {
     getPrompt1: getPrompt1,
     getPrompt2: getPrompt2
-  }
+  };
 }])
 
 .factory('Posts', ['$http', function ($http) {
@@ -59,10 +59,7 @@ angular.module('greenfeels.services', [])
 }])
 
 .factory('Auth', ['$http', '$location', '$window', function ($http, $location, $window) {
-  //Authentication service: authenticates user by exchanging user's username and password
-  //for a JWT from the server, which is then stored in localStorage as 'com.greenfeels'
-
-  //signin function posts to API endpoint with user data and responds with token
+  
   var signin = function(user) {
     return $http({
       method: 'POST',
@@ -74,7 +71,6 @@ angular.module('greenfeels.services', [])
     });
   };
 
-  //signup function posts to API endpoint with user data and responds with token
   var signup = function (user) {
     return $http({
       method: 'POST',
@@ -86,15 +82,12 @@ angular.module('greenfeels.services', [])
     });
   };
 
-  //checks if user is authorized by getting and checking the token from local storage
   var isAuth = function () {
-    return !!$window.localStorage.getItem('com.greenfeels');
+
   };
 
-  //removes token in local storage and redirects to signin page
   var signout = function () {
-    $window.localStorage.removeItem('com.greenfeels');
-    $location.path('/signin');
+
   };
 
   return {
