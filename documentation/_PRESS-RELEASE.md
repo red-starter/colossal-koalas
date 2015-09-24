@@ -17,16 +17,16 @@ Once the project moves into development, the press release can be used as a touc
  -->
  
 ## Heading ##
-  > Name the product in a way the reader (i.e. your target customers) will understand.
+  Project Greenfeels
 
 ## Sub-Heading ##
   > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
 
 ## Summary ##
-  > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  > Project Greenfeels enables a user to easily and intuitively track her or his mental states over time, facilitating reflection and self-awareness of emotional patterns.
 
 ## Problem ##
-  > Describe the problem your product solves.
+  Many people do not habitually reflect upon their emotional or mental patterns. Without a higher-order awareness of their mental states, it is difficult to identify and change cycles of negativity or unhappiness, or to appreciate and sustain positive mindsets.
 
 ## Solution ##
   > Describe how your product elegantly solves the problem.
