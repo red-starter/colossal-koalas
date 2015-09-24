@@ -20,6 +20,8 @@
     "bower": "^1.5.3"
   },
   "devDependencies": {
-    "gulp": "^3.9.0"
+    "gulp": "^3.9.0",
+    "gulp-jscs": "^3.0.0",
+    "jscs": "^2.1.1"
   }
 }
