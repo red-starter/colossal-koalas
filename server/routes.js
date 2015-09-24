@@ -1,11 +1,12 @@
 var models = require('./database/models');
+var controller = require('./database/controller')
 var _ = require('underscore');
 var router = require('express').Router();
 
 var api = {
 	users: {
 		get: function(req, res) {
-			models.User.get(function(err, results) {
+			controller.users.get(function(err, results) {
 				if (err) {
 					console.log('Error retrieving users: ', err);
 				} else {
@@ -14,7 +15,7 @@ var api = {
 			});
 		}, 
 		post: function(req, res) {
-			models.User.post([req.body.username, req.body.password], function(err, results) {
+			controller.users.post([req.body.username, req.body.password], function(err, results) {
 				if (err) {
 					console.log('Error creating user: ', err);
 				} else {
@@ -26,7 +27,7 @@ var api = {
 
 	posts: {
 		get: function(req, res) {
-			models.Post.get(function(err, results) {
+			controller.posts.get(function(err, results) {
 				if (err) {
 					console.log('Error retrieving posts: ', err);
 				} else {
@@ -35,7 +36,7 @@ var api = {
 			});			
 		}, 
 		post: function(req, res) {
-			models.Post.post([req.body.body], function(err, results) {
+			controller.posts.post([req.body.body], function(err, results) {
 				if (err) {
 					console.log('Error creating post: ', err);
 				} else {
@@ -47,7 +48,7 @@ var api = {
 
 	feels: {
 		get: function(req, res) {
-			models.Feel.get(function(err, results) {
+			controller.feels.get(function(err, results) {
 				if (err) {
 					console.log('Error retrieving feels: ', err);
 				} else {
@@ -56,7 +57,7 @@ var api = {
 			});			
 		}, 
 		post: function(req, res) {
-			models.Feel.post([req.body.emotion], function(err, results) {
+			controller.feels.post([req.body.emotion], function(err, results) {
 				if (err) {
 					console.log('Error creating feel: ', err);
 				} else {
@@ -70,7 +71,6 @@ apiArr = ['users','posts','feels']
 // router.route('/feels')
 // 		.get(api['feels'].get)
 // 		.post(api['feels'].post);
-console.log('is function????',models.Feel.get)
 _.each(apiArr, function(route) {
 	router.route('/' + route)
 		.get(api[route].get)
