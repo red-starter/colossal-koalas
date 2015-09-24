@@ -13,6 +13,47 @@
     - Sentiment analysis
     - Reflection reminders from past
     - Refactor to React
+    - Mobile app
+- Project Backlog
+  - Set up project file structure and organization
+    - Decide convention of filenames
+    - Set up build tasks
+      - Decide on linting
+  - Maintain documentation
+  - Maintain test suite
+  - Set up server
+    - Set up database
+    - Connect to database
+    - Design route handlers
+      - Design database queries
+    - Consider deployment, environment variables, etc.
+  - API
+    - Form of data from client
+      - Storage on client vs. storage in DB
+    - Routes and verbs to server
+  - Authentication
+    - Set up Passport
+    - Design session handling
+  - Implement front end
+    - ui-router states
+    - Front page
+      - index.html, .js
+      - Controller
+      - Write prompts
+      - Emoji selector
+      - Variable response to selected emotion
+      - Input field for text
+      - Submit button
+    - Journal view
+      - journal.html, .js
+      - Controller
+      - Horizontal slices of entries
+      - Retrieval from DB and formatting for display
+    - Graph view
+      - graph.html, .js
+      - Design graph format
+      - Controller
+      - D3 display, SVG element
 - Stack
   - Angular vs. React vs. Backbone
     - Backbone
@@ -25,6 +66,7 @@
       - Pros: more intuitive organization and structure
       - Cons: have to learn it
   - D3
+  - Mocha + Chai
   - Node, Express, Passport
   - Sequelize vs. native driver
   - Postgres vs. MySQL vs. Firebase
