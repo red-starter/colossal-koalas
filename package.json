@@ -1,0 +1,19 @@
+{
+  "name": "project-greenfeels",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/colossal-koalas/colossal-koalas.git"
+  },
+  "author": "colossoal koalas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/colossal-koalas/colossal-koalas/issues"
+  },
+  "homepage": "https://github.com/colossal-koalas/colossal-koalas#readme"
+}
