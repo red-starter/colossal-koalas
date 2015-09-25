@@ -14,7 +14,6 @@ Entry.schema(config.mainSchema);
 var Prompt = db.define('prompt', models.Prompt.attributes, models.Prompt.options);
 Prompt.schema(config.mainSchema);
 
-
 Entry.belongsTo(User);
 
 var shouldForce = process.env.NODE_ENV === 'development'
