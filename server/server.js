@@ -24,7 +24,6 @@ app.get('/', function(req, res, next) {
 
 app.listen(port, function(req, res) {
 	console.log('listening on port: ', port);
-	// requestHandler(req, res);
 }) 
 
 console.log(router.stack);
