@@ -1,7 +1,7 @@
 var app = angular.module('greenfeels',
   ['greenfeels.services, greenfeels.home, greenfeels.journal, greenfeels.graph, ui.router']);
 
-app.config(['$stateProvider, $urlRouteProvider', 
+app.config(['$stateProvider, $urlRouteProvider',
   function($stateProvider, $urlRouteProvider) {
 
     $stateProvider
@@ -37,7 +37,7 @@ app.config(['$stateProvider, $urlRouteProvider',
           selected: {
             templateUrl: './home/home.selected.html'
           }
-          
+
         }
       })
       .state('journal', {
@@ -53,4 +53,4 @@ app.config(['$stateProvider, $urlRouteProvider',
 
       });
 
-}]);
+  }]);
