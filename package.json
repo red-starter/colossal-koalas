@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./server/server.js",
+    "start": "PGSSLMODE=require nodemon ./server/server.js",
+    "reset-db": "PGSSLMODE=require NODE_ENV=development node ./server/database/dbinterface.js",
     "test": "mocha ./server/spec/spec.js"
   },
   "repository": {
