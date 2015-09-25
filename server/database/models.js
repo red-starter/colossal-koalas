@@ -13,6 +13,7 @@ function hashPassword(user) {
     });
 }
 
+
 // Function for comparing a password at login
 // Returns a promise that will fulfill with a boolean
 // The `this` keyword is used here since this is passed

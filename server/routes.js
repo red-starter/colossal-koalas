@@ -8,9 +8,9 @@ var api = {
     get: function(req, res) {
       models.User.findAll().then(function(users) {
         res.json(users);
-      })
+      });
     },
-    post: function(req, res,cb) {
+    post: function(req, res, cb) {
       console.log('request', req);
       models.User.findOrCreate({
         where: {name: req.body.username}
@@ -18,18 +18,18 @@ var api = {
         models.User.create({
           name: req.body.username,
           password: req.body.password
-        })
+        });
       }).then(function(user) {
         console.log('User created: ', user);
         res.sendStatus(201);
-      })
+      });
     }
   },
   prompts: {
     get: function(req, res) {
       models.Prompt.findAll().then(function(posts) {
         res.json(posts);
-      })
+      });
     },
 
     post: function(req, res) {
@@ -38,14 +38,14 @@ var api = {
       }).then(function(prompt) {
         console.log('Prompt created: ', prompt);
         res.sendStatus(201);
-      })
+      });
     }
   },
   entries: {
     get: function(req, res) {
       models.Entry.findAll().then(function(entries) {
         res.json(entries);
-      })
+      });
     },
 
     post: function(req, res) {
