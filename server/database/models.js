@@ -1,4 +1,6 @@
 var Sequelize = require('sequelize');
+
+
 // Third argument to .define() is the options for the model.
 // Here, the 'schema' option specifies which schema in our Postgres
 // database we want our tables to be created in, since there are multiple.
@@ -26,7 +28,7 @@ exports.User = {
 
   },
 
-  options: {schema: 'moodlet'}
+  options: {}
 
 };
 
@@ -47,8 +49,6 @@ exports.Entry = {
   },
 
   options: {
-
-    schema: 'moodlet',
 
     // To make sure our table names don't cause confusion,
     // we specify the specific irregular plural of 'entry'
@@ -79,6 +79,6 @@ exports.Prompt = {
 
   },
 
-  options: {schema: 'moodlet'}
+  options: {}
 
 };

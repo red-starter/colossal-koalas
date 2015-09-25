@@ -1,10 +1,19 @@
 var Sequelize = require('sequelize');
-var db = new Sequelize(require('./postgres.config.js'), {sync: {schema: 'moodlet'}}); // Require in the postgres credentials
+
+var config = require('./postgres.config.js');
+var db = new Sequelize(config.url, {sync: {schema: config.mainSchema}}); // Require in the postgres credentials
+
 var models = require('./models');
 
 var User = db.define('user', models.User.attributes, models.User.options);
+User.schema(config.mainSchema);
+
 var Entry = db.define('entry', models.Entry.attributes, models.Entry.options);
+Entry.schema(config.mainSchema);
+
 var Prompt = db.define('prompt', models.Prompt.attributes, models.Prompt.options);
+Prompt.schema(config.mainSchema);
+
 
 Entry.belongsTo(User);
 
