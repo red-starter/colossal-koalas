@@ -6,7 +6,7 @@ var User = orm.define('User', {
 	password: Sequelize.STRING
 });
 
-var Feel = orm.define('Feel', {
+var Entry = orm.define('Entry', {
 	emotion: Sequelize.INTEGER,
 	text: Sequelize.STRING
 });
@@ -19,16 +19,16 @@ var Prompt = orm.define('Prompt', {
 // foreign key constraints
 
 // THESE BREAK EVERYTHING - need to fix
-// Feel.belongsTo(User);
-// User.hasMany(Feel);
+// Entry.belongsTo(User);
+// User.hasMany(Entry);
 
-// create foreign keys for prompt - feel
+// create foreign keys for prompt - Entry
 
 // create tables
 User.sync({force: true}); // force: true clears tables for testing
-Feel.sync({force: true});
+Entry.sync({force: true});
 Prompt.sync({force: true});
 
 exports.User = User;
-exports.Feel = Feel;
+exports.Entry = Entry;
 exports.Prompt = Prompt;
