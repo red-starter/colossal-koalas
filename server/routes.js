@@ -1,3 +1,4 @@
+// TODO: use interface here instead of requiring models directly
 var models = require('./database/models');
 var _ = require('underscore');
 var router = require('express').Router();
@@ -12,10 +13,10 @@ var api = {
     post: function(req, res, cb) {
       console.log('request', req);
       models.User.findOrCreate({
-        where: {username: req.body.username}
+        where: {name: req.body.username}
       }).then(function(user) {
         models.User.create({
-          username: req.body.username,
+          name: req.body.username,
           password: req.body.password
         });
       }).then(function(user) {

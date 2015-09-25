@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start":"nodemon ./server/server.js",
+    "start": "PGSSLMODE=require nodemon ./server/server.js",
+    "reset-db": "PGSSLMODE=require NODE_ENV=development node ./server/database/dbinterface.js",
     "test": "mocha ./server/spec/spec.js"
   },
   "repository": {
@@ -18,14 +19,15 @@
   },
   "homepage": "https://github.com/colossal-koalas/colossal-koalas#readme",
   "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "body-parser": "^1.14.0",
+    "express": "^4.13.3",
     "morgan": "^1.6.1",
-    "mysql": "^2.9.0",
     "pg": "^4.4.2",
+    "pg-hstore": "^2.3.2",
     "request": "^2.63.0",
     "sequelize": "^3.9.0",
-    "underscore": "^1.8.3",
-    "body-parser": "^1.14.0",
-    "express": "^4.13.3"
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "gulp": "^3.9.0",

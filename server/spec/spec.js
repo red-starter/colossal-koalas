@@ -59,17 +59,5 @@ describe('Should have data persistence', function() {
 		})
 	});
 
-	// it ("should save feels and feel scale",function(done){
-		
-	// })
-	// it("should retrieve feels",function(done){
-
-	// });
-	// it ("shouls save prompts",function(done){
-
-	// });
-	// it("should retrieve prompts",function(done){
-
-	// });
 
 });
