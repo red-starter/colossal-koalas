@@ -23,4 +23,11 @@ angular.module('greenfeels.auth', [])
         console.error(error);
       });
     };
+
+    $scope.signout = function() {
+    // create logout function here - use Auth controller with nav view
+      // Auth.signout
+
+    };
 }]);
+
