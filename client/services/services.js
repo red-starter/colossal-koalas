@@ -2,7 +2,7 @@ angular.module('greenfeels.services', [])
 
 .factory('Prompts', ['$http', function($http) {
   // Get prompt #1 for intial state view of home page
-  var getPrompt1 = function() {
+  var getFirstPrompt = function() {
     return $http({
       method: 'GET',
       url: '/api/prompts'
@@ -14,7 +14,7 @@ angular.module('greenfeels.services', [])
   };
 
   // Get prompt #2 for selected state view of home page
-  var getPrompt2 = function(emoji) {
+  var getSecondPrompt = function(emoji) {
     return $http({
       method: 'GET',
       url: '/api/prompts'
@@ -26,35 +26,35 @@ angular.module('greenfeels.services', [])
   };
 
   return {
-    getPrompt1: getPrompt1,
-    getPrompt2: getPrompt2
+    getFirstPrompt: getFirstPrompt,
+    getSecondPrompt: getSecondPrompt
   };
 }])
 
-.factory('Posts', ['$http', function($http) {
-  // Retrieves all of user's posts
+.factory('Entries', ['$http', function($http) {
+  // Retrieves all of user's entries
   var getAll = function() {
     return $http({
       method: 'GET',
-      url: '/api/posts'
+      url: '/api/entries'
     })
     .then(function(resp) {
       return resp.data;
     });
   };
 
-  // Adds user's post
-  var addPost = function(post) {
+  // Adds user's entry
+  var addEntry = function(post) {
     return $http({
       method: 'POST',
-      url: '/api/posts',
+      url: '/api/entries',
       data: post
     });
   };
 
   return {
     getAll: getAll,
-    addPost: addPost
+    addEntry: addEntry
   };
 }])
 
