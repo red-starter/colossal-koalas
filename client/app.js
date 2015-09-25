@@ -10,7 +10,8 @@ app.config(['$stateProvider, $urlRouteProvider',
         views: {
 
           nav: {
-            templateUrl: './nav/nav.html'
+            templateUrl: './nav/nav.html',
+            controller: 'AuthController'
           },
 
           page: {
@@ -45,7 +46,8 @@ app.config(['$stateProvider, $urlRouteProvider',
         views: {
           
           nav: {
-            templateUrl: './nav/nav.html'
+            templateUrl: './nav/nav.html',
+            controller: 'AuthController'
           },
 
           page: {
@@ -60,11 +62,13 @@ app.config(['$stateProvider, $urlRouteProvider',
         views: {
           
           nav: {
-            templateUrl: './nav/nav.html'
+            templateUrl: './nav/nav.html',
+            controller: 'AuthController'
           },
 
           page: {
-            // TODO
+            templateUrl: './graph/graph.html',
+            controller: 'GraphController'
           }
         }
 
