@@ -1,34 +1,68 @@
 var Sequelize = require('sequelize');
-var orm = new Sequelize('greenfeels', 'root', ''); // db name, username, pw
+var orm = new Sequelize(require('./postgres.config.js')); // Require in the postgres credentials
 
+
+// Third argument to .define() is the options for the model.
+// Here, the 'schema' option specifies which schema in our Postgres
+// database we want our tables to be created in, since there are multiple.
+// By default, they'll be created in a schema called 'public'.
 var User = orm.define('User', {
-	username: Sequelize.STRING,
-	password: Sequelize.STRING
-});
 
-var Feel = orm.define('Feel', {
+	username: {
+    type: Sequelize.STRING,
+    unique: true,
+    allowNull: false
+  },
+
+	password: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
+
+}, {schema: 'moodlet'});
+
+var Entry = orm.define('Entry', {
+
 	emotion: Sequelize.INTEGER,
+
 	text: Sequelize.STRING
+
+}, {
+
+  schema: 'moodlet',
+
+  // To make sure our table names don't cause confusion,
+  // we specify the specific irregular plural of 'entry'
+  name: {
+    singular: 'entry',
+    plural: 'entries'
+  }
+
 });
 
 var Prompt = orm.define('Prompt', {
-	// id
-	text: Sequelize.STRING
-});
+
+	text: Sequelize.STRING,
+
+  // Emotion represents the selected emotion that causes the
+  // prompt to display. Initial prompts will have -1 as their 'emotion'.
+  emotion: Sequelize.INTEGER
+
+}, {schema: 'moodlet'});
 
 // foreign key constraints
 
 // THESE BREAK EVERYTHING - need to fix
-// Feel.belongsTo(User);
-// User.hasMany(Feel);
+// Entry.belongsTo(User);
+// User.hasMany(Entry);
 
-// create foreign keys for prompt - feel
+// create foreign keys for prompt - emotion
 
 // create tables
 User.sync({force: true}); // force: true clears tables for testing
-Feel.sync({force: true});
+Entry.sync({force: true});
 Prompt.sync({force: true});
 
 exports.User = User;
-exports.Feel = Feel;
+exports.Entry = Entry;
 exports.Prompt = Prompt;

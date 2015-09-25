@@ -40,21 +40,21 @@ var api = {
       })
     }
   },
-  feels: {
+  entries: {
     get: function(req, res) {
-      models.Feel.findAll().then(function(feels) {
-        res.json(feels);
+      models.Entry.findAll().then(function(entries) {
+        res.json(entries);
       })
     },
 
     post: function(req, res) {
-      models.Feel.create({
+      models.Entry.create({
         emotion: req.body.emotion,
         text: req.body.text
-      }).then(function(feel) {
-        console.log('Feel created: ', feel);
+      }).then(function(entry) {
+        console.log('Entry created: ', entry);
         res.sendStatus(201);
-      })
+      });
     }
   }
 };
