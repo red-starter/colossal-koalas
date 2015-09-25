@@ -1,26 +1,26 @@
 angular.module('greenfeels.services', [])
 
-.factory('Prompts', ['$http', function ($http) {
-  //get prompt #1 for intial state view of home page
-  var getPrompt1 = function () {
+.factory('Prompts', ['$http', function($http) {
+  // Get prompt #1 for intial state view of home page
+  var getPrompt1 = function() {
     return $http({
       method: 'GET',
       url: '/api/prompts'
     })
     .then(function (resp) {
-      //do something to select appropriate prompt
+      // Do something to select appropriate prompt
       return resp.data;
     });
   };
 
-  //get prompt #2 for selected state view of home page 
+  // Get prompt #2 for selected state view of home page 
   var getPrompt2 = function (emoji) {
     return $http({
       method: 'GET',
       url: '/api/prompts'
     })
-    .then(function (resp) {
-      //do something to select appropriate prompt
+    .then(function(resp) {
+      // Do something to select appropriate prompt
       return resp.data;
     });
   };
@@ -31,20 +31,20 @@ angular.module('greenfeels.services', [])
   };
 }])
 
-.factory('Posts', ['$http', function ($http) {
-  //retrieves all of user's posts
+.factory('Posts', ['$http', function($http) {
+  // Retrieves all of user's posts
   var getAll = function () {
     return $http({
       method: 'GET',
       url: '/api/posts'
     })
-    .then(function (resp) {
+    .then(function(resp) {
       return resp.data;
     });
   };
 
-  //adds user's post
-  var addPost = function (post) {
+  // Adds user's post
+  var addPost = function(post) {
     return $http({
       method: 'POST',
       url: '/api/posts',
@@ -58,7 +58,7 @@ angular.module('greenfeels.services', [])
   };
 }])
 
-.factory('Auth', ['$http', '$location', '$window', function ($http, $location, $window) {
+.factory('Auth', ['$http', '$location', '$window', function($http, $location, $window) {
   
   var signin = function(user) {
     return $http({
@@ -71,22 +71,22 @@ angular.module('greenfeels.services', [])
     });
   };
 
-  var signup = function (user) {
+  var signup = function(user) {
     return $http({
       method: 'POST',
       url: '/api/users/signup',
       data: user
     })
-    .then(function (resp) {
+    .then(function(resp) {
       return resp.data.token;
     });
   };
 
-  var isAuth = function () {
+  var isAuth = function() {
 
   };
 
-  var signout = function () {
+  var signout = function() {
 
   };
 
