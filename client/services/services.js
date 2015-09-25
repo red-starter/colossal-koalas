@@ -1,26 +1,26 @@
 angular.module('greenfeels.services', [])
 
 .factory('Prompts', ['$http', function($http) {
-  //get prompt #1 for intial state view of home page
+  // Get prompt #1 for intial state view of home page
   var getPrompt1 = function() {
     return $http({
       method: 'GET',
       url: '/api/prompts'
     })
     .then(function (resp) {
-      //do something to select appropriate prompt
+      // Do something to select appropriate prompt
       return resp.data;
     });
   };
 
-  //get prompt #2 for selected state view of home page 
+  // Get prompt #2 for selected state view of home page 
   var getPrompt2 = function (emoji) {
     return $http({
       method: 'GET',
       url: '/api/prompts'
     })
     .then(function(resp) {
-      //do something to select appropriate prompt
+      // Do something to select appropriate prompt
       return resp.data;
     });
   };
@@ -32,7 +32,7 @@ angular.module('greenfeels.services', [])
 }])
 
 .factory('Posts', ['$http', function($http) {
-  //retrieves all of user's posts
+  // Retrieves all of user's posts
   var getAll = function () {
     return $http({
       method: 'GET',
@@ -43,7 +43,7 @@ angular.module('greenfeels.services', [])
     });
   };
 
-  //adds user's post
+  // Adds user's post
   var addPost = function(post) {
     return $http({
       method: 'POST',
