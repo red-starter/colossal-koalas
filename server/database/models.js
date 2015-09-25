@@ -17,6 +17,12 @@ var User = orm.define('User', {
 	password: {
     type: Sequelize.STRING,
     allowNull: false
+  },
+
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
   }
 
 }, {schema: 'moodlet'});
@@ -25,7 +31,13 @@ var Entry = orm.define('Entry', {
 
 	emotion: Sequelize.INTEGER,
 
-	text: Sequelize.STRING
+	text: Sequelize.STRING,
+
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  }
 
 }, {
 
@@ -46,7 +58,13 @@ var Prompt = orm.define('Prompt', {
 
   // Emotion represents the selected emotion that causes the
   // prompt to display. Initial prompts will have -1 as their 'emotion'.
-  emotion: Sequelize.INTEGER
+  emotion: Sequelize.INTEGER,
+
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true,
+    autoIncrement: true
+  }
 
 }, {schema: 'moodlet'});
 
