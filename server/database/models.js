@@ -18,8 +18,9 @@ var Prompt = orm.define('Prompt', {
 
 // foreign key constraints
 
-Feel.belongsTo(User);
-User.hasMany(Feel);
+// THESE BREAK EVERYTHING - need to fix
+// Feel.belongsTo(User);
+// User.hasMany(Feel);
 
 // create foreign keys for prompt - feel
 
