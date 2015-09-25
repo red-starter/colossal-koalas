@@ -14,9 +14,9 @@ describe('Should have data persistence', function() {
 		});
 		db.connect();
 
-		db.query('set foreign_key_checks =0;',done);
-		db.query('truncate table users;',done);
-		db.query('set foreign_key_checks =1;',done);
+		// db.query('set foreign_key_checks =0;',done);
+		// db.query('truncate table users;',done);
+		// db.query('set foreign_key_checks =1;',done);
 	
 	});
 
