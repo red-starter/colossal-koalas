@@ -1,3 +1,4 @@
+// TODO: use interface here instead of requiring models directly
 var models = require('./database/models');
 var _ = require('underscore');
 var router = require('express').Router();
