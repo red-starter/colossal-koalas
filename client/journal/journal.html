@@ -1,0 +1,10 @@
+<div ng-controller='JournalController' id='journal'>
+  <h1>Journal</h1>
+  <ul>
+    <li class="journal-entry" ng-repeat="entry in journal.entries | orderBY: '-timeStamp'">
+      <div class="timestamp"> {{ entry.timeStamp }} </div>
+      <div class="emotion"> {{ entry.emotion }} </div>
+      <div class="text"> {{ entry.text }} </div>
+    </li>
+  </ul>
+</div>
