@@ -60,4 +60,4 @@ node_modules
 bower_components
 
 #Postgres Heroku URL
-postgres.config.js
+postgres.url.js
