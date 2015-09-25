@@ -1,7 +1,7 @@
 var journal = angular.module('greenfeels.journal');
 
-journal.controller('JournalController', ['$scope', '$window', '$location', 'Posts',
-  function ($scope, $window, $location, Entries) {
+journal.controller('JournalController', ['$scope', 'Entries',
+  function ($scope, Entries) {
     // Create journal model
     $scope.journal = {};
 
@@ -15,6 +15,6 @@ journal.controller('JournalController', ['$scope', '$window', '$location', 'Post
         });
     };
     // Display all posts on page load
-    $scope.getPosts();
+    $scope.getEntries();
   }
 ]);
