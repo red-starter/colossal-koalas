@@ -85,16 +85,3 @@ describe('Models', function() {
   // TODO: Prompt tests?
 
 }); // Closes Models suite
-
-xdescribe('Should have data persistence', function() {
-
-  it("should save a user and password into the database", function(done){
-
-    });
-
-  it("should retrieve a user and password on get request", function(done){
-    
-  });
-
-
-});
