@@ -13,7 +13,6 @@ function hashPassword(user) {
     });
 }
 
-
 // Function for comparing a password at login
 // Returns a promise that will fulfill with a boolean
 // The `this` keyword is used here since this is passed
@@ -22,10 +21,9 @@ function comparePassword(password) {
   return bcrypt.compareAsync(password, this.password);
 }
 
-// Third argument to .define() is the options for the model.
-// Here, the 'schema' option specifies which schema in our Postgres
-// database we want our tables to be created in, since there are multiple.
-// By default, they'll be created in a schema called 'public'.
+//// Model schemata ////////////////
+
+// Attributes and options for User model.
 exports.User = {
 
   attributes: {
@@ -64,6 +62,7 @@ exports.User = {
 
 };
 
+// Attributes and options for Entry model.
 exports.Entry = {
 
   attributes: {
@@ -83,7 +82,8 @@ exports.Entry = {
   options: {
 
     // To make sure our table names don't cause confusion,
-    // we specify the specific irregular plural of 'entry'
+    // we specify the specific irregular plural of 'entry'.
+    // See http://docs.sequelizejs.com/en/latest/docs/associations/#naming-strategy
     name: {
       singular: 'entry',
       plural: 'entries'
@@ -93,6 +93,7 @@ exports.Entry = {
 
 };
 
+// Attributes and options for Prompt model.
 exports.Prompt = {
 
   attributes: {
