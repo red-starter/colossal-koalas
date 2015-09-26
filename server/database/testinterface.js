@@ -25,4 +25,9 @@ Entry.belongsTo(User);
 db.sync({force: true});
 
 // TODO: Export methods here
-module.exports = db;
+module.exports = {
+  db: db,
+  User: User,
+  Entries: Entries,
+  Prompts: Prompts
+};
