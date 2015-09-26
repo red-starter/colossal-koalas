@@ -6,6 +6,7 @@ var bcrypt = Bluebird.promisify(require('bcrypt-nodejs'));
 // Function for hashing user's password before storage
 // Returns a promise that will fulfill to undefined, or reject with error
 // This is attached as a hook, so it takes the model as its argument.
+// See http://docs.sequelizejs.com/en/latest/docs/hooks/
 function hashPassword(user) {
   return bcrypt.hashAsync(user.password, null, null)
     .then(function(hash) {

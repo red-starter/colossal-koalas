@@ -1,3 +1,7 @@
+// Parallel testing interface, using a separate schema
+// in the Postgres database. This allows us to always
+// safely assume during testing that we have no data in
+// the tables.
 var Sequelize = require('sequelize');
 
 var config = require('./postgres.config.js');
@@ -5,6 +9,7 @@ var db = new Sequelize(config.url, {sync: {schema: config.testSchema}}); // Requ
 
 var models = require('./models');
 
+// See ./interface.js for comments about lines 14/17/20.
 var User = db.define('user', models.User.attributes, models.User.options);
 User.schema(config.testSchema);
 
@@ -16,7 +21,8 @@ Prompt.schema(config.testSchema);
 
 Entry.belongsTo(User);
 
-db.sync({force: true}).then(function() { process.exit(0); });
+// Always start with sparkling fresh tables.
+db.sync({force: true});
 
 // TODO: Export methods here
 module.exports = db;
