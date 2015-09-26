@@ -54,17 +54,25 @@ if (dbEnvironment === 'testing' || dbEnvironment === 'reset') {
   shouldForce = false;
 }
 
-db.sync({force: shouldForce})
-  .then(function() {
-    // If we're executing our `reset-db` npm script,
-    // we bail here
-    if (dbEnvironment === 'reset') process.exit(0);
-  });
+// Wrap actual db synchronization in a function that
+// we can expose from module.exports. This function
+// returns a promise, so that a module requiring the db
+// knows to wait for the initial sync/setup to finish
+// before proceeding.
+function init() {
+  return db.sync({force: shouldForce})
+    .then(function() {
+      // If we're executing our `reset-db` npm script,
+      // we bail here
+      if (dbEnvironment === 'reset') process.exit(0);
+    });
+}
 
 // TODO: Export methods here
 module.exports = {
-  db: db,
+  sequelize: db,
   User: User,
-  Entries: Entries,
-  Prompts: Prompts
+  Entry: Entry,
+  Prompt: Prompt,
+  init: init
 };
