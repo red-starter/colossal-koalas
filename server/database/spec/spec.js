@@ -61,6 +61,29 @@ describe('Models', function() {
 
   }); // Closes User suite
 
+  describe('Entry', function() {
+
+    it('should save to the database with emotion, text, and a user', function(done) {
+      db.User.findOne({ name: 'Mike' })
+        .then(function(user) {
+          return db.Entry
+            .create({ emotion: 7, text: 'Surf is bad this week' })
+            .then(function(entry) {
+              entry.setUser(user);
+            })
+            .then(function() {
+              done();
+            });
+        })
+        .catch(function(err) {
+          done(err);
+        });
+    }); // Closes 'it should save to the database with emotion, text, and a user'
+
+  }); // Closes Entry suite
+
+  // TODO: Prompt tests?
+
 }); // Closes Models suite
 
 xdescribe('Should have data persistence', function() {
