@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "PGSSLMODE=require nodemon ./server/server.js",
-    "reset-db": "PGSSLMODE=require NODE_ENV=development node ./server/database/dbinterface.js",
-    "test": "mocha ./server/spec/spec.js"
+    "reset-db": "PGSSLMODE=require NODE_DB_ENV=reset node ./server/database/dbinterface.js",
+    "test": "PGSSLMODE=require NODE_DB_ENV=testing mocha ./server/spec/spec.js"
   },
   "repository": {
     "type": "git",
