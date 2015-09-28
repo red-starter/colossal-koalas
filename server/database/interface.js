@@ -1,31 +1,81 @@
+// Database interface and initialization.
+// This sets up the sequelize instance for interaction
+// with the Postgres server using postgres.config.js and
+// models.js.
 var Sequelize = require('sequelize');
 
+// Bring in our config file and models.
 var config = require('./postgres.config.js');
-var db = new Sequelize(config.url, {sync: {schema: config.mainSchema}}); // Require in the postgres credentials
-
 var models = require('./models');
 
-var User = db.define('user', models.User.attributes, models.User.options);
-User.schema(config.mainSchema);
+// Declare variables for later use.
+var db;
+var schema;
+var User;
+var Entry;
+var Prompt;
+var shouldForce;
 
-var Entry = db.define('entry', models.Entry.attributes, models.Entry.options);
-Entry.schema(config.mainSchema);
+// Read NODE_DB_ENV variable to see if we are entering
+// test mode or not. If so, use test schema to sandbox
+// our database abuse.
+var dbEnvironment = process.env.NODE_DB_ENV;
 
-var Prompt = db.define('prompt', models.Prompt.attributes, models.Prompt.options);
-Prompt.schema(config.mainSchema);
+if (dbEnvironment === 'testing') {
+  schema = config.testSchema;
+} else {
+  schema = config.mainSchema
+}
 
+// Initiate sequelize instance (representing the connection
+// to the database) with the url from the config file and
+// the appropriate schema we selected above.
+db = new Sequelize(config.url, {sync: {schema: schema}});
+
+// Each model must have the schema attached or Postgres will
+// yell at you unhappily, even though you already specified
+// the schema on the sequelize instance. There may be more
+// options for the sequelize instance that would avoid this.
+User = db.define('user', models.User.attributes, models.User.options);
+User.schema(schema);
+
+Entry = db.define('entry', models.Entry.attributes, models.Entry.options);
+Entry.schema(schema);
+
+Prompt = db.define('prompt', models.Prompt.attributes, models.Prompt.options);
+Prompt.schema(schema);
+
+// Only one foreign key association. Untested as of 9/25.
 Entry.belongsTo(User);
 
-var shouldForce = process.env.NODE_ENV === 'development'
-  ? true
-  : false;
+// If NODE_DB_ENV is set to 'reset' when this code executes,
+// the sequelize instance will drop the tables before creating
+// them anew. Otherwise, the extant tables will be loaded.
+if (dbEnvironment === 'testing' || dbEnvironment === 'reset') {
+  shouldForce = true;
+} else {
+  shouldForce = false;
+}
 
-db.sync({force: shouldForce})
-  .then(function() {
-    if (shouldForce) process.exit(0);
-  });
-
-
+// Wrap actual db synchronization in a function that
+// we can expose from module.exports. This function
+// returns a promise, so that a module requiring the db
+// knows to wait for the initial sync/setup to finish
+// before proceeding.
+function init() {
+  return db.sync({force: shouldForce})
+    .then(function() {
+      // If we're executing our `reset-db` npm script,
+      // we bail here
+      if (dbEnvironment === 'reset') process.exit(0);
+    });
+}
 
 // TODO: Export methods here
-module.exports = db;
+module.exports = {
+  sequelize: db,
+  User: User,
+  Entry: Entry,
+  Prompt: Prompt,
+  init: init
+};
