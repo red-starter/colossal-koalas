@@ -30,6 +30,10 @@ var endpoints = {
           // The next branch of the chain will fulfill with the user.
           // We just send a 201.
           res.status(201).end();
+        })
+        .catch(function(err) {
+          console.error(err);
+          res.status(500).end();     
         });
     }
   },
@@ -53,6 +57,10 @@ var endpoints = {
       })
       .then(function(entries) {
         res.json(entries);
+      })
+      .catch(function(err) {
+          console.error(err);
+          res.status(500).end();     
       });
     },
 
@@ -71,6 +79,10 @@ var endpoints = {
               res.json(entry);
             });
           }
+        })
+        .catch(function(err) {
+          console.error(err);
+          res.status(500).end();     
         });
     }
   },
@@ -85,6 +97,10 @@ var endpoints = {
           } else {
             res.json(entry);
           }
+        })
+        .catch(function(err) {
+          console.error(err);
+          res.status(500).end();     
         });
     },
 
