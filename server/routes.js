@@ -57,15 +57,21 @@ var api = {
     },
 
     post: function(req, res) {
-      db.Entry.create({
-        emotion: req.body.emotion,
-        text: req.body.text
-      }).then(function(entry) {
-        entry.setUser(User.findOne({
-          where: {name: req.params.username}
-        }));
-        res.status(201).json(entry);
-      });
+      db.User.findOne({ where: { name: req.params.username } })
+        .then(function(user) {
+          if (!user) {
+            res.status(404).end();
+          } else {
+            db.Entry.create({
+              emotion: req.body.emotion,
+              text: req.body.text,
+              userId: user.id
+            })
+            .then(function(entry) {
+              res.json(entry);
+            });
+          }
+        });
     }
   },
 
@@ -83,11 +89,11 @@ var api = {
     },
 
     put: function(req, res) {
-
+      // TODO: update a post
     },
 
     delete: function(req, res) {
-
+      // TODO: delete a post
     }
   }
 
