@@ -100,10 +100,14 @@ var api = {
 };
 
 // TODO: make a little less clever
-_.each(api, function(route, key) {
-  router.route('/' + key)
-    .get(route.get)
-    .post(route.post);
+_.each(api, function(handlers, path) {
+
+  var endpoint = router.route(path);
+
+  for (var method in handlers) {
+    endpoint[method] = handlers[method];
+  }
+
 });
 
 module.exports = router;

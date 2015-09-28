@@ -9,6 +9,8 @@ var app = express();
 // logging and parsing
 app.use(morgan('dev'));
 app.use(parser.json());
+
+// Mount router for api
 app.use('/api/users', router);
 
 var port = process.env.PORT || 8080;
