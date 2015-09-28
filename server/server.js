@@ -16,12 +16,13 @@ app.use('/api/users', router);
 var port = process.env.PORT || 8080;
 
 // serve static files
+app.use(express.static(__dirname + '/client'));
 
 // set up routes
 // TODO: actually serve client stuff
-app.get('/', function(req, res) {
-	res.send('<p>hello</p>');
-});
+// app.get('/', function(req, res) {
+// 	res.send('<p>hello</p>');
+// });
 
 app.listen(port, function(err) {
   if (err) {
