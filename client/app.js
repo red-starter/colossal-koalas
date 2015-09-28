@@ -119,7 +119,7 @@ app.config(['$stateProvider, $urlRouteProvider',
   $rootScope.$on('$stateChangeStart', function (evt, next, current) {
     // need to modify for UI router and states
     if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
-      $state.transitionTo('/signin');
+      $state.transitionTo('signin');
     }
   });
 });
