@@ -1,5 +1,4 @@
 var express = require('express');
-var db = require('./database/config');
 // middleware
 var morgan = require('morgan');
 var parser = require('body-parser');
@@ -10,20 +9,26 @@ var app = express();
 // logging and parsing
 app.use(morgan('dev'));
 app.use(parser.json());
-app.use('/api', router);
+
+// Mount router for api
+app.use('/api/users', router);
 
 var port = process.env.PORT || 8080;
 
 // serve static files
 
 // set up routes
-app.get('/', function(req, res, next) {
+// TODO: actually serve client stuff
+app.get('/', function(req, res) {
 	res.send('<p>hello</p>');
-	next();
 });
 
-app.listen(port, function(req, res) {
-	console.log('listening on port: ', port);
+app.listen(port, function(err) {
+  if (err) {
+    console.error(err);
+  } else {
+    console.log('listening on port: ', port); 
+  }
 });
 
 console.log(router.stack);
