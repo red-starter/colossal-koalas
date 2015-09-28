@@ -27,7 +27,10 @@ if (dbEnvironment === 'testing') {
   schema = config.mainSchema
 }
 
-db = new Sequelize(config.url, {sync: {schema: schema}}); // Require in the postgres credentials
+// Initiate sequelize instance (representing the connection
+// to the database) with the url from the config file and
+// the appropriate schema we selected above.
+db = new Sequelize(config.url, {sync: {schema: schema}});
 
 // Each model must have the schema attached or Postgres will
 // yell at you unhappily, even though you already specified
