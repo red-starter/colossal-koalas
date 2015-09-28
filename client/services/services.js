@@ -58,11 +58,12 @@ angular.module('greenfeels.services', [])
   };
 }])
 
-.factory('Auth', ['$http', '$location', '$window', function($http, $location, $window) {
+.factory('Auth', ['$http', function($http) {
 
   var signin = function(user) {
     return $http({
       method: 'POST',
+      // TODO: update URL to match back-end
       url: '/api/users/signin',
       data: user
     })
@@ -74,7 +75,7 @@ angular.module('greenfeels.services', [])
   var signup = function(user) {
     return $http({
       method: 'POST',
-      url: '/api/users/signup',
+      url: '/api/users',
       data: user
     })
     .then(function(resp) {
@@ -83,18 +84,13 @@ angular.module('greenfeels.services', [])
   };
 
   var isAuth = function() {
-
-  };
-
-  var signout = function() {
-
+    return !!$window.localStorage.getItem('moodlet');
   };
 
   return {
     signin: signin,
     signup: signup,
     isAuth: isAuth,
-    signout: signout
   };
 
 }]);
