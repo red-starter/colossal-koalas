@@ -2,7 +2,7 @@ var db = require('./database/interface')
 var _ = require('underscore');
 var router = require('express').Router();
 
-var api = {
+var endpoints = {
 
   '/': {
 
@@ -100,7 +100,7 @@ var api = {
 };
 
 // TODO: make a little less clever
-_.each(api, function(handlers, path) {
+_.each(endpoints, function(handlers, path) {
 
   var endpoint = router.route(path);
 
