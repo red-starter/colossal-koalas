@@ -54,7 +54,7 @@ app.use(express.static(path.resolve(__dirname, '..', 'client')));
 // set up routes
 // TODO: actually serve client stuff
 // app.get('/', function(req, res) {
-// 	res.send('<p>hello</p>');
+// res.send('<p>hello</p>');
 // });
 
 db.init().then(function() {
