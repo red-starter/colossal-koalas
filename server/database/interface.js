@@ -45,8 +45,11 @@ Entry.schema(schema);
 Prompt = db.define('prompt', models.Prompt.attributes, models.Prompt.options);
 Prompt.schema(schema);
 
-// Only one foreign key association. Untested as of 9/25.
+// These lines set up the foreign key within Entry (userId)
+// and create the methods {Entry.setUser, Entry.getUser} and
+// {User.setEntries, User.getEntries}.
 Entry.belongsTo(User);
+User.hasMany(Entry);
 
 // If NODE_DB_ENV is set to 'reset' when this code executes,
 // the sequelize instance will drop the tables before creating

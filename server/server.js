@@ -1,8 +1,11 @@
+var path = require('path');
+
 var express = require('express');
 // middleware
 var morgan = require('morgan');
 var parser = require('body-parser');
 var router = require('./routes');
+var db = require('./database/interface');
 
 var app = express();
 
@@ -16,7 +19,7 @@ app.use('/api/users', router);
 var port = process.env.PORT || 8080;
 
 // serve static files
-app.use(express.static(__dirname + '/client'));
+app.use(express.static(path.resolve(__dirname, '..', 'client')));
 
 // set up routes
 // TODO: actually serve client stuff
@@ -24,14 +27,18 @@ app.use(express.static(__dirname + '/client'));
 // 	res.send('<p>hello</p>');
 // });
 
-app.listen(port, function(err) {
-  if (err) {
-    console.error(err);
-  } else {
-    console.log('listening on port: ', port); 
-  }
+db.init().then(function() {
+
+  app.listen(port, function(err) {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log('listening on port: ', port);
+    }
+  });
+
 });
 
-console.log(router.stack);
+// console.log(router.stack);
 
 module.exports = app;
