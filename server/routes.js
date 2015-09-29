@@ -1,5 +1,6 @@
 var db = require('./database/interface');
 var router = require('express').Router();
+var app = require('./server'); //required server so we could have access to the secret set in server.js
 
 // All of these endpoints will be mounted onto `/api/users`
 var pathHandlers = {
@@ -14,13 +15,22 @@ var pathHandlers = {
             res.status(409).send('User already exists');
           } else {
             // Else, we initiate creating the user and pass the promise out to the chain.
+            // We create a jwt and store it in token variable with 24 hour expiration date
+            var token = jwt.sign(user, app.get('secret'), {
+              expiresInMinutes: 1440 //expires in 24 hours
+            });
             return db.User.create({ name: req.body.username, password: req.body.password });
           }
         })
         .then(function(user) {
           // The next branch of the chain will fulfill with the user.
           // We just send a 201.
+          // We send back the token.
           res.sendStatus(201);
+          res.json({
+            success: true,
+            token: token
+          });
         })
         .catch(function(err) {
           console.error(err);
@@ -34,7 +44,7 @@ var pathHandlers = {
     get: function(req, res) {
       db.User.findOne({where: {name: req.params.username}})
         .then(function(user) {
-          return user.getEntries()
+          return user.getEntries();
         })
         .then(function(entries) {
           res.json(entries);
@@ -121,5 +131,6 @@ for (path in pathHandlers) {
   }
 
 }
+
 
 module.exports = router;

@@ -33,10 +33,10 @@ angular.module('greenfeels.services', [])
 
 .factory('Entries', ['$http', function($http) {
   // Retrieves all of user's entries
-  var getAll = function() {
+  var getAll = function(username) {
     return $http({
       method: 'GET',
-      url: '/api/entries'
+      url: '/api/users/' + username + '/entries' // this might not be right - need to figure out how to write proper url
     })
     .then(function(resp) {
       return resp.data;
@@ -47,7 +47,7 @@ angular.module('greenfeels.services', [])
   var addEntry = function(post) {
     return $http({
       method: 'POST',
-      url: '/api/entries',
+      url: '/api/users' + username + '/entries', // this might not be right - need to figure out how to write proper url
       data: post
     });
   };
@@ -64,7 +64,7 @@ angular.module('greenfeels.services', [])
     return $http({
       method: 'POST',
       // TODO: update URL to match back-end
-      url: '/api/users/signin',
+      url: '/api/signin',
       data: user
     })
     .then(function(resp) {

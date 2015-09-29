@@ -16,7 +16,7 @@ home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries',
       $state.transitionTo('home.selected');
       $scope.prompt = Prompts.getSecondPrompt();
       $scope.entry.emotion = $event.target.attributes['data-emotion-id'].value;
-      console.log('emotion', $scope.entry.emotion)
+      console.log('emotion', $scope.entry.emotion);
     };
 
     $scope.submit = function() {
