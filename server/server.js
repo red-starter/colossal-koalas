@@ -3,6 +3,7 @@ var express = require('express');
 var morgan = require('morgan');
 var parser = require('body-parser');
 var router = require('./routes');
+var db = require('./database/interface');
 
 var app = express();
 
@@ -24,12 +25,16 @@ app.use(express.static(__dirname + '/client'));
 // 	res.send('<p>hello</p>');
 // });
 
-app.listen(port, function(err) {
-  if (err) {
-    console.error(err);
-  } else {
-    console.log('listening on port: ', port); 
-  }
+db.init().then(function() {
+
+  app.listen(port, function(err) {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log('listening on port: ', port);
+    }
+  });
+
 });
 
 console.log(router.stack);
