@@ -12,10 +12,11 @@ home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries',
 
     // Handler for clicking on an emoji on the spectrum. Transitions state, changes to new prompt,
     // and captures the code of the selected emotion on the tentative entry model.
-    $scope.selectHandler = function($event) {
+    $scope.selectHandler = function(emoji) {
       $state.transitionTo('home.selected');
       $scope.prompt = Prompts.getSecondPrompt();
-      $scope.entry.emotion = $event.target.data();
+      $scope.entry.emotion = emoji.target.attributes['data-emotion-id'].value;
+      console.log('emotion', $scope.entry.emotion)
     };
 
     $scope.submit = function() {
