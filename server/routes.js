@@ -113,7 +113,7 @@ for (path in pathHandlers) {
   routePath = router.route(path);
 
   for (method in pathHandlers[path]) {
-    routePath[method]( path[method] );
+    routePath[method]( pathHandlers[path][method] );
   }
 
 }
