@@ -1,13 +1,14 @@
 var app = angular.module('greenfeels',
-  ['greenfeels.services, greenfeels.home, greenfeels.journal, greenfeels.graph, greenfeels.nav, ui.router']);
+  ['greenfeels.services', 'greenfeels.home', 'greenfeels.journal', 'greenfeels.auth', 'ui.router']); // need to add greenfeels.graph when ready
 
-app.config(['$stateProvider, $urlRouteProvider',
-  function($stateProvider, $urlRouteProvider) {
+app.config(['$stateProvider', '$urlRouterProvider',
+  function($stateProvider, $urlRouterProvider) {
 
     $stateProvider
       .state('home', {
         // Parent state of home; load home.html, set controller, use initial state
         views: {
+          url: '/',
 
           nav: {
             templateUrl: './nav/nav.html',
@@ -16,13 +17,15 @@ app.config(['$stateProvider, $urlRouteProvider',
 
           page: {
             templateUrl: './home/home.html',
-            controller: 'HomeController'
+            controller: 'HomeController',
           }
 
         }
       })
       .state('home.initial', {
         // Initial nested state; display first prompt
+        url: '/',
+
         views: {
 
           initial: {
@@ -33,6 +36,8 @@ app.config(['$stateProvider, $urlRouteProvider',
       })
       .state('home.selected', {
         // Selected state of home; load second prompt, display text input and submit button
+        url: '/',
+
         views: {
 
           selected: {
@@ -42,6 +47,7 @@ app.config(['$stateProvider, $urlRouteProvider',
         }
       })
       .state('journal', {
+        // url: '/journal', // optional
         
         views: {
           
@@ -58,6 +64,7 @@ app.config(['$stateProvider, $urlRouteProvider',
 
       })
       .state('graph', {
+        // url: '/graph', // optional
         
         views: {
           
@@ -74,6 +81,7 @@ app.config(['$stateProvider, $urlRouteProvider',
 
       })
       .state('signin', {
+        url: '/signin',
         
         views: {
         
@@ -85,6 +93,7 @@ app.config(['$stateProvider, $urlRouteProvider',
 
       })
       .state('signup', {
+        url: '/signup',
         
         views: {
         
@@ -93,8 +102,9 @@ app.config(['$stateProvider, $urlRouteProvider',
             controller: 'AuthController'
           }
         }
-
       });
+
+      $urlRouterProvider.otherwise('/');
 
   }])
 .factory('AttachTokens', function ($window) {
