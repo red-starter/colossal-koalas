@@ -1,4 +1,4 @@
-var db = require('./database/interface')
+var db = require('./database/interface');
 var router = require('express').Router();
 
 // All of these endpoints will be mounted onto `/api/users`
@@ -9,14 +9,7 @@ var pathHandlers = {
     get: function(req, res) {
       db.Entry.findAll({
 
-        include: [{
-          model: 'User', 
-          as: 'users'
-        }],
-
-        where: {
-          'users.name': req.params.username
-        },
+        include: [{model: db.User, required: true, where: {name: req.params.username}}],
 
         order: [['createdAt', 'DESC']]
         
@@ -83,7 +76,7 @@ var pathHandlers = {
 
 // Mount the post to /api/users separately, since it
 // can't be keyed by a path.
-router.post(function(req, res, cb) {
+router.post('', function(req, res, cb) {
       // Check to see if a user with this name already exists.
       db.User.find( {where: { name: req.body.username }} )
         .then(function(user) {
@@ -92,7 +85,7 @@ router.post(function(req, res, cb) {
             res.status(409).send('User already exists');
           } else {
             // Else, we initiate creating the user and pass the promise out to the chain.
-            return db.User.create({ name: req.body.username, password: req.body.password })
+            return db.User.create({ name: req.body.username, password: req.body.password });
           }
         })
         .then(function(user) {
@@ -104,7 +97,7 @@ router.post(function(req, res, cb) {
           console.error(err);
           res.status(500).end();     
         });
-    });
+});
 
 var path, routePath, method;
 

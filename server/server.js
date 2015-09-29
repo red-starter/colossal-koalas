@@ -37,6 +37,6 @@ db.init().then(function() {
 
 });
 
-console.log(router.stack);
+// console.log(router.stack);
 
 module.exports = app;
