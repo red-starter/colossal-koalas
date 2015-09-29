@@ -1,3 +1,5 @@
+var path = require('path');
+
 var express = require('express');
 // middleware
 var morgan = require('morgan');
@@ -17,7 +19,7 @@ app.use('/api/users', router);
 var port = process.env.PORT || 8080;
 
 // serve static files
-app.use(express.static(__dirname + '/client'));
+app.use(express.static(path.resolve(__dirname, '..', 'client')));
 
 // set up routes
 // TODO: actually serve client stuff
