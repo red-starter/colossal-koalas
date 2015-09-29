@@ -1,4 +1,4 @@
-var home = angular.module('greenfeels.home');
+var home = angular.module('greenfeels.home', []);
 
 home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries',
   function($scope, $state, Prompts, Entries) {
@@ -15,7 +15,8 @@ home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries',
     $scope.selectHandler = function($event) {
       $state.transitionTo('home.selected');
       $scope.prompt = Prompts.getSecondPrompt();
-      $scope.entry.emotion = $event.target.attr('data-emotion-id');
+      $scope.entry.emotion = $event.target.attributes['data-emotion-id'].value;
+      console.log('emotion', $scope.entry.emotion)
     };
 
     $scope.submit = function() {

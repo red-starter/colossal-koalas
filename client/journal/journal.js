@@ -1,4 +1,4 @@
-var journal = angular.module('greenfeels.journal');
+var journal = angular.module('greenfeels.journal', []);
 
 journal.controller('JournalController', ['$scope', 'Entries',
   function ($scope, Entries) {
