@@ -36,13 +36,7 @@ describe('Moodlet server API', function() {
       .expect(function(res) {
         expect(res.body.length).to.equal(2);
       })
-      .end(function(err, res) {
-        if (err) {
-          done(err);
-        } else {
-          done();
-        }
-      });
+      .end(done);
 
   }); // Closes 'it should allow retrieval of all of a user's entries'
 
@@ -55,13 +49,7 @@ describe('Moodlet server API', function() {
         expect(res.body.emotion).to.equal(5);
         expect(res.body.text).to.equal('Cloudy');
       })
-      .end(function(err, res) {
-        if (err) {
-          done(err);
-        } else {
-          done();
-        }
-      });
+      .end(done);
 
   }); // Closes 'it should allow retrieval of a single entry'
 
@@ -70,15 +58,17 @@ describe('Moodlet server API', function() {
     request.put('/api/users/Mike/entries/1')
       .send({ emotion: 3 })
       .expect(200)
-      .expect(function(res) {
-        expect(res.body.emotion).to.equal(3);
-        expect(res.body.text).to.equal('Beer');
-      })
       .end(function(err, res) {
         if (err) {
           done(err);
         } else {
-          done();
+          request.get('/api/users/Mike/entries/1')
+            .expect(200)
+            .expect(function(res) {
+              expect(res.body.emotion).to.equal(3);
+              expect(res.body.text).to.equal('Beer');
+            })
+            .end(done);
         }
       });
 

@@ -74,7 +74,7 @@ var pathHandlers = {
       db.Entry.findOne({ where: { id: req.params.entryid } })
         .then(function(entry) {
           if (!entry) {
-            res.status(404).send();
+            res.status(404).end();
           } else {
             res.json(entry);
           }
@@ -86,11 +86,25 @@ var pathHandlers = {
     },
 
     put: function(req, res) {
-      // TODO: update a post
+      db.Entry.update(req.body, {where: {id: req.params.entryid}})
+        .then(function() {
+          res.status(200).end();
+        })
+        .catch(function(err) {
+          console.error(err);
+          res.status(400).send(err);
+        });
     },
 
     delete: function(req, res) {
-      // TODO: delete a post
+      db.Entry.destroy({where: {id: req.params.entryid}})
+        .then(function() {
+          res.status(200).end();
+        })
+        .catch(function(err) {
+          console.error(err);
+          res.status(400).send(err);
+        })
     }
   }
 
