@@ -20,11 +20,11 @@ var pathHandlers = {
         .then(function(user) {
           // The next branch of the chain will fulfill with the user.
           // We just send a 201.
-          res.status(201).end();
+          res.sendStatus(201);
         })
         .catch(function(err) {
           console.error(err);
-          res.status(500).end();
+          res.sendStatus(500);
         });
     }
   },
@@ -41,7 +41,7 @@ var pathHandlers = {
         })
         .catch(function(err) {
           console.error(err);
-          res.status(500).end();     
+          res.sendStatus(500);
         });
     },
 
@@ -49,7 +49,7 @@ var pathHandlers = {
       db.User.findOne({ where: { name: req.params.username } })
         .then(function(user) {
           if (!user) {
-            res.status(404).end();
+            res.sendStatus(404);
           } else {
             db.Entry.create({
               emotion: req.body.emotion,
@@ -63,7 +63,7 @@ var pathHandlers = {
         })
         .catch(function(err) {
           console.error(err);
-          res.status(500).end();     
+          res.sendStatus(500);
         });
     }
   },
@@ -74,21 +74,21 @@ var pathHandlers = {
       db.Entry.findOne({ where: { id: req.params.entryid } })
         .then(function(entry) {
           if (!entry) {
-            res.status(404).end();
+            res.sendStatus(404);
           } else {
             res.json(entry);
           }
         })
         .catch(function(err) {
           console.error(err);
-          res.status(500).end();     
+          res.sendStatus(500);
         });
     },
 
     put: function(req, res) {
       db.Entry.update(req.body, {where: {id: req.params.entryid}})
         .then(function() {
-          res.status(200).end();
+          res.sendStatus(200);
         })
         .catch(function(err) {
           console.error(err);
@@ -99,7 +99,7 @@ var pathHandlers = {
     delete: function(req, res) {
       db.Entry.destroy({where: {id: req.params.entryid}})
         .then(function() {
-          res.status(200).end();
+          res.sendStatus(200);
         })
         .catch(function(err) {
           console.error(err);
