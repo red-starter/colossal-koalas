@@ -4,23 +4,45 @@ var router = require('express').Router();
 // All of these endpoints will be mounted onto `/api/users`
 var pathHandlers = {
 
+  '': {
+    post:function(req, res, cb) {
+      // Check to see if a user with this name already exists.
+      db.User.find( {where: { name: req.body.username }} )
+        .then(function(user) {
+          // If a user with this name is found, reject the post request.
+          if (user) {
+            res.status(409).send('User already exists');
+          } else {
+            // Else, we initiate creating the user and pass the promise out to the chain.
+            return db.User.create({ name: req.body.username, password: req.body.password });
+          }
+        })
+        .then(function(user) {
+          // The next branch of the chain will fulfill with the user.
+          // We just send a 201.
+          res.status(201).end();
+        })
+        .catch(function(err) {
+          console.error(err);
+          res.status(500).end();
+        });
+    }
+  },
+
   '/:username/entries': {
 
     get: function(req, res) {
-      db.Entry.findAll({
-
-        include: [{model: db.User, required: true, where: {name: req.params.username}}],
-
-        order: [['createdAt', 'DESC']]
-        
-      })
-      .then(function(entries) {
-        res.json(entries);
-      })
-      .catch(function(err) {
+      db.User.findOne({where: {name: req.params.username}})
+        .then(function(user) {
+          return user.getEntries()
+        })
+        .then(function(entries) {
+          res.json(entries);
+        })
+        .catch(function(err) {
           console.error(err);
           res.status(500).end();     
-      });
+        });
     },
 
     post: function(req, res) {
@@ -73,31 +95,6 @@ var pathHandlers = {
   }
 
 };
-
-// Mount the post to /api/users separately, since it
-// can't be keyed by a path.
-router.post('', function(req, res, cb) {
-      // Check to see if a user with this name already exists.
-      db.User.find( {where: { name: req.body.username }} )
-        .then(function(user) {
-          // If a user with this name is found, reject the post request.
-          if (user) {
-            res.status(409).send('User already exists');
-          } else {
-            // Else, we initiate creating the user and pass the promise out to the chain.
-            return db.User.create({ name: req.body.username, password: req.body.password });
-          }
-        })
-        .then(function(user) {
-          // The next branch of the chain will fulfill with the user.
-          // We just send a 201.
-          res.status(201).end();
-        })
-        .catch(function(err) {
-          console.error(err);
-          res.status(500).end();     
-        });
-});
 
 var path, routePath, method;
 
