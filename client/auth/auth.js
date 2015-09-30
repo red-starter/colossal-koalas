@@ -18,6 +18,7 @@ angular.module('greenfeels.auth', [])
       })
       .catch(function(error) {
         console.error(error);
+        $scope.error = error.data;
       });
     };
 
@@ -34,6 +35,7 @@ angular.module('greenfeels.auth', [])
       })
       .catch(function(error) {
         console.error(error);
+        $scope.error = error.data;
       });
     };
 
