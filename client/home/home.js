@@ -8,7 +8,7 @@ home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries',
     $scope.prompt = initPrompt;
 
     // Initialize a blank model for the entry.
-    $scope.entry = { };
+    $scope.entry = {};
 
     // Handler for clicking on an emoji on the spectrum. Transitions state, changes to new prompt,
     // and captures the code of the selected emotion on the tentative entry model.
@@ -22,7 +22,8 @@ home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries',
     $scope.submit = function() {
       // TODO: Use submit service to submit the entry to the server
       Entries.addEntry(JSON.stringify($scope.entry));
-      $scope.entry = { };
+      $scope.entry = {};
+      $state.transitionTo('home');
     };
 
   }]);

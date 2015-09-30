@@ -57,7 +57,7 @@ angular.module('greenfeels.services', [])
     
     return $http({
       method: 'POST',
-      url: '/api/users' + username + '/entries', // this might not be right - need to figure out how to write proper url
+      url: '/api/users/' + username + '/entries', // this might not be right - need to figure out how to write proper url
       data: post
     });
   };
