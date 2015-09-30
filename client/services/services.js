@@ -73,7 +73,6 @@ angular.module('greenfeels.services', [])
   var signin = function(user) {
     return $http({
       method: 'POST',
-      // TODO: update URL to match back-end
       url: '/api/users/signin',
       data: user
     })
