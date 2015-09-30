@@ -1,9 +1,16 @@
 var graph = angular.module('greenfeels.graph',[]);
-graph.controller('GraphController',['$scope', '$state', 'Prompts', 'Entries',function($scope){
+graph.controller('GraphController',['$http','$scope', '$state', 'Prompts', 'Entries',function(Entries,$http,$scope){
 	//get data off of controller
-	//stub some stupid data
+	//stub some data
 	var data = stubData(15);
-	
+	//get data from database
+
+	var username = 'stubMan';
+	var data = Entries.getAll().then(function(data){
+		console.log('data retrieved is:',data)
+	});
+
+	//will not have to do this if we get info from db
 	//have to sort data,so that line goes through bubbles in orders
 	data.sort(function(a,b){
 		return changeDateToDaysAgo(a.date) - changeDateToDaysAgo(b.date);
@@ -111,7 +118,7 @@ graph.controller('GraphController',['$scope', '$state', 'Prompts', 'Entries',fun
 		.append('title')
 		.text(function(d){return d["body"]})	
 	}
-	
+
 	var smoothLine = function(){
 		var line = d3.svg.line()
 		.interpolate("cardinal")
