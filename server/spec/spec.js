@@ -1,14 +1,30 @@
+// Use `npm run test-start` to initiate testing db
 var expect = require('chai').expect;
 var request = require('supertest')('http://localhost:8080');
 
-describe('Moodlet server API', function() {
+var db = require('../database/interface');
 
+describe('Moodlet server API', function() {
+  
   var token;
+
+  this.timeout(4000);
+
+  before(function(done) {
+    this.timeout(10000);
+    // Drops any existing tables
+    db.init().then(function() {
+      done();
+    });
+  });
 
   it('should accept submissions of new users with POST on /api/users', function(done) {
 
     request.post('/api/users')
-      .send({ username: 'Mike', password: '123'})
+      .send({
+        username: 'Mike',
+        password: '123'
+      })
       .expect(201)
       .end(function(err, res) {
         if (err) {
@@ -27,23 +43,88 @@ describe('Moodlet server API', function() {
     expect(token).to.be.ok;
   });
 
+  // TODO: add sign out tests
+
+  it('should not sign in a user that doesn\'t exist', function(done) {
+
+    request.post('/api/users/signin')
+      .send({
+        username: 'Cynthia',
+        password: '123'
+      })
+      .expect(404)
+      .end(function(err) {
+        if (err) {
+          done(err);
+        } else {
+          done();
+        }
+      });
+  }); // Closes 'it should not sign in a user that doesn\'t exist'
+
+  it('should not sign in a user with an invalid password', function(done) {
+
+    request.post('/api/users/signin')
+      .send({
+        username: 'Mike',
+        password: 'beer'
+      })
+      .expect(404)
+      .end(function(err) {
+        if (err) {
+          done(err);
+        } else {
+          done();
+        }
+      });
+  }); // Closes 'it should not sign in a user with an invalid password'
+
+  it('should sign in an existing user with valid password', function(done) {
+
+    request.post('/api/users/signin')
+      .send({
+        username: 'Mike',
+        password: '123'
+      })
+      .expect(200)
+      .end(function(err) {
+        if (err) {
+          done(err);
+        } else {
+          done();
+        }
+      });
+
+  }); // Closes 'it should sign in an existing user with valid password'
+
+  it('should have issued a token upon signing in an existing user', function() {
+    expect(token).to.be.ok;
+  }); // Closes 'it should have issued a token upon signing in an existing user'
+
   it('should accept submissions of new entries with POST on /api/users/:username/entries', function(done) {
 
     request.post('/api/users/Mike/entries')
       .set('x-access-token', token)
-      .send({ emotion: 1, text: 'Beer' })
+      .send({
+        emotion: 1,
+        text: 'Beer'
+      })
       .expect(200)
       .end(function(err, res) {
         if (err) {
           done(err)
         } else {
           request.post('/api/users/Mike/entries')
-            .send({ emotion: 5, text: 'Cloudy' })
+            .send({
+              emotion: 5,
+              text: 'Cloudy'
+            })
             .expect(200, done)
         }
       });
 
   }); // Closes 'it should accept submissions of new entries'
+
 
   it('should allow retrieval of all of a user\'s entries with GET on /api/users/:username/entries', function(done) {
 
@@ -76,7 +157,9 @@ describe('Moodlet server API', function() {
 
     request.put('/api/users/Mike/entries/1')
       .set('x-access-token', token)
-      .send({ emotion: 3 })
+      .send({
+        emotion: 3
+      })
       .expect(200)
       .end(function(err, res) {
         if (err) {
@@ -109,6 +192,5 @@ describe('Moodlet server API', function() {
       });
 
   }); // Closes 'it should allow deletion of a single entry'
-
 
 }); // Closes 'Moodlet server API;
