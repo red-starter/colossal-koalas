@@ -54,7 +54,7 @@ var pathHandlers = {
       db.User.find( {where: { name: username }} )
         .then(function(user) {
           if (!user) {
-            next(new Error('User does not exist'));
+            res.status(404).end('User not found.');
           } else {
             return user.comparePassword(password)
               .then(function (foundUser) {
@@ -68,7 +68,7 @@ var pathHandlers = {
                     token: token
                   });
                 } else {
-                  return next(new Error('Password doesn\'t match'));
+                  res.status(404).end('Invalid password.');
                 }
               });
           }
