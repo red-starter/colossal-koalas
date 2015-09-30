@@ -8,13 +8,18 @@
   <title></title>
 </head>
 <body>
-  
+
   <div ui-view="nav"></div>
   <div ui-view="page"></div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.0.1/faker.js">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
   <script src="services/services.js"></script>
   <script src="home/home.js"></script>
   <script src="auth/auth.js"></script>
+  <script type="text/javascript" src="graph/mockDataGenerator.js"></script>
+  <script src="graph/graph.js"></script>
   <script src="journal/journal.js"></script>
   <script src="app.js"></script>
 </body>
