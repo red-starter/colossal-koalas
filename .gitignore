@@ -61,3 +61,6 @@ bower_components
 
 #Postgres Heroku URL
 postgres.url.js
+
+#JWT secret
+secret.js
