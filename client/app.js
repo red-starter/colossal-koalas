@@ -27,7 +27,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
       })
       .state('home.initial', {
         // Initial nested state; display first prompt
-        url: '/',
+        // url: '/',
 
         views: {
           initial: {
@@ -41,7 +41,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
       })
       .state('home.selected', {
         // Selected state of home; load second prompt, display text input and submit button
-        url: '/',
+        // url: '/',
 
         views: {
           selected: {
@@ -125,7 +125,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
         }
       });
 
-      $urlRouterProvider.otherwise('/signin');
+      $urlRouterProvider.otherwise('/');
 
   }])
 .factory('AttachTokens', function ($window) {
