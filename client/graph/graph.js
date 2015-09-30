@@ -1,7 +1,24 @@
 var graph = angular.module('greenfeels.graph',[]);
-graph.controller('GraphController',['$http','$scope', '$state', 'Prompts', 'Entries',function(Entries,$http,$scope){
+graph.controller('GraphController',['Auth','$scope', '$state', 'Prompts', 'Entries',function(Entries,$http,$scope){
 	//get data off of controller
 	//stub some data
+
+
+	//only run this in testing mode ro protect db
+	var stubber = function(){
+      Auth.signup('fakeUser')
+      .then(function(token) {
+        $window.localStorage.setItem('moodlet', token);
+        $state.transitionTo('home');
+      })
+      .catch(function(error) {
+        console.error(error);
+      });
+    };;
+
+
+	}
+
 	var data = stubData(15);
 	//get data from database
 
