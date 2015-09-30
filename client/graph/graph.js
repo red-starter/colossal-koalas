@@ -1,44 +1,10 @@
-
-var stubData = function(num){
-	var stubData = []
-	//post {emotion:1-7 ,text:200 words,data,date:0-100 days ago}
-	_.times(num,function(){
-		var stub ={}
-		stub.emotion = parseInt(Math.random()*8)
-		stub.date = faker.date.past()
-		stub.body = faker.lorem.paragraph()
-		stubData.push(stub);
-	})
-	return stubData;
-}
-
-var changeArrayDateToDaysAgo =function(arr){
-	var now = new Date();
-	var res = []
-	_.each(arr,function(date){
-		var then = new Date(date)
-		var daysAgo = (now.getTime() - then.getTime())/(1000*60*60*24);
-		res.push(parseInt(daysAgo));	
-	});
-	return res;
-
-}
-
-
-var changeDateToDaysAgo =function(date){
-	var then =new Date(date);
-	var now = new Date();
-	var daysAgo = (now.getTime() - then.getTime())/(1000*60*60*24);
-	return parseInt(daysAgo);
-}
-
-angular.module('greenfeels',[])
-.controller('GraphController',function($scope){
+var graph = angular.module('greenfeels.graph',[]);
+graph.controller('GraphController',['$scope', '$state', 'Prompts', 'Entries',function($scope){
 	//get data off of controller
 	//stub some stupid data
 	var data = stubData(15);
-	//have to sort data
-
+	
+	//have to sort data,so that line goes through bubbles in orders
 	data.sort(function(a,b){
 		return changeDateToDaysAgo(a.date) - changeDateToDaysAgo(b.date);
 	})
@@ -50,7 +16,7 @@ angular.module('greenfeels',[])
 		margin:50
 	}
 	//svg selector 
-	var svg = d3.select("#graph").append("svg")
+	var svg = d3.select("#graph1").append("svg")
 	.attr("width",options.width)
 	.attr("height",options.height)
 
@@ -61,7 +27,7 @@ angular.module('greenfeels',[])
 	var bodyRange = _.map(data,function(element){
 		return element.body.length
 	})
-	console.log(bodyRange)
+	// console.log(bodyRange)
 
 	//choose x axis and y axis
 	var xAxisArr = daysAgoRange;
@@ -106,76 +72,76 @@ angular.module('greenfeels',[])
 		.call(xAxis)
 		// call with the yAxis function
 		svg.append("g")
-		  .attr("class", "axis")
-		  .attr("transform", "translate(" + (options.margin) + ",0)")
-		  .call(yAxis);
+		.attr("class", "axis")
+		.attr("transform", "translate(" + (options.margin) + ",0)")
+		.call(yAxis);
 		//fix later
 		//create horizontal lines
 		svg.selectAll(".h").data(d3.range(-8,10,1)).enter()
-		  .append("line").classed("h",1)
-		  .attr("x1",options.margin).attr("x2",options.height-options.margin)
-		  .attr("y1",mapY).attr("y2",mapY)
+		.append("line").classed("h",1)
+		.attr("x1",options.margin).attr("x2",options.height-options.margin)
+		.attr("y1",mapY).attr("y2",mapY)
 		//create vertical lines
 		svg.selectAll(".v").data(d3.range(1,5)).enter()
-		  .append("line").classed("v",1)
-		  .attr("y1",options.margin).attr("y2",options.width-options.margin)
-		  .attr("x1",mapX).attr("x2",mapX)
+		.append("line").classed("v",1)
+		.attr("y1",options.margin).attr("y2",options.width-options.margin)
+		.attr("x1",mapX).attr("x2",mapX)
 		 //refresh page with new axis
-		genGraph();
+		 genGraph();
 
-	}
+		}
 
 
-	var genGraph = function(){
+		var genGraph = function(){
 
 		//clear graph
 		svg.selectAll("circle").remove()
 		svg.selectAll("circle").data(data,function(e,index){return index})
-			.enter()
-			.append("circle")
-			.attr('cx',function(d){return mapX(changeDateToDaysAgo(+d["date"]))})
-			.attr('cy',function(d){return mapY(+d["emotion"])})
+		.enter()
+		.append("circle")
+		.attr('cx',function(d){return mapX(changeDateToDaysAgo(+d["date"]))})
+		.attr('cy',function(d){return mapY(+d["emotion"])})
 			.attr('r',function(d){return mapRadius(+d["body"].length)}) //sqrt makes negative
 			.attr('fill',function(d){return mapColor(d["emotion"])})
 			// .attr('opacity',function(d){return mapOpacity(d[$scope.opacity])})
 			.on("mouseover", function(d) {
-       			d3.select(this).attr('opacity',0.3)
-		    })
-		    .on("mouseout", function(d) {
-       			d3.select(this).attr('opacity',1)
-		    })
+				d3.select(this).attr('opacity',0.3)
+			})
+			.on("mouseout", function(d) {
+				d3.select(this).attr('opacity',1)
+			})
 			.append('title')
 			.text(function(d){return d["body"]})	
 
 		//draw a sexy line
-	    var line = d3.svg.line()
-	      .interpolate("cardinal")
-	      .x(function(d,i) {return mapX(changeDateToDaysAgo(+d["date"]))})
-	      .y(function(d,i) {return mapY(+d["emotion"])})
+		var line = d3.svg.line()
+		.interpolate("cardinal")
+		.x(function(d,i) {return mapX(changeDateToDaysAgo(+d["date"]))})
+		.y(function(d,i) {return mapY(+d["emotion"])})
 
-	    var path = svg.append("path")
-	      .attr("d", line(data))
-	      .attr("stroke", "steelblue")
-	      .attr("stroke-width", "2")
-	      .attr("fill", "none");
+		var path = svg.append("path")
+		.attr("d", line(data))
+		.attr("stroke", "steelblue")
+		.attr("stroke-width", "2")
+		.attr("fill", "none");
 
-	    var totalLength = path.node().getTotalLength();
+		var totalLength = path.node().getTotalLength();
 
-	    path
-	      .attr("stroke-dasharray", totalLength + " " + totalLength)
-	      .attr("stroke-dashoffset", totalLength)
-	      .transition()
-	        .duration(2000)
-	        .ease("linear")
-	        .attr("stroke-dashoffset", 0);
+		path
+		.attr("stroke-dasharray", totalLength + " " + totalLength)
+		.attr("stroke-dashoffset", totalLength)
+		.transition()
+		.duration(2000)
+		.ease("linear")
+		.attr("stroke-dashoffset", 0);
 
-	    svg.on("click", function(){
-	      path      
-	        .transition()
-	        .duration(2000)
-	        .ease("linear")
-	        .attr("stroke-dashoffset", totalLength);
-	    })
+		svg.on("click", function(){
+			path      
+			.transition()
+			.duration(2000)
+			.ease("linear")
+			.attr("stroke-dashoffset", totalLength);
+		})
 	}
-	$scope.initAxis();
-})
+	setTimeout(function(){$scope.initAxis()},100);
+}])
