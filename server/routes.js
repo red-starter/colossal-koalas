@@ -8,24 +8,27 @@ var app = require('./server'); //required server so we could have access to the 
 // All of these endpoints will be mounted onto `/api/users`
 var pathHandlers = {
 
+  // Sign up new user to api/users
   '': {
-    post:function(req, res, cb) {
+    post:function(req, res, next) {
+      var username = req.body.username;
+      var password = req.body.password;
       // Check to see if a user with this name already exists.
-      db.User.find( {where: { name: req.body.username }} )
+      db.User.find( {where: { name: username }} )
         .then(function(user) {
           // If a user with this name is found, reject the post request.
           if (user) {
             res.status(409).end('User already exists');
           } else {
             // Else, we initiate creating the user and pass the promise out to the chain.
-            return db.User.create({ name: req.body.username, password: req.body.password });
+            return db.User.create({ name: username, password: password });
           }
         })
         .then(function(user) {
           // The next branch of the chain will fulfill with the user.
           // We create a jwt and store it in token variable with 24 hour expiration date.
-          // This token is send back to the client.
-          var token = jwt.sign(user, secret, {
+          // This token is send back to the client with username as payload.
+          var token = jwt.sign(username, secret, {
             expiresInMinutes: 1440 //expires in 24 hours
           });
 
@@ -34,6 +37,41 @@ var pathHandlers = {
             token: token
           });
           
+        })
+        .catch(function(err) {
+          console.error(err);
+          res.sendStatus(500);
+        });
+    }
+  },
+
+  '/signin': {
+    
+    post:function(req, res, next) {
+      var username = req.body.username;
+      var password = req.body.password;
+
+      db.User.find( {where: { name: username }} )
+        .then(function(user) {
+          if (!user) {
+            res.status(404).end('User not found.');
+          } else {
+            return user.comparePassword(password)
+              .then(function (foundUser) {
+                if (foundUser) {
+                  // Token is send back to the client with username as payload.
+                  var token = jwt.sign(username, secret, {
+                    expiresInMinutes: 1440 //expires in 24 hours
+                  });
+                  res.status(200).json({
+                    success: true,
+                    token: token
+                  });
+                } else {
+                  res.status(404).end('Invalid password.');
+                }
+              });
+          }
         })
         .catch(function(err) {
           console.error(err);
