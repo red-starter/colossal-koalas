@@ -63,7 +63,7 @@ var pathHandlers = {
                   var token = jwt.sign(username, secret, {
                     expiresInMinutes: 1440 //expires in 24 hours
                   });
-                  res.status(201).json({
+                  res.status(200).json({
                     success: true,
                     token: token
                   });
