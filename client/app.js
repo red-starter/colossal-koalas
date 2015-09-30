@@ -35,7 +35,9 @@ app.config(['$stateProvider', '$urlRouterProvider',
           }
         },
 
-        authenticate: true
+        data: {
+          requireLogin: true //authentication is required to access this state
+        }
       })
       .state('home.selected', {
         // Selected state of home; load second prompt, display text input and submit button
