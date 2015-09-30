@@ -31,9 +31,14 @@ angular.module('greenfeels.services', [])
   };
 }])
 
-.factory('Entries', ['$http', function($http) {
+.factory('Entries', ['$http', '$window', function($http, $window) {
   // Retrieves all of user's entries
   var getAll = function(username) {
+    var username = $window.localStorage.getItem('moodlet.username');
+    if (!username) {
+      return;
+    }
+
     return $http({
       method: 'GET',
       url: '/api/users/' + username + '/entries' // this might not be right - need to figure out how to write proper url
@@ -45,6 +50,11 @@ angular.module('greenfeels.services', [])
 
   // Adds user's entry
   var addEntry = function(post) {
+    var username = $window.localStorage.getItem('moodlet.username');
+    if (!username) {
+      return;
+    }
+    
     return $http({
       method: 'POST',
       url: '/api/users' + username + '/entries', // this might not be right - need to figure out how to write proper url
