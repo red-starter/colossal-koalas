@@ -15,7 +15,6 @@ app.use(morgan('dev'));
 app.use(parser.json());
 app.set('secret', 'simsisawesome'); //set secret variable (we can come up with a better secret and store it in a different file)
 
-
 //verify token
 router.use(function(req, res, next) {
   //check post parameters or header or url parameters for token
@@ -24,7 +23,7 @@ router.use(function(req, res, next) {
   //decode token
   if (token) {
     //verify secret and check expression 
-    jwt.veryify(token, app.get('secret'), function(err, decoded) {
+    jwt.verify(token, app.get('secret'), function(err, decoded) {
       if (err) {
         return res.json({ success: false, message: 'Failed to authenticate token.'});
       } else {
@@ -50,12 +49,6 @@ var port = process.env.PORT || 8080;
 
 // serve static files
 app.use(express.static(path.resolve(__dirname, '..', 'client')));
-
-// set up routes
-// TODO: actually serve client stuff
-// app.get('/', function(req, res) {
-// res.send('<p>hello</p>');
-// });
 
 db.init().then(function() {
 

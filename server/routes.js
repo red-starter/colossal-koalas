@@ -1,3 +1,5 @@
+var jwt = require('jsonwebtoken');
+
 var db = require('./database/interface');
 var router = require('express').Router();
 var app = require('./server'); //required server so we could have access to the secret set in server.js
@@ -26,8 +28,7 @@ var pathHandlers = {
           // The next branch of the chain will fulfill with the user.
           // We just send a 201.
           // We send back the token.
-          res.sendStatus(201);
-          res.json({
+          res.status(200).json({
             success: true,
             token: token
           });
