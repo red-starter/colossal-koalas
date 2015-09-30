@@ -1,7 +1,7 @@
 angular.module('greenfeels.auth', [])
 
-.controller('AuthController', ['$scope', '$window', '$location', 'Auth',
-  function($scope, $window, $location, Auth) {
+.controller('AuthController', ['$scope', '$window', '$state', 'Auth',
+  function($scope, $window, $state, Auth) {
     $scope.user = {};
 
     $scope.signin = function() {
@@ -36,6 +36,10 @@ angular.module('greenfeels.auth', [])
     // remove token from localStorage and redirect to sign in state
       $window.localStorage.removeItem('moodlet');
       $state.transitionTo('signin');
+    };
+
+    $scope.changeState = function(toState) {
+      $state.transitionTo(toState);
     };
 }]);
 

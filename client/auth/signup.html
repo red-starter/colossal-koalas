@@ -2,7 +2,7 @@
   <h1>Sign up</h1>
   <form name='signupForm' ng-submit='signup()'>
     <input type='text' ng-model='user.username'>
-    <input type='text' ng-model='user.password'>
+    <input type='password' ng-model='user.password'>
     <button>Sign up!</button>
   </form>
-  <a href='#/signin'>Already have an account? <strong>Sign in!</strong></a>
+  <p>Already have an account? <strong ng-click="changeState('signin')">Sign in!</strong></p>
