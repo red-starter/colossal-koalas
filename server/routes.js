@@ -1,4 +1,5 @@
 var jwt = require('jsonwebtoken');
+var secret = require('./secret');
 
 var db = require('./database/interface');
 var router = require('express').Router();
@@ -17,21 +18,22 @@ var pathHandlers = {
             res.status(409).send('User already exists');
           } else {
             // Else, we initiate creating the user and pass the promise out to the chain.
-            // We create a jwt and store it in token variable with 24 hour expiration date
-            var token = jwt.sign(user, app.get('secret'), {
-              expiresInMinutes: 1440 //expires in 24 hours
-            });
             return db.User.create({ name: req.body.username, password: req.body.password });
           }
         })
         .then(function(user) {
           // The next branch of the chain will fulfill with the user.
-          // We just send a 201.
-          // We send back the token.
+          // We create a jwt and store it in token variable with 24 hour expiration date.
+          // This token is send back to the client.
+          var token = jwt.sign(user, secret, {
+            expiresInMinutes: 1440 //expires in 24 hours
+          });
+
           res.status(200).json({
             success: true,
             token: token
           });
+          
         })
         .catch(function(err) {
           console.error(err);

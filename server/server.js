@@ -4,16 +4,18 @@ var express = require('express');
 // middleware
 var morgan = require('morgan');
 var parser = require('body-parser');
+var jwt = require('jsonwebtoken');
+
+var secret = require('./secret');
 var router = require('./routes');
 var db = require('./database/interface');
-var jwt = require('jsonwebtoken');
 
 var app = express();
 
 // logging and parsing
 app.use(morgan('dev'));
 app.use(parser.json());
-app.set('secret', 'simsisawesome'); //set secret variable (we can come up with a better secret and store it in a different file)
+app.set('secret', secret); //set secret variable (we can come up with a better secret and store it in a different file)
 
 //verify token
 router.use(function(req, res, next) {
