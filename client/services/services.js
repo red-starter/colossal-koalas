@@ -33,7 +33,7 @@ angular.module('greenfeels.services', [])
 
 .factory('Entries', ['$http', '$window', function($http, $window) {
   // Retrieves all of user's entries
-  var getAll = function(username) {
+  var getAll = function() {
     var username = $window.localStorage.getItem('moodlet.username');
     if (!username) {
       return;

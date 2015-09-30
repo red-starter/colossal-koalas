@@ -54,7 +54,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
         }
       })
       .state('journal', {
-        // url: '/journal', // optional
+        url: '/journal', // optional
         
         views: {
           
