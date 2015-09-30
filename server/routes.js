@@ -10,7 +10,7 @@ var pathHandlers = {
 
   // Sign up new user to api/users
   '': {
-    post:function(req, res) {
+    post:function(req, res, next) {
       var username = req.body.username;
       var password = req.body.password;
       // Check to see if a user with this name already exists.
@@ -47,7 +47,7 @@ var pathHandlers = {
 
   '/signin': {
     
-    post:function(req, res) {
+    post:function(req, res, next) {
       var username = req.body.username;
       var password = req.body.password;
 
