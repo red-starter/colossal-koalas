@@ -10,7 +10,10 @@ angular.module('greenfeels.auth', [])
       // transitions state to home
       Auth.signin($scope.user)
       .then(function (token) {
+        // Store session token for access to secured endpoints
         $window.localStorage.setItem('moodlet', token);
+        // Store plaintext username for use as a URL parameter in ajax requests
+        $window.localStorage.setItem('moodlet.username', $scope.user.username);
         $state.transitionTo('home');
       })
       .catch(function(error) {
@@ -24,7 +27,9 @@ angular.module('greenfeels.auth', [])
       // transitions state to home
       Auth.signup($scope.user)
       .then(function(token) {
+        // Same actions as signin
         $window.localStorage.setItem('moodlet', token);
+        $window.localStorage.setItem('moodlet.username', $scope.user.username);
         $state.transitionTo('home');
       })
       .catch(function(error) {
@@ -33,8 +38,10 @@ angular.module('greenfeels.auth', [])
     };
 
     $scope.signout = function() {
-    // remove token from localStorage and redirect to sign in state
+      // remove token from localStorage and redirect to sign in state
       $window.localStorage.removeItem('moodlet');
+      // Clear cached username
+      $window.localStorage.removeItem('moodlet.username');
       $state.transitionTo('signin');
     };
 
