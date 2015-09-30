@@ -15,7 +15,7 @@ var pathHandlers = {
         .then(function(user) {
           // If a user with this name is found, reject the post request.
           if (user) {
-            res.status(409).send('User already exists');
+            res.status(409).end('User already exists');
           } else {
             // Else, we initiate creating the user and pass the promise out to the chain.
             return db.User.create({ name: req.body.username, password: req.body.password });
