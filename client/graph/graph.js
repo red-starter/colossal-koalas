@@ -35,23 +35,23 @@ graph.controller('GraphController',['$scope', '$state', 'Prompts', 'Entries',fun
 	var sizeArr = bodyRange;
 	var colorArr = emotionRange;
 
+	//grab values off of UserInput
+	// var xAxisArr = _.pluck($scope.userInput,$scope.xaxis) 
+	// var yAxisArr = _.pluck($scope.userInput,$scope.yaxis) 
+	// var sizeArr = _.pluck($scope.userInput,$scope.size)
+	// var opacityArr = _.pluck($scope.userInput,$scope.opacity)
 	// console.log(xAxisArr,yAxisArr)
+	//initialize mapping based on range of user input
+	mapX = d3.scale.linear().domain(d3.extent(xAxisArr)).range([options.margin,options.width-options.margin]);
+	mapY = d3.scale.linear().domain(d3.extent(yAxisArr)).range([options.height - options.margin,options.margin]);
 
-	$scope.initAxis = function(){
+	mapRadius = d3.scale.sqrt().domain(d3.extent(sizeArr)).range([0,20])
+	// mapOpacity = d3.scale.linear().domain([d3.min(opacityArr),d3.max(opacityArr)]).range([0.5,1]);
+	mapColor = d3.scale.category10().domain(colorArr).range(['#FF0000', ,'#FF1100','#FF2200','#FF3300','#FF4400','#FF5500','#FF6600','#FF7700','#FF8800','#FF9900','#FFAA00','#FFBB00','#FFCC00','#FFDD00','#FFEE00','#FFFF00','#EEFF00','#DDFF00','#CCFF00','#BBFF00','#AAFF00','#99FF00','#88FF00','#77FF00','#66FF00','#55FF00','#44FF00','#33FF00','#22FF00','#11FF00','#00FF00'].reverse())
 
-		//grab values off of UserInput
-		// var xAxisArr = _.pluck($scope.userInput,$scope.xaxis) 
-		// var yAxisArr = _.pluck($scope.userInput,$scope.yaxis) 
-		// var sizeArr = _.pluck($scope.userInput,$scope.size)
-		// var opacityArr = _.pluck($scope.userInput,$scope.opacity)
+	var initAxis = function(){
 
-		//initialize mapping based on range of user input
-		mapX = d3.scale.linear().domain(d3.extent(xAxisArr)).range([options.margin,options.width-options.margin]);
-		mapY = d3.scale.linear().domain(d3.extent(yAxisArr)).range([options.height - options.margin,options.margin]);
 
-		mapRadius = d3.scale.sqrt().domain(d3.extent(sizeArr)).range([0,20])
-		// mapOpacity = d3.scale.linear().domain([d3.min(opacityArr),d3.max(opacityArr)]).range([0.5,1]);
-		mapColor = d3.scale.category10().domain(colorArr).range(['#FF0000', ,'#FF1100','#FF2200','#FF3300','#FF4400','#FF5500','#FF6600','#FF7700','#FF8800','#FF9900','#FFAA00','#FFBB00','#FFCC00','#FFDD00','#FFEE00','#FFFF00','#EEFF00','#DDFF00','#CCFF00','#BBFF00','#AAFF00','#99FF00','#88FF00','#77FF00','#66FF00','#55FF00','#44FF00','#33FF00','#22FF00','#11FF00','#00FF00'].reverse())
 		var xAxis = d3.svg.axis()
 		.scale(mapX) //where to orient numbers
 		.orient('bottom') 
@@ -86,34 +86,33 @@ graph.controller('GraphController',['$scope', '$state', 'Prompts', 'Entries',fun
 		.append("line").classed("v",1)
 		.attr("y1",options.margin).attr("y2",options.width-options.margin)
 		.attr("x1",mapX).attr("x2",mapX)
-		 //refresh page with new axis
-		 genGraph();
-
+		 //refresh page with new axiss
 		}
 
 
-		var genGraph = function(){
 
-		//clear graph
+	//clear graph first
+	var genGraph = function(){
 		svg.selectAll("circle").remove()
 		svg.selectAll("circle").data(data,function(e,index){return index})
 		.enter()
 		.append("circle")
 		.attr('cx',function(d){return mapX(changeDateToDaysAgo(+d["date"]))})
 		.attr('cy',function(d){return mapY(+d["emotion"])})
-			.attr('r',function(d){return mapRadius(+d["body"].length)}) //sqrt makes negative
-			.attr('fill',function(d){return mapColor(d["emotion"])})
-			// .attr('opacity',function(d){return mapOpacity(d[$scope.opacity])})
-			.on("mouseover", function(d) {
-				d3.select(this).attr('opacity',0.3)
-			})
-			.on("mouseout", function(d) {
-				d3.select(this).attr('opacity',1)
-			})
-			.append('title')
-			.text(function(d){return d["body"]})	
-
-		//draw a sexy line
+		.attr('r',function(d){return mapRadius(+d["body"].length)}) //sqrt makes negative
+		.attr('fill',function(d){return mapColor(d["emotion"])})
+		// .attr('opacity',function(d){return mapOpacity(d[$scope.opacity])})
+		.on("mouseover", function(d) {
+			d3.select(this).attr('opacity',0.3)
+		})
+		.on("mouseout", function(d) {
+			d3.select(this).attr('opacity',1)
+		})
+		.append('title')
+		.text(function(d){return d["body"]})	
+	}
+	
+	var smoothLine = function(){
 		var line = d3.svg.line()
 		.interpolate("cardinal")
 		.x(function(d,i) {return mapX(changeDateToDaysAgo(+d["date"]))})
@@ -143,5 +142,7 @@ graph.controller('GraphController',['$scope', '$state', 'Prompts', 'Entries',fun
 			.attr("stroke-dashoffset", totalLength);
 		})
 	}
-	setTimeout(function(){$scope.initAxis()},100);
+	smoothLine();
+	genGraph();
+	initAxis();
 }])

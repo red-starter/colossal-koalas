@@ -64,7 +64,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
 
       })
       .state('graph', {
-        // url: '/graph', // optional
+        url: '/graph', // optional
         
         views: {
           
