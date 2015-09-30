@@ -122,11 +122,6 @@ var pathHandlers = {
 
 var path, routePath, method;
 
-router.get('prompts',function(req,res,next){
-  console.log('prompts')
-  res.send("<p>HI<p>")
-})
-
 for (path in pathHandlers) {
 
   routePath = router.route(path);
