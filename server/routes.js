@@ -29,7 +29,7 @@ var pathHandlers = {
             expiresInMinutes: 1440 //expires in 24 hours
           });
 
-          res.status(200).json({
+          res.status(201).json({
             success: true,
             token: token
           });

@@ -3,17 +3,34 @@ var request = require('supertest')('http://localhost:8080');
 
 describe('Moodlet server API', function() {
 
+  var token;
+
   it('should accept submissions of new users with POST on /api/users', function(done) {
 
     request.post('/api/users')
       .send({ username: 'Mike', password: '123'})
-      .expect(201, done);
+      .expect(201)
+      .end(function(err, res) {
+        if (err) {
+          done(err);
+        } else {
+          if (res.body.success) {
+            token = res.body.token;
+            done();
+          }
+        }
+      });
 
   }); // Closes 'it should accept submissions of new users'
+
+  it('should have issued a token upon creation of new user', function() {
+    expect(token).to.be.ok;
+  });
 
   it('should accept submissions of new entries with POST on /api/users/:username/entries', function(done) {
 
     request.post('/api/users/Mike/entries')
+      .set('x-access-token', token)
       .send({ emotion: 1, text: 'Beer' })
       .expect(200)
       .end(function(err, res) {
@@ -31,6 +48,7 @@ describe('Moodlet server API', function() {
   it('should allow retrieval of all of a user\'s entries with GET on /api/users/:username/entries', function(done) {
 
     request.get('/api/users/Mike/entries')
+      .set('x-access-token', token)
       .expect(200)
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(function(res) {
@@ -43,6 +61,7 @@ describe('Moodlet server API', function() {
   it('should allow retrieval of a single entry with GET on /api/users/:username/entries/:entryid', function(done) {
 
     request.get('/api/users/Mike/entries/2')
+      .set('x-access-token', token)
       .expect(200)
       .expect('Content-Type', 'application/json; charset=utf-8')
       .expect(function(res) {
@@ -56,6 +75,7 @@ describe('Moodlet server API', function() {
   it('should allow modification of a single entry with PUT on /api/users/:username/entries/:entryid', function(done) {
 
     request.put('/api/users/Mike/entries/1')
+      .set('x-access-token', token)
       .send({ emotion: 3 })
       .expect(200)
       .end(function(err, res) {
@@ -77,6 +97,7 @@ describe('Moodlet server API', function() {
   it('should allow deletion of a single entry with DELETE on /api/users/:username/entries/:entryid', function(done) {
 
     request.delete('/api/users/Mike/entries/2')
+      .set('x-access-token', token)
       .expect(200)
       .end(function(err, res) {
         if (err) {
