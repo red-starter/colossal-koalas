@@ -68,7 +68,7 @@ var pathHandlers = {
                     token: token
                   });
                 } else {
-                  return next(new Error('No user'));
+                  return next(new Error('Password doesn\'t match'));
                 }
               });
           }
