@@ -7,9 +7,9 @@ app.config(['$stateProvider', '$urlRouterProvider',
     $stateProvider
       .state('home', {
         // Parent state of home; load home.html, set controller, use initial state
+        url: '/',
+        
         views: {
-          url: '/',
-
           nav: {
             templateUrl: './nav/nav.html',
             controller: 'AuthController'
@@ -19,7 +19,10 @@ app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: './home/home.html',
             controller: 'HomeController',
           }
+        },
 
+        data: {
+          requireLogin: true //authentication is required to access this state
         }
       })
       .state('home.initial', {
@@ -27,11 +30,13 @@ app.config(['$stateProvider', '$urlRouterProvider',
         url: '/',
 
         views: {
-
           initial: {
             templateUrl: './home/home.init.html'
           }
+        },
 
+        data: {
+          requireLogin: true //authentication is required to access this state
         }
       })
       .state('home.selected', {
@@ -39,11 +44,13 @@ app.config(['$stateProvider', '$urlRouterProvider',
         url: '/',
 
         views: {
-
           selected: {
             templateUrl: './home/home.selected.html'
           }
+        },
 
+        data: {
+          requireLogin: true //authentication is required to access this state
         }
       })
       .state('journal', {
@@ -60,6 +67,10 @@ app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: './journal/journal.html',
             controller: 'JournalController'
           }
+        },
+
+        data: {
+          requireLogin: true //authentication is required to access this state
         }
 
       })
@@ -77,8 +88,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: './graph/graph.html',
             controller: 'GraphController'
           }
-        }
+        },
 
+        data: {
+          requireLogin: true //authentication is required to access this state
+        }
       })
       .state('signin', {
         url: '/signin',
@@ -89,8 +103,11 @@ app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: './auth/signin.html',
             controller: 'AuthController'
           }
-        }
+        },
 
+        data: {
+          requireLogin: false //authentication is not required to access this state
+        }
       })
       .state('signup', {
         url: '/signup',
@@ -101,10 +118,14 @@ app.config(['$stateProvider', '$urlRouterProvider',
             templateUrl: './auth/signup.html',
             controller: 'AuthController'
           }
+        },
+
+        data: {
+          requireLogin: false //authentication is not required to access this state
         }
       });
 
-      $urlRouterProvider.otherwise('/');
+      $urlRouterProvider.otherwise('/signin');
 
   }])
 .factory('AttachTokens', function ($window) {
@@ -124,12 +145,16 @@ app.config(['$stateProvider', '$urlRouterProvider',
 })
 .run(function ($rootScope, $location, $state, Auth) {
   //this function listens for when angular changes states
-  //when the state is change, local storage is checked for the JWT
-  //and the token is sent back to the server to check if the user is valid
-  $rootScope.$on('$stateChangeStart', function (evt, next, current) {
-    // need to modify for UI router and states
-    if (next.$$route && next.$$route.authenticate && !Auth.isAuth()) {
-      $state.transitionTo('signin');
+  //when the state is changed, if the state requires authentication
+  //local storage is checked for the JWT
+  //if there is no JWT stored in local storage, transition to requested state is prevented
+  //state is changed to 'signin'
+  $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
+    if (toState.data.requireLogin && !Auth.isAuth()) {
+      //user isn't authenticated, so transition state to signin
+      event.preventDefault(); //prevent state transition from happening
+      console.log('You shall not pass!');
+      $state.transitionTo('signin'); //transitions state to signin
     }
   });
 });

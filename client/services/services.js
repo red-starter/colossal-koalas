@@ -58,7 +58,7 @@ angular.module('greenfeels.services', [])
   };
 }])
 
-.factory('Auth', ['$http', function($http) {
+.factory('Auth', ['$http', '$window', function($http, $window) {
 
   var signin = function(user) {
     return $http({
