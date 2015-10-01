@@ -91,6 +91,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
         },
 
         data: {
+          //change back later
           requireLogin: true //authentication is required to access this state
         }
       })
