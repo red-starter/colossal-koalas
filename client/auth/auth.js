@@ -3,7 +3,6 @@ angular.module('greenfeels.auth', [])
 .controller('AuthController', ['$scope', '$window', '$state', 'Auth',
   function($scope, $window, $state, Auth) {
     $scope.user = {};
-
     $scope.signin = function() {
       // calls sign in function from Auth factory to send POST request to api/users
       // receives token from server and stores in local storage

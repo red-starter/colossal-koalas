@@ -1,37 +1,73 @@
 var graph = angular.module('greenfeels.graph',[]);
-graph.controller('GraphController',['Auth','$scope', '$state', 'Prompts', 'Entries',function(Entries,$http,$scope){
+
+graph.controller('GraphController',
+	['Auth','Entries','$scope','$window',function ( Auth, Entries, $scope,$window ){
+
+		var data;
+		var signedIn = false;
 	//get data off of controller
 	//stub some data
+	//only run this in testing mode ro protect db, signup fakeuser, post some data,then retrieve into an array
+	var createFakeDBData = function(){
+		var user = {username:'fakeUser1',password:'1234'};
+		Auth.signup(user)
+		.then(function (token) {
+	        // Store session token for access to secured endpoints
+	        $window.localStorage.setItem('moodlet', token);
+	        // Store plaintext username for use as a URL parameter in ajax requests
+	        $window.localStorage.setItem('moodlet.username', user.username);
+	    })
+		.catch(function(error) {
+			// console.log(error);
+			//already signed in 
+			if (error.status === 409){
+				console.log('already signed up')
+				signin = true;
+				return Auth.signin(user).then(function (token) {
+		    		// Store session token for access to secured endpoints
+		    		$window.localStorage.setItem('moodlet', token);
+			        // Store plaintext username for use as a URL parameter in ajax requests
+			        $window.localStorage.setItem('moodlet.username', user.username);
+			    })
+			}
+		}).then(function(){
+			var promiseArr = [];
+			if (!signin){
+				_.times(8,function(){
+					promiseArr.push(Entries.addEntry({emotion: parseInt(Math.random()*8),text:faker.lorem.paragraph()}))
+				})
+			}
+			return Promise.all(promiseArr)
+			})				
+		}
+		.then(function(data){
+			data = data;
+			console.log(data)
+					// smoothLine();
+					// genGraph();
+					// initAxis();
+				})
+	})	      	
+	}() //immediately invoke
 
-
-	//only run this in testing mode ro protect db
-	var stubber = function(){
-      Auth.signup('fakeUser')
-      .then(function(token) {
-        $window.localStorage.setItem('moodlet', token);
-        $state.transitionTo('home');
-      })
-      .catch(function(error) {
-        console.error(error);
-      });
-    };;
-
+	//replace with moment.js
+	var changeArrayDateToDaysAgo =function(arr){
+		var now = new Date();
+		var res = []
+		_.each(arr,function(date){
+			var then = new Date(date)
+			var daysAgo = (now.getTime() - then.getTime())/(1000*60*60*24);
+			res.push(parseInt(daysAgo));  
+		});
+		return res;
 
 	}
-
-	var data = stubData(15);
-	//get data from database
-
-	var username = 'stubMan';
-	var data = Entries.getAll().then(function(data){
-		console.log('data retrieved is:',data)
-	});
-
-	//will not have to do this if we get info from db
-	//have to sort data,so that line goes through bubbles in orders
-	data.sort(function(a,b){
-		return changeDateToDaysAgo(a.date) - changeDateToDaysAgo(b.date);
-	})
+	var changeDateToDaysAgo =function(date){
+		var then =new Date(date);
+		var now = new Date();
+		var daysAgo = (now.getTime() - then.getTime())/(1000*60*60*24);
+		return parseInt(daysAgo);
+	}
 
 	//create svg
 	var options ={
@@ -44,12 +80,14 @@ graph.controller('GraphController',['Auth','$scope', '$state', 'Prompts', 'Entri
 	.attr("width",options.width)
 	.attr("height",options.height)
 
-	var timeRange = _.pluck(data,'date');
+	//or updatedAt?
+	var timeRange = _.pluck(data,'createdAt');
 	var daysAgoRange = changeArrayDateToDaysAgo(timeRange); 
 
 	var emotionRange = _.pluck(data,'emotion');
 	var bodyRange = _.map(data,function(element){
-		return element.body.length
+		console.log(data)
+		return element.text.length
 	})
 	// console.log(bodyRange)
 
@@ -123,7 +161,7 @@ graph.controller('GraphController',['Auth','$scope', '$state', 'Prompts', 'Entri
 		.append("circle")
 		.attr('cx',function(d){return mapX(changeDateToDaysAgo(+d["date"]))})
 		.attr('cy',function(d){return mapY(+d["emotion"])})
-		.attr('r',function(d){return mapRadius(+d["body"].length)}) //sqrt makes negative
+		.attr('r',function(d){return mapRadius(+d["text"].length)}) //sqrt makes negative
 		.attr('fill',function(d){return mapColor(d["emotion"])})
 		// .attr('opacity',function(d){return mapOpacity(d[$scope.opacity])})
 		.on("mouseover", function(d) {
@@ -133,7 +171,7 @@ graph.controller('GraphController',['Auth','$scope', '$state', 'Prompts', 'Entri
 			d3.select(this).attr('opacity',1)
 		})
 		.append('title')
-		.text(function(d){return d["body"]})	
+		.text(function(d){return d["text"]})	
 	}
 
 	var smoothLine = function(){
@@ -166,7 +204,4 @@ graph.controller('GraphController',['Auth','$scope', '$state', 'Prompts', 'Entri
 			.attr("stroke-dashoffset", totalLength);
 		})
 	}
-	smoothLine();
-	genGraph();
-	initAxis();
 }])
