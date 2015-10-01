@@ -1,5 +1,19 @@
+html {
+  height: 100%;
+}
+
 body {
   background-color: #84B9CD;
+  background: rgba(132,185,204,1);
+  background: -moz-linear-gradient(top, rgba(132,185,204,1) 0%, rgba(84,150,178,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(132,185,204,1)), color-stop(100%, rgba(84,150,178,1)));
+  background: -webkit-linear-gradient(top, rgba(132,185,204,1) 0%, rgba(84,150,178,1) 100%);
+  background: -o-linear-gradient(top, rgba(132,185,204,1) 0%, rgba(84,150,178,1) 100%);
+  background: -ms-linear-gradient(top, rgba(132,185,204,1) 0%, rgba(84,150,178,1) 100%);
+  background: linear-gradient(to bottom, rgba(132,185,204,1) 0%, rgba(84,150,178,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84b9cc', endColorstr='#5496b2', GradientType=0 );
+  background-size: cover;
+  background-repeat: none;
   font-family: 'Raleway', sans-serif;
 }
 
@@ -8,6 +22,7 @@ body {
 .content {
   margin: 0 auto;
   margin-top: 100px;
+  text-align: center;
   width: 50%;
 }
 
@@ -18,6 +33,7 @@ h1 {
   text-align: center;
 }
 
+/* There should be an easier way to style angular input fields */
 form.ng-pristine.ng-invalid.ng-invalid-required,form.ng-invalid.ng-invalid-required.ng-dirty.ng-valid-parse, form.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required, input.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required, input.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required.ng-touched, input.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required.ng-touched, input.ng-dirty.ng-valid-parse.ng-touched.ng-invalid.ng-invalid-required, input.ng-pristine.ng-invalid.ng-invalid-required.ng-touched, input.ng-untouched.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required, input.ng-untouched.ng-dirty.ng-valid-parse.ng-invalid.ng-invalid-required {
   margin: 0 auto 30px;
 }
@@ -43,7 +59,6 @@ button {
   background: #fff;
   cursor: pointer;
   font-size: 14px;
-  margin-left: 100px;
   margin-bottom: 20px;
   width: 150px;
 }
@@ -57,3 +72,9 @@ button {
   font-size: 14px;
   cursor: pointer;
 }
+
+/* Journal page */
+
+/* make emojis li with img src, take off buttons */
+
+/* Graph page */
