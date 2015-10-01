@@ -43,10 +43,10 @@ graph.controller('GraphController',
 			return Entries.getAll()
 		})
 		.then(function(data){
-
+			console.log(data)
 			//change createdAt to be over the scale of a year? is there a better way?
 			_.each(data,function(element){
-				element.createdAt = faker.date.past();
+				element.createdAt = faker.date.recent();
 			})
 			//have to sort cuz now faking data again
 			data.sort(function(a,b){
@@ -55,30 +55,11 @@ graph.controller('GraphController',
 
 			var parameters = initializeGraphParameters(data);
 			generateAxis(parameters);
-			generateCircles(parameters);
 			generateLine(parameters);
+			generateCircles(parameters);
 		})      	
 	}() //immediately invoke
 
-
-	//replace with moment.js
-	var changeArrayDateToDaysAgo =function(arr){
-		var now = new Date();
-		var res = []
-		_.each(arr,function(date){
-			var then = new Date(date)
-			var daysAgo = (now.getTime() - then.getTime())/(1000*60*60*24);
-			res.push(parseInt(daysAgo));  
-		});
-		return res;
-
-	}
-	var changeDateToDaysAgo =function(date){
-		var then =new Date(date);
-		var now = new Date();
-		var daysAgo = (now.getTime() - then.getTime())/(1000*60*60*24);
-		return parseInt(daysAgo);
-	}
 
 	var initializeGraphParameters = function(data){
 		//container 
@@ -87,10 +68,10 @@ graph.controller('GraphController',
 
 		//create svg
 		var options ={
-			width:600,
+			width:1000,
 			height:600,
 			margin:50
-		}
+		};
 
 		parameters.options = options;
 		//svg selector 
@@ -102,7 +83,7 @@ graph.controller('GraphController',
 		data = parameters.data;
 		//or updatedAt?
 		var timeRange = _.pluck(data,'createdAt');
-		var daysAgoRange = changeArrayDateToDaysAgo(timeRange); 
+		// var daysAgoRange = changeArrayDateToDaysAgo(timeRange); 
 
 		var emotionRange = _.pluck(data,'emotion');
 		var bodyRange = _.map(data,function(element){
@@ -111,19 +92,12 @@ graph.controller('GraphController',
 		// console.log(bodyRange)
 
 		//choose x axis and y axis
-		var xAxisArr = daysAgoRange;
+		// var xAxisArr = daysAgoRange;
 		var yAxisArr = emotionRange;
 		var sizeArr = bodyRange;
 		var colorArr = emotionRange;
-		//grab values off of UserInput
-		// var xAxisArr = _.pluck($scope.userInput,$scope.xaxis) 
-		// var yAxisArr = _.pluck($scope.userInput,$scope.yaxis) 
-		// var sizeArr = _.pluck($scope.userInput,$scope.size)
-		// var opacityArr = _.pluck($scope.userInput,$scope.opacity)
-		// console.log(xAxisArr,yAxisArr)
-		//initialize mapping based on range of user input
-		parameters.mapX = d3.scale.linear().domain(d3.extent(xAxisArr)).range([options.margin,options.width-options.margin]);
-		parameters.mapY = d3.scale.linear().domain(d3.extent(yAxisArr)).range([options.height - options.margin,options.margin]);
+		parameters.mapX = d3.time.scale().domain(d3.extent(timeRange)).range([options.width-options.margin,options.margin]);
+		parameters.mapY = d3.scale.linear().domain(d3.extent(yAxisArr)).range([options.margin,options.height - options.margin]);
 
 		parameters.mapRadius = d3.scale.sqrt().domain(d3.extent(sizeArr)).range([0,20])
 		// mapOpacity = d3.scale.linear().domain([d3.min(opacityArr),d3.max(opacityArr)]).range([0.5,1]);
@@ -145,9 +119,10 @@ graph.controller('GraphController',
 		.scale(mapX) //where to orient numbers
 		.orient('bottom') 
 
-		var yAxis = d3.svg.axis()
-		.scale(mapY)
-		.orient('left')
+		// var yAxis = d3.svg.axis()
+		// .scale(mapY)
+		// .tickValues([])
+		// .orient('left')
 
 		//clear previous append
 		svg.selectAll("g").remove()
@@ -160,21 +135,23 @@ graph.controller('GraphController',
 		.attr('transform','translate(0,'+ (options.height- options.margin) +')')
 		.call(xAxis)
 		// call with the yAxis function
-		svg.append("g")
-		.attr("class", "axis")
-		.attr("transform", "translate(" + (options.margin) + ",0)")
-		.call(yAxis);
+		// svg.append("g")
+		// .attr("class", "axis")
+		// .attr("transform", "translate(" + (options.margin) + ",0)")
+		// .call(yAxis);
+
+
 		//fix later
 		//create horizontal lines
-		svg.selectAll(".h").data(d3.range(-8,10,1)).enter()
-		.append("line").classed("h",1)
-		.attr("x1",options.margin).attr("x2",options.height-options.margin)
-		.attr("y1",mapY).attr("y2",mapY)
-		//create vertical lines
-		svg.selectAll(".v").data(d3.range(1,5)).enter()
-		.append("line").classed("v",1)
-		.attr("y1",options.margin).attr("y2",options.width-options.margin)
-		.attr("x1",mapX).attr("x2",mapX)
+		// svg.selectAll(".h").data(d3.range(-8,10,1)).enter()
+		// .append("line").classed("h",1)
+		// .attr("x1",options.margin).attr("x2",options.height-options.margin)
+		// .attr("y1",mapY).attr("y2",mapY)
+		// //create vertical lines
+		// svg.selectAll(".v").data(d3.range(1,5)).enter()
+		// .append("line").classed("v",1)
+		// .attr("y1",options.margin).attr("y2",options.width-options.margin)
+		// .attr("x1",mapX).attr("x2",mapX)
 		 //refresh page with new axiss
 		}
 
@@ -191,25 +168,32 @@ graph.controller('GraphController',
 		var mapColor = parameters.mapColor
 		var data = parameters.data;
 		var options = parameters.options;
+		var emojiByInteger = ['😄', '😊', '😌', '😐', '😕', '😒', '😞', '😣'];
 
 
-		svg.selectAll("circle").remove()
-		svg.selectAll("circle").data(data,function(e,index){return index})
+		svg.selectAll(".emojiText").remove()
+		svg.selectAll(".emojiText").data(data,function(e,index){return index})
 		.enter()
-		.append("circle")
-		.attr('cx',function(d){return mapX(changeDateToDaysAgo(+d["createdAt"]))})
-		.attr('cy',function(d){return mapY(+d["emotion"])})
-		.attr('r',function(d){return mapRadius(+d["text"].length)}) //sqrt makes negative
-		.attr('fill',function(d){return mapColor(d["emotion"])})
-		// .attr('opacity',function(d){return mapOpacity(d[$scope.opacity])})
+		.append("text")
+		.attr('class','emojiText')
+		.attr('x',function(d){return mapX(d["createdAt"])})
+		.attr('y',function(d){return mapY(+d["emotion"])})
+		.text(function(d){
+			return emojiByInteger[+d["emotion"]];
+		})
+		.attr("font-family", "sans-serif")
+		.attr("font-size", "30px")
 		.on("mouseover", function(d) {
 			d3.select(this).attr('opacity',0.3)
 		})
 		.on("mouseout", function(d) {
 			d3.select(this).attr('opacity',1)
 		})
+		.on('click',function(d){
+			d3.select('#graphText').text(d.text)
+		})
 		.append('title')
-		.text(function(d){return d["text"]})	
+		.text(function(d){return moment(d["createdAt"]).fromNow()+" emotion"+d["emotion"]})	
 	}
 
 	var generateLine = function(parameters){
@@ -220,8 +204,8 @@ graph.controller('GraphController',
 		var options = parameters.options;
 
 		var line = d3.svg.line()
-		.interpolate("cardinal")
-		.x(function(d,i) {return mapX(changeDateToDaysAgo(+d["createdAt"]))})
+		.interpolate("monotone")
+		.x(function(d,i) {return mapX(d["createdAt"])})
 		.y(function(d,i) {return mapY(+d["emotion"])})
 
 		var path = svg.append("path")
@@ -239,13 +223,5 @@ graph.controller('GraphController',
 		.duration(2000)
 		.ease("linear")
 		.attr("stroke-dashoffset", 0);
-
-		svg.on("click", function(){
-			path      
-			.transition()
-			.duration(2000)
-			.ease("linear")
-			.attr("stroke-dashoffset", totalLength);
-		})
 	}
 }])
