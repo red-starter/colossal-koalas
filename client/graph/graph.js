@@ -6,11 +6,11 @@ graph.controller('GraphController',
 		var getData = function(){
 			Entries.getAll()
 			.then(function(data){
-				console.log('data',data)
+				// console.log('data',data)
 				var parameters = initializeGraphParameters(data);
 				generateAxis(parameters);
-				generateCircles(parameters);
 				generateLine(parameters);
+				generateCircles(parameters);
 			})      	
 	}() 	//immediately invoke
 
@@ -57,7 +57,7 @@ graph.controller('GraphController',
 		//or updatedAt?
 		var timeRange = _.pluck(data,'createdAt');
 		var daysAgoRange = changeArrayDateToDaysAgo(timeRange);
-		console.log(daysAgoRange);
+		// console.log(daysAgoRange);
 
 		var emotionRange = _.pluck(data,'emotion');
 		var bodyRange = _.map(data,function(element){
@@ -152,7 +152,7 @@ graph.controller('GraphController',
 		svg.selectAll("circle").data(data,function(e,index){return index})
 		.enter()
 		.append("circle")
-		.attr('cx',function(d){console.log(+d["createdAt"]);return mapX(changeDateToDaysAgo(+d["createdAt"]))})
+		.attr('cx',function(d){return mapX(changeDateToDaysAgo(d["createdAt"]))})
 		.attr('cy',function(d){return mapY(+d["emotion"])})
 		.attr('r',function(d){return mapRadius(+d["text"].length)}) //sqrt makes negative
 		.attr('fill',function(d){return mapColor(d["emotion"])})
@@ -176,7 +176,7 @@ graph.controller('GraphController',
 
 		var line = d3.svg.line()
 		.interpolate("cardinal")
-		.x(function(d,i) {return mapX(changeDateToDaysAgo(+d["createdAt"]))})
+		.x(function(d,i) {return mapX(changeDateToDaysAgo(d["createdAt"]))})
 		.y(function(d,i) {return mapY(+d["emotion"])})
 
 		var path = svg.append("path")
