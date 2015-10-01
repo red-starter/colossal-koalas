@@ -59,8 +59,5 @@ build/Release
 node_modules
 bower_components
 
-#Postgres Heroku URL
-postgres.url.js
-
-#JWT secret
-secret.js
+#Dev store of env variables
+.env.json

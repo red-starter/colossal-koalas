@@ -20,9 +20,9 @@ var shouldForce;
 // Read NODE_DB_ENV variable to see if we are entering
 // test mode or not. If so, use test schema to sandbox
 // our database abuse.
-var dbEnvironment = process.env.NODE_DB_ENV;
+var dbEnvironment = process.env.NODE_ENV;
 
-if (dbEnvironment === 'testing') {
+if (dbEnvironment === 'test') {
   schema = config.testSchema;
 } else {
   schema = config.mainSchema
@@ -63,7 +63,7 @@ User.hasMany(Entry);
 // If NODE_DB_ENV is set to 'reset' when this code executes,
 // the sequelize instance will drop the tables before creating
 // them anew. Otherwise, the extant tables will be loaded.
-if (dbEnvironment === 'testing' || dbEnvironment === 'reset') {
+if (dbEnvironment === 'test' || dbEnvironment === 'reset') {
   shouldForce = true;
 } else {
   shouldForce = false;
