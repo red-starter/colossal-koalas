@@ -33,6 +33,7 @@ h1 {
   text-align: center;
 }
 
+/* There should be an easier way to style angular input fields */
 form.ng-pristine.ng-invalid.ng-invalid-required,form.ng-invalid.ng-invalid-required.ng-dirty.ng-valid-parse, form.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required, input.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required, input.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required.ng-touched, input.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required.ng-touched, input.ng-dirty.ng-valid-parse.ng-touched.ng-invalid.ng-invalid-required, input.ng-pristine.ng-invalid.ng-invalid-required.ng-touched, input.ng-untouched.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required, input.ng-untouched.ng-dirty.ng-valid-parse.ng-invalid.ng-invalid-required {
   margin: 0 auto 30px;
 }
@@ -71,3 +72,9 @@ button {
   font-size: 14px;
   cursor: pointer;
 }
+
+/* Journal page */
+
+/* make emojis li with img src, take off buttons */
+
+/* Graph page */
