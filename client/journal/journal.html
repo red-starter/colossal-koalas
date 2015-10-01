@@ -1,7 +1,7 @@
-<div ng-controller='JournalController' id='journal'>
+<div id='journal'>
   <h1>Journal</h1>
   <ul>
-    <li class="journal-entry" ng-repeat="entry in journal.entries | orderBy: '-timeStamp'">
+    <li class="journal-entry" ng-repeat="entry in journal.entries | orderBy: '-createdAt'">
     <!-- make sure timeStamp variable matches response from API request -->
       <div class="timestamp"> {{ entry.createdAt }} </div>
       <div class="emoji"> {{ entry.emoji }} </div>

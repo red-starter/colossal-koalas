@@ -2,7 +2,6 @@ var home = angular.module('greenfeels.home', []);
 
 home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries',
   function($scope, $state, Prompts, Entries) {
-
     $state.transitionTo('home.initial');
     // Upon load, initialize first prompt. Display of this prompt will depend on the state.
     // Cache the initial prompt in case we want to return to this state.

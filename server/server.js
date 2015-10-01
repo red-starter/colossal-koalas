@@ -6,7 +6,7 @@ var morgan = require('morgan');
 var parser = require('body-parser');
 var jwt = require('jsonwebtoken');
 
-var secret = require('./secret');
+var secret = process.env.TOKEN_SECRET;
 var router = require('./routes');
 var db = require('./database/interface');
 
@@ -52,17 +52,29 @@ var port = process.env.PORT || 8080;
 // serve static files
 app.use(express.static(path.resolve(__dirname, '..', 'client')));
 
-db.init().then(function() {
-
+if (process.env.NODE_ENV === 'test') {
+  // If we're launching tests, Mocha will call db.init().
+  // We just need to have the server be ready for connections.
   app.listen(port, function(err) {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log('listening on port: ', port);
-    }
+    if (err) console.error(err);
   });
 
-});
+} else {
+  // If we aren't testing, we want to wait until we're synced
+  // with the database before we start accepting connections.
+  db.init().then(function() {
+
+    app.listen(port, function(err) {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log('listening on port: ', port);
+      }
+    });
+
+  });
+
+}
 
 // console.log(router.stack);
 

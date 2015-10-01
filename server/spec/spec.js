@@ -1,4 +1,3 @@
-// Use `npm run test-start` to initiate testing db
 var expect = require('chai').expect;
 var request = require('supertest')('http://localhost:8080');
 

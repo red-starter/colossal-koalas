@@ -69,7 +69,7 @@ exports.Entry = {
 
     emotion: Sequelize.INTEGER,
 
-    text: Sequelize.STRING,
+    text: Sequelize.TEXT,
 
     id: {
       type: Sequelize.INTEGER,
