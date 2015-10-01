@@ -1,6 +1,5 @@
-
-<div id='signup'>
-  <h1>Sign up</h1>
+<div class="content">
+  <h1>moodlet</h1>
   <form name='signupForm' ng-submit='signup()' novalidate>
     <input type='text' ng-model='user.username' required />
     <input type='password' ng-model='user.password' required />
@@ -8,3 +7,4 @@
     <p class="error" ng-show="error"> {{error}}</p>
   </form>
   <p>Already have an account? <strong ng-click="changeState('signin')">Sign in!</strong></p>
+</div>

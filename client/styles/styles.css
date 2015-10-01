@@ -1,54 +1,58 @@
 body {
-  background-color: #fff;
+  background-color: #84B9CD;
   font-family: 'Raleway', sans-serif;
 }
 
-
-h1 {
-  font-family: 'Raleway', sans-serif;
-  text-align: center;
-  font-size: 80px;
-  font-weight: 100;
-}
+/* Sign up & sign in pages */
 
 .content {
   margin: 0 auto;
-  margin-top: 200px;
+  margin-top: 100px;
   width: 50%;
+}
+
+h1 {
+  font-family: 'Raleway', sans-serif;
+  font-size: 80px;
+  font-weight: 100;
+  text-align: center;
+}
+
+form.ng-pristine.ng-invalid.ng-invalid-required,form.ng-invalid.ng-invalid-required.ng-dirty.ng-valid-parse, form.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required, input.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required, input.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required.ng-touched, input.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required.ng-touched, input.ng-dirty.ng-valid-parse.ng-touched.ng-invalid.ng-invalid-required, input.ng-pristine.ng-invalid.ng-invalid-required.ng-touched, input.ng-untouched.ng-dirty.ng-valid-parse.ng-valid.ng-valid-required, input.ng-untouched.ng-dirty.ng-valid-parse.ng-invalid.ng-invalid-required {
+  margin: 0 auto 30px;
 }
 
 form {
-  margin: 0 auto;
-  margin-top: 50px;
   width: 50%;
 }
-
-
-.ng-pristine {
-  margin-right: 0;
-}
-
-.ng-untouched {
-  margin-right: 0;
-}
-
-.ng-invalid {
-  margin-right: 0;
-}
-
-.ng-invalid-required {
-  margin-right: 0;
-}
-
 
 input {
   display: block;
-/*  margin: 0;*/
-  width: 50%;
-  margin-bottom: 20px;
-  border: 1px solid black;
-  border-radius: 5px;
+  width: 250px;
   font-size: 20px;
   font-weight: 100;
-  padding: 5px;
+}
+
+input, button {
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+button {
+  background: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 100px;
+  margin-bottom: 20px;
+  width: 150px;
+}
+
+.error {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.change-sign {
+  font-size: 12px;
 }
