@@ -6,6 +6,7 @@ var Sequelize = require('sequelize');
 
 // Bring in our config file and models.
 var config = require('./postgres.config.js');
+var url = process.env.DATABASE_URL;
 var models = require('./models');
 
 // Declare variables for later use.
@@ -19,9 +20,9 @@ var shouldForce;
 // Read NODE_DB_ENV variable to see if we are entering
 // test mode or not. If so, use test schema to sandbox
 // our database abuse.
-var dbEnvironment = process.env.NODE_DB_ENV;
+var dbEnvironment = process.env.NODE_ENV;
 
-if (dbEnvironment === 'testing') {
+if (dbEnvironment === 'test') {
   schema = config.testSchema;
 } else {
   schema = config.mainSchema
@@ -31,7 +32,7 @@ if (dbEnvironment === 'testing') {
 // to the database) with the url from the config file and
 // the appropriate schema we selected above.
 
-db = new Sequelize(config.url, {ssl:true,sync: {schema: schema}});
+db = new Sequelize(url, {ssl:true,sync: {schema: schema}});
 // db = new Sequelize('database', 'username', 'password', {
 //       dialect: "postgres", 
 //       host: "amazon...",
@@ -62,7 +63,7 @@ User.hasMany(Entry);
 // If NODE_DB_ENV is set to 'reset' when this code executes,
 // the sequelize instance will drop the tables before creating
 // them anew. Otherwise, the extant tables will be loaded.
-if (dbEnvironment === 'testing' || dbEnvironment === 'reset') {
+if (dbEnvironment === 'test' || dbEnvironment === 'reset') {
   shouldForce = true;
 } else {
   shouldForce = false;
