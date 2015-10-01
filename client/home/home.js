@@ -6,8 +6,7 @@ home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries',
     // Upon load, initialize first prompt. Display of this prompt will depend on the state.
     // Cache the initial prompt in case we want to return to this state.
     // var initPrompt = Prompts.getFirstPrompt();
-    var initPrompt = 'How are you feeling today?';
-    $scope.initialPrompt = initPrompt;
+    $scope.initialPrompt = Prompts.getFirstPrompt();
 
     // Initialize a blank model for the entry.
     $scope.entry = {};
@@ -16,10 +15,9 @@ home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries',
     // and captures the code of the selected emotion on the tentative entry model.
     $scope.selectHandler = function($event) {
       $state.transitionTo('home.selected');
-      var secondPrompt = 'Why are you feeling that way?';
-      $scope.secondPrompt = secondPrompt;
-      // $scope.prompt = Prompts.getSecondPrompt();
-      $scope.entry.emotion = $event.target.attributes['data-emotion-id'].value;
+      var emotion = $event.target.attributes['data-emotion-id'].value;
+      $scope.entry.emotion = emotion;
+      $scope.secondPrompt = Prompts.getSecondPrompt(emotion);
       console.log('emotion', $scope.entry.emotion);
       console.log('prompt', $scope.secondPrompt);
     };

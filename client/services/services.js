@@ -1,28 +1,63 @@
 angular.module('greenfeels.services', [])
 
 .factory('Prompts', ['$http', function($http) {
+  var firstPrompts = [
+    'Hi! How are you doing?',
+    'Hey! How are you feeling?',
+    'Hey! Wanna record how you\'re feeling?'
+  ];
   // Get prompt #1 for intial state view of home page
   var getFirstPrompt = function() {
-    return $http({
-      method: 'GET',
-      url: '/api/prompts'
-    })
-    .then(function(resp) {
-      // Do something to select appropriate prompt
-      return resp.data;
-    });
+    return firstPrompts[Math.floor(Math.random() * firstPrompts.length)];
   };
 
-  // Get prompt #2 for selected state view of home page
-  var getSecondPrompt = function(emoji) {
-    return $http({
-      method: 'GET',
-      url: '/api/prompts'
-    })
-    .then(function(resp) {
-      // Do something to select appropriate prompt
-      return resp.data;
-    });
+  var secondPrompts = [
+    [ // 😄
+      'Awesome! Do you want to record any thoughts?',
+      'That\'s great! Is there anything you want to write down?'
+    ],
+    [ // 😊
+      'Good! Is there anything you\'d like to write down?',
+      'Good! Want to write something about your mood?'
+    ],
+    [ // 😌
+      'Would you like to record any of your thoughts?',
+      'Is there anything you want to write down?',
+      'Are there any details about your mood that you want to record?',
+      'Would you like to write about how you\'re feeling?'
+    ],
+    [ // 😐
+      'Would you like to record any of your thoughts?',
+      'Is there anything you want to write down?',
+      'Are there any details about your mood that you want to record?',
+      'Would you like to write about how you\'re feeling?'
+    ],
+    [ // 😕
+      'Would you like to record any of your thoughts?',
+      'Is there anything you want to write down?',
+      'Are there any details about your mood that you want to record?',
+      'Would you like to write about how you\'re feeling?'
+    ],
+    [ // 😒
+      'Is there anything you\'d like to write about how you\'re feeling?',
+      'Are there any details about your mood that you want to record?'
+    ],
+    [ // 😞
+      'Is there anything you\'d like to write about how you\'re feeling?',
+      'Are there any details about your mood that you want to record?'
+    ],
+    [ // 😣
+      'Is there anything you\'d like to write about how you\'re feeling?',
+      'Are there any details about your mood that you want to record?'
+    ] 
+  ];
+
+  // Get prompt #2 for selected state view of home page.
+  // The `emotion` argument is the integer representing
+  // the emoji that was selected.
+  var getSecondPrompt = function(emotion) {
+    var appropriatePrompts = secondPrompts[emotion];
+    return appropriatePrompts[Math.floor(Math.random() * appropriatePrompts.length)];
   };
 
   return {
