@@ -48,6 +48,10 @@ graph.controller('GraphController',
 			_.each(data,function(element){
 				element.createdAt = faker.date.past();
 			})
+			//have to sort cuz now faking data again
+			data.sort(function(a,b){
+				return changeDateToDaysAgo(a.createdAt) - changeDateToDaysAgo(b.createdAt);
+			})
 
 			var parameters = initializeGraphParameters(data);
 			generateAxis(parameters);
