@@ -3,62 +3,16 @@ var graph = angular.module('greenfeels.graph',[]);
 graph.controller('GraphController',
 	['Auth','Entries','$scope','$window',function ( Auth, Entries, $scope,$window ){
 
-		var signedIn = false;
-	//get data off of controller
-	//stub some data
-	//only run this in testing mode ro protect db, signup fakeuser, post some data,then retrieve into an array
-	var createFakeDBData = function(){
-		var user = {username:'fakeUser1',password:'1234'};
-		Auth.signup(user)
-		.then(function (token) {
-	        // Store session token for access to secured endpoints
-	        $window.localStorage.setItem('moodlet', token);
-	        // Store plaintext username for use as a URL parameter in ajax requests
-	        $window.localStorage.setItem('moodlet.username', user.username);
-	    })
-		.catch(function(error) {
-			// console.log(error);
-			//already signed in 
-			if (error.status === 409){
-				console.log('already signed up')
-				signedIn = true;
-				return Auth.signin(user).then(function (token) {
-		    		// Store session token for access to secured endpoints
-		    		$window.localStorage.setItem('moodlet', token);
-			        // Store plaintext username for use as a URL parameter in ajax requests
-			        $window.localStorage.setItem('moodlet.username', user.username);
-			    })
-			}
-		})
-		.then(function(){
-			var promiseArr = [];
-			if (!signedIn){
-				_.times(8,function(){
-					promiseArr.push(Entries.addEntry({emotion: parseInt(Math.random()*8),text:faker.lorem.paragraph()}))
-				})
-			}
-			return Promise.all(promiseArr)
-		})				
-		.then(function(){
-			return Entries.getAll()
-		})
-		.then(function(data){
-
-			//change createdAt to be over the scale of a year? is there a better way?
-			_.each(data,function(element){
-				element.createdAt = faker.date.past();
-			})
-			//have to sort cuz now faking data again
-			data.sort(function(a,b){
-				return changeDateToDaysAgo(a.createdAt) - changeDateToDaysAgo(b.createdAt);
-			})
-
-			var parameters = initializeGraphParameters(data);
-			generateAxis(parameters);
-			generateCircles(parameters);
-			generateLine(parameters);
-		})      	
-	}() //immediately invoke
+		var getData = function(){
+			Entries.getAll()
+			.then(function(data){
+				console.log('data',data)
+				var parameters = initializeGraphParameters(data);
+				generateAxis(parameters);
+				generateCircles(parameters);
+				generateLine(parameters);
+			})      	
+	}() 	//immediately invoke
 
 
 	//replace with moment.js
@@ -67,7 +21,7 @@ graph.controller('GraphController',
 		var res = []
 		_.each(arr,function(date){
 			var then = new Date(date)
-			var daysAgo = (now.getTime() - then.getTime())/(1000*60*60*24);
+			var daysAgo = (now.getTime() - then.getTime())/1000;
 			res.push(parseInt(daysAgo));  
 		});
 		return res;
@@ -76,7 +30,7 @@ graph.controller('GraphController',
 	var changeDateToDaysAgo =function(date){
 		var then =new Date(date);
 		var now = new Date();
-		var daysAgo = (now.getTime() - then.getTime())/(1000*60*60*24);
+		var daysAgo = (now.getTime() - then.getTime())/1000;
 		return parseInt(daysAgo);
 	}
 
@@ -102,7 +56,8 @@ graph.controller('GraphController',
 		data = parameters.data;
 		//or updatedAt?
 		var timeRange = _.pluck(data,'createdAt');
-		var daysAgoRange = changeArrayDateToDaysAgo(timeRange); 
+		var daysAgoRange = changeArrayDateToDaysAgo(timeRange);
+		console.log(daysAgoRange);
 
 		var emotionRange = _.pluck(data,'emotion');
 		var bodyRange = _.map(data,function(element){
@@ -197,7 +152,7 @@ graph.controller('GraphController',
 		svg.selectAll("circle").data(data,function(e,index){return index})
 		.enter()
 		.append("circle")
-		.attr('cx',function(d){return mapX(changeDateToDaysAgo(+d["createdAt"]))})
+		.attr('cx',function(d){console.log(+d["createdAt"]);return mapX(changeDateToDaysAgo(+d["createdAt"]))})
 		.attr('cy',function(d){return mapY(+d["emotion"])})
 		.attr('r',function(d){return mapRadius(+d["text"].length)}) //sqrt makes negative
 		.attr('fill',function(d){return mapColor(d["emotion"])})

@@ -92,7 +92,7 @@ app.config(['$stateProvider', '$urlRouterProvider',
 
         data: {
           //change back later
-          requireLogin: false //authentication is required to access this state
+          requireLogin: true //authentication is required to access this state
         }
       })
       .state('signin', {
