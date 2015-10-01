@@ -4,7 +4,10 @@ A platform for mood-tracking, microjournaling, self-reflection, and mindfulness.
 
 ## Team
 
-Cynthia Chen, Laura Knight, Cameron Martin, Michael Sova
+Cynthia Chen [@cynthiaechen](https://github.com/cynthiaechen)
+Laura Knight [@ljknight](https://github.com/ljknight)
+Cameron Martin [@camhux](https://github.com/camhux)
+Michael Sova [@red-starter](https://github.com/red-starter)
 
 ## Table of Contents
 
