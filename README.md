@@ -1,6 +1,6 @@
 # Moodlet
 
-> Pithy project description
+A platform for mood-tracking, microjournaling, self-reflection, and mindfulness.
 
 ## Team
 
