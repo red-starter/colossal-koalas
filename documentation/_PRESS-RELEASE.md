@@ -1,4 +1,4 @@
-# Project Name #
+# Moodlet #
 
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -16,26 +16,24 @@ Oh, and I also like to write press-releases in what I call "Oprah-speak" for mai
 Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
  -->
  
-## Heading ##
-  Project Greenfeels
 
 ## Sub-Heading ##
-  > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  > A platform for mood-tracking and microjournaling. Self-reflection, mindfulness.
 
 ## Summary ##
-  > Project Greenfeels enables a user to easily and intuitively track her or his mental states over time, facilitating reflection and self-awareness of emotional patterns.
+  > Moodlet enables a user to easily and intuitively track her or his mental states over time, facilitating reflection and self-awareness of emotional patterns.
 
 ## Problem ##
-  Many people do not habitually reflect upon their emotional or mental patterns. Without a higher-order awareness of their mental states, it is difficult to identify and change cycles of negativity or unhappiness, or to appreciate and sustain positive mindsets.
+  > Many people do not habitually reflect upon their emotional or mental patterns. Without a higher-order awareness of their mental states, it is difficult to identify and change cycles of negativity or unhappiness, or to appreciate and sustain positive mindsets.
 
 ## Solution ##
-  > Describe how your product elegantly solves the problem.
+  > Moodlet provides an entirely personal, zero-pressure digital space for recording one's overall mood throughout the days, weeks, and months of one's life. The beautiful, intuitive interface invites reflection and introspection.
 
 ## Quote from You ##
-  > A quote from a spokesperson in your company.
+  > "Perhaps the heaviest thing we lift is not our weights, but our feels, bro." - Michael Sova, Lead Data Researcher
 
 ## How to Get Started ##
-  > Describe how easy it is to get started.
+  > All it takes to get started on Moodlet is a username and password. After that, a user can record their moods as often or as infrequently as they desire, or is convenient within their schedule. It takes only a few seconds to submit each entry within the microjournal.
 
 ## Customer Quote ##
   > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
