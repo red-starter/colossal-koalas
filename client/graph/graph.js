@@ -43,10 +43,16 @@ graph.controller('GraphController',
 			return Entries.getAll()
 		})
 		.then(function(data){
-			initializeGraphParameters(data);
-			generateAxis();
-			generateCircles();
-			generateLine();
+
+			//change createdAt to be over the scale of a year? is there a better way?
+			_.each(data,function(element){
+				element.createdAt = faker.date.past();
+			})
+
+			var parameters = initializeGraphParameters(data);
+			generateAxis(parameters);
+			generateCircles(parameters);
+			generateLine(parameters);
 		})      	
 	}() //immediately invoke
 
@@ -70,10 +76,10 @@ graph.controller('GraphController',
 		return parseInt(daysAgo);
 	}
 
-	var initializeGraphParameters = function(){
+	var initializeGraphParameters = function(data){
 		//container 
-		var graphParams = {};
-		graphParams.data = data;
+		var parameters = {};
+		parameters.data = data;
 
 		//create svg
 		var options ={
@@ -82,14 +88,14 @@ graph.controller('GraphController',
 			margin:50
 		}
 
-		graphParams.options = options;
+		parameters.options = options;
 		//svg selector 
 		var svg = d3.select("#graph1").append("svg")
 		.attr("width",options.width)
 		.attr("height",options.height)
 
-		graphParams.svg = d3.select('svg');
-		data = graphParams.data;
+		parameters.svg = d3.select('svg');
+		data = parameters.data;
 		//or updatedAt?
 		var timeRange = _.pluck(data,'createdAt');
 		var daysAgoRange = changeArrayDateToDaysAgo(timeRange); 
@@ -105,7 +111,6 @@ graph.controller('GraphController',
 		var yAxisArr = emotionRange;
 		var sizeArr = bodyRange;
 		var colorArr = emotionRange;
-
 		//grab values off of UserInput
 		// var xAxisArr = _.pluck($scope.userInput,$scope.xaxis) 
 		// var yAxisArr = _.pluck($scope.userInput,$scope.yaxis) 
@@ -113,23 +118,23 @@ graph.controller('GraphController',
 		// var opacityArr = _.pluck($scope.userInput,$scope.opacity)
 		// console.log(xAxisArr,yAxisArr)
 		//initialize mapping based on range of user input
-		graphParams.mapX = d3.scale.linear().domain(d3.extent(xAxisArr)).range([options.margin,options.width-options.margin]);
-		graphParams.mapY = d3.scale.linear().domain(d3.extent(yAxisArr)).range([options.height - options.margin,options.margin]);
+		parameters.mapX = d3.scale.linear().domain(d3.extent(xAxisArr)).range([options.margin,options.width-options.margin]);
+		parameters.mapY = d3.scale.linear().domain(d3.extent(yAxisArr)).range([options.height - options.margin,options.margin]);
 
-		graphParams.mapRadius = d3.scale.sqrt().domain(d3.extent(sizeArr)).range([0,20])
+		parameters.mapRadius = d3.scale.sqrt().domain(d3.extent(sizeArr)).range([0,20])
 		// mapOpacity = d3.scale.linear().domain([d3.min(opacityArr),d3.max(opacityArr)]).range([0.5,1]);
-		graphParams.mapColor = d3.scale.category10().domain(colorArr).range(['#FF0000', ,'#FF1100','#FF2200','#FF3300','#FF4400','#FF5500','#FF6600','#FF7700','#FF8800','#FF9900','#FFAA00','#FFBB00','#FFCC00','#FFDD00','#FFEE00','#FFFF00','#EEFF00','#DDFF00','#CCFF00','#BBFF00','#AAFF00','#99FF00','#88FF00','#77FF00','#66FF00','#55FF00','#44FF00','#33FF00','#22FF00','#11FF00','#00FF00'].reverse())
+		parameters.mapColor = d3.scale.category10().domain(colorArr).range(['#FF0000', ,'#FF1100','#FF2200','#FF3300','#FF4400','#FF5500','#FF6600','#FF7700','#FF8800','#FF9900','#FFAA00','#FFBB00','#FFCC00','#FFDD00','#FFEE00','#FFFF00','#EEFF00','#DDFF00','#CCFF00','#BBFF00','#AAFF00','#99FF00','#88FF00','#77FF00','#66FF00','#55FF00','#44FF00','#33FF00','#22FF00','#11FF00','#00FF00'].reverse())
 
-		return graphParams;
+		return parameters;
 	}
-	var generateAxis = function(){
+	var generateAxis = function(parameters){
 
-		//grab references from graph graphParams
-		var svg = graphParams.svg
-		var mapX = graphParams.mapX
-		var mapY = graphParams.mapY
-		var data = graphParams.data;
-		var options = graphParams.options;
+		//grab references from graph parameters
+		var svg = parameters.svg
+		var mapX = parameters.mapX
+		var mapY = parameters.mapY
+		var data = parameters.data;
+		var options = parameters.options;
 
 
 		var xAxis = d3.svg.axis()
@@ -172,23 +177,23 @@ graph.controller('GraphController',
 
 
 	//clear graph first
-	var generateCircles = function(){
+	var generateCircles = function(parameters){
 
-		var svg = graphParams.svg
-		var mapX = graphParams.mapX
-		var mapY = graphParams.mapY
-		var mapOpacity = graphParams.mapOpacity
-		var mapRadius = graphParams.mapRadius
-		var mapColor = graphParams.mapColor
-		var data = graphParams.data;
-		var options = graphParams.options;
+		var svg = parameters.svg
+		var mapX = parameters.mapX
+		var mapY = parameters.mapY
+		var mapOpacity = parameters.mapOpacity
+		var mapRadius = parameters.mapRadius
+		var mapColor = parameters.mapColor
+		var data = parameters.data;
+		var options = parameters.options;
 
 
 		svg.selectAll("circle").remove()
 		svg.selectAll("circle").data(data,function(e,index){return index})
 		.enter()
 		.append("circle")
-		.attr('cx',function(d){return mapX(changeDateToDaysAgo(+d["date"]))})
+		.attr('cx',function(d){return mapX(changeDateToDaysAgo(+d["createdAt"]))})
 		.attr('cy',function(d){return mapY(+d["emotion"])})
 		.attr('r',function(d){return mapRadius(+d["text"].length)}) //sqrt makes negative
 		.attr('fill',function(d){return mapColor(d["emotion"])})
@@ -203,16 +208,16 @@ graph.controller('GraphController',
 		.text(function(d){return d["text"]})	
 	}
 
-	var generateLine = function(){
-		var svg = graphParams.svg
-		var mapX = graphParams.mapX
-		var mapY = graphParams.mapY
-		var data = graphParams.data;
-		var options = graphParams.options;
+	var generateLine = function(parameters){
+		var svg = parameters.svg
+		var mapX = parameters.mapX
+		var mapY = parameters.mapY
+		var data = parameters.data;
+		var options = parameters.options;
 
 		var line = d3.svg.line()
 		.interpolate("cardinal")
-		.x(function(d,i) {return mapX(changeDateToDaysAgo(+d["date"]))})
+		.x(function(d,i) {return mapX(changeDateToDaysAgo(+d["createdAt"]))})
 		.y(function(d,i) {return mapY(+d["emotion"])})
 
 		var path = svg.append("path")
