@@ -5,7 +5,6 @@ var mainSchema = 'moodlet';
 var testSchema = 'moodlet_test';
 
 module.exports = {
-  url: url,
   mainSchema: mainSchema,
   testSchema: testSchema
 };
