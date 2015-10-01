@@ -6,6 +6,7 @@ var Sequelize = require('sequelize');
 
 // Bring in our config file and models.
 var config = require('./postgres.config.js');
+var url = process.env.DATABASE_URL || config.url;
 var models = require('./models');
 
 // Declare variables for later use.
@@ -31,7 +32,7 @@ if (dbEnvironment === 'testing') {
 // to the database) with the url from the config file and
 // the appropriate schema we selected above.
 
-db = new Sequelize(config.url, {ssl:true,sync: {schema: schema}});
+db = new Sequelize(url, {ssl:true,sync: {schema: schema}});
 // db = new Sequelize('database', 'username', 'password', {
 //       dialect: "postgres", 
 //       host: "amazon...",

@@ -1,5 +1,5 @@
 var jwt = require('jsonwebtoken');
-var secret = require('./secret');
+var secret = process.env.TOKEN_SECRET || require('./secret');
 
 var db = require('./database/interface');
 var router = require('express').Router();

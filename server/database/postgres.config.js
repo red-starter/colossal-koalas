@@ -1,5 +1,5 @@
 // This file stores DB constants. The URL is required in so nobody steals it.
-var url = require('./postgres.url.js');
+var url = require('./postgres.url.js') || null;
 
 // Postgres schemata are like namespaces within the single database.
 // These allow us to have a parallel test schema that we can constantly
