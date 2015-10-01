@@ -3,9 +3,6 @@ var jscs = require('gulp-jscs');
 var shell = require('gulp-shell');
 var env = require('gulp-env');
 
-var DATABASE_URL = require('./server/database/postgres.url.js');
-var TOKEN_SECRET = require('./server/secret');
-
 gulp.task('style', function() {
   return gulp.src(['./client/**/*.js', './server/**/*.js'], {base: '.'})
     .pipe(jscs({fix: true}))
