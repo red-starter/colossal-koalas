@@ -1,4 +1,4 @@
-# Project Name
+# Moodlet
 
 > Pithy project description
 

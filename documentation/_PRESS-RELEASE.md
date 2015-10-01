@@ -18,7 +18,7 @@ Once the project moves into development, the press release can be used as a touc
  
 
 ## Sub-Heading ##
-  > A platform for mood-tracking and microjournaling. Self-reflection, mindfulness.
+  > A platform for mood-tracking, microjournaling, self-reflection, and mindfulness.
 
 ## Summary ##
   > Moodlet enables a user to easily and intuitively track her or his mental states over time, facilitating reflection and self-awareness of emotional patterns.
