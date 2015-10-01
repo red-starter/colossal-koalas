@@ -1,22 +1,16 @@
 <div>
-
   <div ui-view="initial"></div>
-
   <!-- Spectrum stays on screen -->
     <ul class="emotion-spectrum"> 
-
-      <li><button class="emoji" ng-click="selectHandler($event)" data-emotion-id="0">😄</button></li>
-      <li><button class="emoji" ng-click="selectHandler($event)" data-emotion-id="1">😊</button></li>
-      <li><button class="emoji" ng-click="selectHandler($event)" data-emotion-id="2">😌</button></li>
-      <li><button class="emoji" ng-click="selectHandler($event)" data-emotion-id="3">😐</button></li>
-      <li><button class="emoji" ng-click="selectHandler($event)" data-emotion-id="4">😕</button></li>
-      <li><button class="emoji" ng-click="selectHandler($event)" data-emotion-id="5">😒</button></li>
-      <li><button class="emoji" ng-click="selectHandler($event)" data-emotion-id="6">😞</button></li>
-      <li><button class="emoji" ng-click="selectHandler($event)" data-emotion-id="7">😣</button></li>
-
+    <!-- Grabbed images from: http://twitter.github.io/twemoji/preview.html -->
+      <li><button class="emoji" ng-click="selectHandler($event)" data-emotion-id="0"><img src="http://twemoji.maxcdn.com/72x72/1f604.png"></button></li>
+      <li><button class="emoji" ng-click="selectHandler($event)" data-emotion-id="1"><img src="http://twemoji.maxcdn.com/72x72/1f60a.png"/></button></li>
+      <li><button class="emoji" ng-click="selectHandler($event)" data-emotion-id="2"><img src="http://twemoji.maxcdn.com/72x72/1f60c.png"/></button></li>
+      <li><button class="emoji" ng-click="selectHandler($event)" data-emotion-id="3"><img src="http://twemoji.maxcdn.com/72x72/1f610.png"/></button></li>
+      <li><button class="emoji" ng-click="selectHandler($event)" data-emotion-id="4"><img src="http://twemoji.maxcdn.com/72x72/1f615.png"/></button></li>
+      <li><button class="emoji" ng-click="selectHandler($event)" data-emotion-id="5"><img src="http://twemoji.maxcdn.com/72x72/1f612.png"/></button></li>
+      <li><button class="emoji" ng-click="selectHandler($event)" data-emotion-id="6"><img src="http://twemoji.maxcdn.com/72x72/1f614.png"/></button></li>
+      <li><button class="emoji" ng-click="selectHandler($event)" data-emotion-id="7"><img src="http://twemoji.maxcdn.com/72x72/1f62b.png"/></button></li>
    </ul>
-
-
    <div ui-view="selected"></div>
-
  </div>
