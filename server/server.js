@@ -6,7 +6,7 @@ var morgan = require('morgan');
 var parser = require('body-parser');
 var jwt = require('jsonwebtoken');
 
-var secret = process.env.TOKEN_SECRET || require('./secret');
+var secret = process.env.TOKEN_SECRET;
 var router = require('./routes');
 var db = require('./database/interface');
 

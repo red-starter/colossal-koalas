@@ -6,7 +6,7 @@ var Sequelize = require('sequelize');
 
 // Bring in our config file and models.
 var config = require('./postgres.config.js');
-var url = process.env.DATABASE_URL || config.url;
+var url = process.env.DATABASE_URL;
 var models = require('./models');
 
 // Declare variables for later use.
