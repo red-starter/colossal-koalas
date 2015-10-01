@@ -1,10 +1,12 @@
 <div ng-controller='AuthController' id='signin'>
-  <h1>Sign in</h1>
-  <form name='signinForm' ng-submit='signin()' novalidate>
-    <input type='text' ng-model='user.username' required />
-    <input type='password' ng-model='user.password' required />
-    <button>Sign in</button>
-    <p class="error" ng-show="error"> {{error}}</p>
-  </form>
-  <p>Don't have an account? <strong ng-click="changeState('signup')">Sign up!</strong></p>
+  <div class="content">
+    <h1>moodlet</h1>
+    <form name='signinForm' ng-submit='signin()' novalidate>
+      <input type='text' ng-model='user.username' placeholder="username" required />
+      <input type='password' ng-model='user.password' placeholder="password" required />
+      <button>Sign in</button>
+      <p class="error" ng-show="error"> {{error}}</p>
+    </form>
+    <p>Don't have an account? <strong ng-click="changeState('signup')">Sign up!</strong></p>
+  </div>
 </div>
