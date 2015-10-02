@@ -15,6 +15,7 @@ body {
   background-size: cover;
   background-attachment: fixed;
   background-repeat: none;
+  color: #272C41;
   font-family: 'Raleway', sans-serif;
 }
 
@@ -31,8 +32,12 @@ h1 {
   font-family: 'Raleway', sans-serif;
   font-size: 80px;
   font-weight: 100;
+  margin: 0;
   text-align: center;
-  margin: 0 auto;
+}
+
+#signup h1, #signin h1 {
+  margin-bottom: 40px;
 }
 
 /* There should be an easier way to style angular input fields */
@@ -45,14 +50,12 @@ form {
 }
 
 input {
-  display: block;
-  width: 250px;
   font-size: 20px;
-  font-weight: 100;
+  width: 250px;
 }
 
 input, button {
-  border: 1px solid gray;
+  border: 1px solid #272C41;
   border-radius: 5px;
   padding: 8px;
 }
@@ -67,43 +70,69 @@ button {
 
 .error {
   font-size: 14px;
-  margin-bottom: 20px;
 }
 
 .change-sign {
-  font-size: 14px;
   cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 20px;
 }
 
-/* Journal page */
+/* Nav */
 
-.journal-entry {
-  width: 50%;
-  margin: 0 auto;
-  border-bottom: 1px solid #fff;
-  margin-top: 30px;
+.logo {
+  display: inline;
+  font-size: 40px;
+  font-weight: 100;
+  left: 30px;
+  position: absolute;
+  top: 20px;
 }
-.journal-entries {
-  margin-top: 20px;
-  margin-bottom: 50px;
+
+.nav {
+  margin: 40px auto 0;
+  text-align: center;
+  width: 320px;
 }
-.journal-entries li:last-child {
+
+.nav li {
+  border-right: 1px black solid;
+  float: left;
+  /* This moves the prompt down - find better way */
+  margin-bottom: 150px;
+  padding: 0 15px;
+}
+
+.nav li:last-child {
   border: none;
+  padding-right: 0;
 }
 
-.timestamp {
-  margin-bottom: 15px;
+.nav a {
+  color: #272C41;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.8px;
+  text-decoration: none;
+  text-transform: uppercase;
 }
 
-.text {
-  font-size: 24px;
-  padding-bottom: 20px;
-}
+/* Home page initial */
 
-/* Home page initial*/
 ul {
   list-style-type: none;
   padding-left: 0;
+}
+
+.prompt {
+  clear: both;
+  font-size: 50px;
+  font-weight: 300;
+  text-align: center;
+}
+
+.prompt-one {
+  margin-bottom: 35px;
 }
 
 .emotion-spectrum {
@@ -114,37 +143,29 @@ ul {
   clear: both;
 }
 
+.emoji {
+  background: none;
+  border: none;
+  border-radius: 50px;
+  float: left;
+  margin-bottom: 35px;
+  margin-right: 10px; 
+  padding: 0;
+  width: 50px;
+}
+
 img {
   width: 50px;
 }
 
-.emoji {
-  float: left;
-  background: none;
-  border: none;
-  border-radius: 10px;
-  width: 50px;
-  margin-bottom: 0;
-  margin-right: 10px; 
-  padding: 0;
-}
-
-.prompt {
-  text-align: center;
-  font-size: 65px;
-  font-weight: 100;
-  clear: both;
-  margin-bottom: 50px;
-}
-
-/* Home page selected*/
+/* Home page selected */
 
 .selected {
   display: block;
   margin: 0 auto;
-  width: 75%;
+  width: 60%;
   text-align: center;
-  position: relative;
+  /*position: relative;*/
 }
 
 .feels-form {
@@ -156,8 +177,8 @@ textarea {
   display: block;
   width: 400px;
   font-size: 20px;
-  font-weight: 100;
-  border: 1px solid gray;
+  /*font-weight: 100;*/
+  border: 1px solid #272C41;
   border-radius: 5px;
   padding: 8px;
 }
@@ -165,46 +186,38 @@ textarea {
 .submit-feels {
   width: 100px;
   margin-top: 20px;
-
 }
+
 .selected .prompt {
-  top: 50;
-  font-size: 40px;
+  /*top: 50;*/
+  /*font-size: 30px;*/
 }
 
-/* Nav */
+/* Journal page */
 
-.logo {
-  display: inline;
-  font-size: 40px;
-  font-weight: 100;
-  left: 30px;
-  position: absolute;
-  padding-right: 0;
-  top: 5px;
+.journal-entry {
+  width: 50%;
+  margin: 0 auto;
+  border-bottom: 1px solid #fff;
+  margin-top: 30px;
 }
 
-.nav {
-  margin: 20px auto 0;
-  text-align: center;
-  width: 320px;
+.journal-entries {
+  margin-top: 20px;
+  margin-bottom: 50px;
 }
 
-.nav li {
-  border-right: 1px black solid;
-  float: left;
-  padding: 0 15px;
-}
-
-.nav li:last-child {
+.journal-entries li:last-child {
   border: none;
-  padding-right: 0;
 }
 
-.nav a {
-  color: #000;
-  font-weight: 400;
-  text-decoration: none;
+.timestamp {
+  margin-bottom: 15px;
+}
+
+.text {
+  font-size: 24px;
+  padding-bottom: 20px;
 }
 
 /* Graph page */
