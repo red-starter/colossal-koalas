@@ -4,9 +4,7 @@
 
 ## Team
 
-  - __Product Owner__: Cameron Martin
-  - __Scrum Master__: Cynthia Chen
-  - __Development Team Members__: Laura Knight, Michael Sova
+Cynthia Chen, Laura Knight, Cameron Martin, Michael Sova
 
 ## Table of Contents
 
@@ -35,12 +33,6 @@
 ### Installing Dependencies
 
 From within the root directory:
-
-```sh
-sudo npm install -g bower
-npm install
-bower install
-```
 
 ### Roadmap
 
