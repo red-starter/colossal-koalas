@@ -1,7 +1,10 @@
 var journal = angular.module('greenfeels.journal', []);
 
-journal.controller('JournalController', ['$scope', 'Entries',
-  function ($scope, Entries) {
+journal.controller('JournalController', ['$scope', 'Entries', 'Twemoji',
+  function ($scope, Entries, Twemoji) {
+    // Expose twemoji helper in scope
+    $scope.getTwemojiSrc = Twemoji.getTwemojiSrc;
+    
     // Create journal model
     $scope.journal = {};
 
