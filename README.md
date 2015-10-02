@@ -48,7 +48,9 @@ From within the root directory:
 
 ### Gulp Scripts
 
-Several useful developer scripts are configured in `gulpfile.js`. You must configure a `.env.json` for these to work, however, which will contain the same environment variables required for the server to run normally. See `example.env.json` for a template.
+Several useful developer scripts are configured in `gulpfile.js`. You must configure a `.env.json` for most of these to work, however, which will contain the same environment variables required for the server to run normally. See `example.env.json` for a template.
+
+`gulp style` will run jscs (if you have it installed) and attempt to fix all style errors automatically. Errors that it can't fix automatically will be displayed.
 
 `gulp start` will run the local server in production mode without you needing to manually set the environment variables.
 
