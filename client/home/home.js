@@ -1,7 +1,12 @@
 var home = angular.module('greenfeels.home', []);
 
-home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries',
-  function($scope, $state, Prompts, Entries) {
+home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries', 'Twemoji',
+  function($scope, $state, Prompts, Entries, Twemoji) {
+    // Expose our Twemoji service within the scope.
+    // This is used to conveniently generate the `src`
+    // attributes of the <img> tags within the buttons.
+    $scope.getTwemojiSrc = Twemoji.getTwemojiSrc;
+
     $state.transitionTo('home.initial');
     // Upon load, initialize first prompt. Display of this prompt will depend on the state.
     // Cache the initial prompt in case we want to return to this state.

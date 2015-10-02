@@ -4,7 +4,7 @@
     <li class="journal-entry" ng-repeat="entry in journal.entries | orderBy: '-createdAt'">
     <!-- make sure timeStamp variable matches response from API request -->
       <div class="timestamp"> {{ entry.createdAt }} </div>
-      <div class="emoji"> {{ entry.emoji }} </div>
+      <img class="emoji" src="{{ getTwemojiSrc(entry.emotion, 72) }}" >
       <div class="text"> {{ entry.text }} </div>
     </li>
   </ul>
