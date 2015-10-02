@@ -15,11 +15,9 @@ home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries',
     // and captures the code of the selected emotion on the tentative entry model.
     $scope.selectHandler = function($event) {
       $state.transitionTo('home.selected');
-      var emotion = $event.target.attributes['data-emotion-id'].value;
+      var emotion = $event.currentTarget.attributes['data-emotion-id'].value;
       $scope.entry.emotion = emotion;
       $scope.secondPrompt = Prompts.getSecondPrompt(emotion);
-      console.log('emotion', $scope.entry.emotion);
-      console.log('prompt', $scope.secondPrompt);
     };
 
     $scope.submit = function() {
