@@ -1,7 +1,7 @@
 var graph = angular.module('greenfeels.graph',[]);
 
 graph.controller('GraphController',
-	['Entries',function ( Entries){
+	['Entries', 'Twemoji', function(Entries, Twemoji) {
 
 		var getData = function(){
 			Entries.getAll()

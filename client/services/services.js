@@ -137,4 +137,32 @@ angular.module('greenfeels.services', [])
     isAuth: isAuth,
   };
 
-}]);
+}])
+
+  .factory('Twemoji', function() {
+    // Shared CDN host
+    var urlBase = 'http://twemoji.maxcdn.com/';
+    // Index corresponds to emotion value
+    var imgs = [
+      '1f604.png',
+      '1f60a.png',
+      '1f60c.png',
+      '1f610.png',
+      '1f615.png',
+      '1f612.png',
+      '1f614.png',
+      '1f62b.png'
+    ];
+    // Getter takes int(0 - 7) as emotion and
+    // int(16, 36, or 72) as size of image in pixels.
+    // Use this function to fill in the `src=""` attribute
+    // of an <img> tag.
+    var getTwemojiSrc = function(emotion, size) {
+      return urlBase + size + 'x' + size + '/' + imgs[emotion];
+    }
+
+    return {
+      getTwemojiSrc: getTwemojiSrc
+    };
+
+  });
