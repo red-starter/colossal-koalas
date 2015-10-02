@@ -13,6 +13,7 @@ body {
   background: linear-gradient(to bottom, rgba(132,185,204,1) 0%, rgba(84,150,178,1) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84b9cc', endColorstr='#5496b2', GradientType=0 );
   background-size: cover;
+  background-attachment: fixed;
   background-repeat: none;
   font-family: 'Raleway', sans-serif;
 }
@@ -31,6 +32,7 @@ h1 {
   font-size: 80px;
   font-weight: 100;
   text-align: center;
+  margin: 0 auto;
 }
 
 /* There should be an easier way to style angular input fields */
@@ -75,6 +77,134 @@ button {
 
 /* Journal page */
 
-/* make emojis li with img src, take off buttons */
+.journal-entry {
+  width: 50%;
+  margin: 0 auto;
+  border-bottom: 1px solid #fff;
+  margin-top: 30px;
+}
+.journal-entries {
+  margin-top: 20px;
+  margin-bottom: 50px;
+}
+.journal-entries li:last-child {
+  border: none;
+}
+
+.timestamp {
+  margin-bottom: 15px;
+}
+
+.text {
+  font-size: 24px;
+  padding-bottom: 20px;
+}
+
+/* Home page initial*/
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.emotion-spectrum {
+  display: block;
+  width: 500px;
+  margin: 0 auto;
+  margin-bottom: 50px;
+  clear: both;
+}
+
+img {
+  width: 50px;
+}
+
+.emoji {
+  float: left;
+  background: none;
+  border: none;
+  border-radius: 10px;
+  width: 50px;
+  margin-bottom: 0;
+  margin-right: 10px; 
+  padding: 0;
+}
+
+.prompt {
+  text-align: center;
+  font-size: 65px;
+  font-weight: 100;
+  clear: both;
+  margin-bottom: 50px;
+}
+
+/* Home page selected*/
+
+.selected {
+  display: block;
+  margin: 0 auto;
+  width: 75%;
+  text-align: center;
+  position: relative;
+}
+
+.feels-form {
+  width: 75%;
+  margin: 0 auto;
+}
+
+textarea {
+  display: block;
+  width: 400px;
+  font-size: 20px;
+  font-weight: 100;
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.submit-feels {
+  width: 100px;
+  margin-top: 20px;
+
+}
+.selected .prompt {
+  top: 50;
+  font-size: 40px;
+}
+
+/* Nav */
+
+.logo {
+  display: inline;
+  font-size: 40px;
+  font-weight: 100;
+  left: 30px;
+  position: absolute;
+  padding-right: 0;
+  top: 5px;
+}
+
+.nav {
+  margin: 20px auto 0;
+  text-align: center;
+  width: 320px;
+}
+
+.nav li {
+  border-right: 1px black solid;
+  float: left;
+  padding: 0 15px;
+}
+
+.nav li:last-child {
+  border: none;
+  padding-right: 0;
+}
+
+.nav a {
+  color: #000;
+  font-weight: 400;
+  text-decoration: none;
+}
 
 /* Graph page */
