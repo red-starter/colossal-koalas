@@ -154,7 +154,6 @@ app.config(['$stateProvider', '$urlRouterProvider',
     if (toState.data.requireLogin && !Auth.isAuth()) {
       //user isn't authenticated, so transition state to signin
       event.preventDefault(); //prevent state transition from happening
-      console.log('You shall not pass!');
       $state.transitionTo('signin'); //transitions state to signin
     }
   });
