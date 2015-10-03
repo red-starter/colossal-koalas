@@ -1,7 +1,7 @@
 var journal = angular.module('greenfeels.journal', []);
 
-journal.controller('JournalController', ['$scope', 'Entries', 'Twemoji',
-  function ($scope, Entries, Twemoji) {
+journal.controller('JournalController', ['$scope', 'Entries', 'Twemoji', 'Spinner',
+  function ($scope, Entries, Twemoji, Spinner) {
     // Expose twemoji helper in scope
     $scope.getTwemojiSrc = Twemoji.getTwemojiSrc;
     
@@ -11,8 +11,13 @@ journal.controller('JournalController', ['$scope', 'Entries', 'Twemoji',
     var emojiByInteger = ['😄', '😊', '😌', '😐', '😕', '😒', '😞', '😣'];
 
     $scope.getEntries = function() {
+
+      var spinner = Spinner.create();
+      spinner.spin(document.querySelector('.journal-entries'));
+
       Entries.getAll()
         .then(function(resp) {
+          spinner.stop();
           $scope.journal.entries = resp;
           $scope.journal.entries.map(function(entry) {
             entry.emoji = emojiByInteger[entry.emotion];
