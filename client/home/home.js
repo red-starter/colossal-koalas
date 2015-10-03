@@ -29,7 +29,7 @@ home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries', 'Tw
       // TODO: Use submit service to submit the entry to the server
       Entries.addEntry(JSON.stringify($scope.entry));
       $scope.entry = {};
-      $state.transitionTo('home');
+      $state.transitionTo('journal');
     };
 
   }]);
