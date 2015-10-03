@@ -181,6 +181,9 @@ textarea {
   border: 1px solid #272C41;
   border-radius: 5px;
   padding: 8px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 30px;
 }
 
 .submit-feels {
@@ -198,13 +201,13 @@ textarea {
 .journal-entry {
   width: 50%;
   margin: 0 auto;
-  border-bottom: 1px solid #fff;
-  margin-top: 30px;
+  /*border-bottom: 1px solid #fff;*/
+  padding: 20px;
 }
 
 .journal-entries {
   margin-top: 20px;
-  margin-bottom: 50px;
+  /*margin-bottom: 50px;*/
 }
 
 .journal-entries li:last-child {
@@ -212,12 +215,22 @@ textarea {
 }
 
 .timestamp {
-  margin-bottom: 15px;
+  display: inline-block;
+  margin-bottom: 5px;
+  color: #fff;
 }
 
 .text {
   font-size: 24px;
-  padding-bottom: 20px;
+  padding: 10px 0;
+  border-radius: 8px 8px 8px 50px;
+  background-color: #fff;
+}
+
+.journal-entry .emoji {
+  border-radius: 50px;
+  padding: 5px;
+  background-color: #fff;
 }
 
 /* Graph page */

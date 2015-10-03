@@ -16,6 +16,7 @@ journal.controller('JournalController', ['$scope', 'Entries', 'Twemoji',
           $scope.journal.entries = resp;
           $scope.journal.entries.map(function(entry) {
             entry.emoji = emojiByInteger[entry.emotion];
+            entry.displayDate = moment(entry.createdAt).format('h:mm a dddd MMMM Do YYYY')
             return entry;
           });
         })
