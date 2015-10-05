@@ -8,7 +8,9 @@ var app = require('./server'); //required server so we could have access to the 
 //verify token
 function verifyToken(req, res, next) {
   //check post parameters or header or url parameters for token
-  var token = req.body.token;
+  var token = req.headers['x-access-token'];
+
+  console.log(token);
 
   //decode token
   if (token) {
