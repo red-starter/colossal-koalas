@@ -23,7 +23,11 @@ graph.controller('GraphController',
 		params.options ={
 			width:800,
 			height:600,
-			margin:100
+			margin:100,
+			marginLeft:50,
+			marginTop:50,
+			marginRight:50,
+			marginBottom:50
 		};
 		//svg selector 
 		params.svg = d3.select("#graph1").append("svg")
@@ -42,9 +46,12 @@ graph.controller('GraphController',
 		return params;
 	}
 	var generateAxis = function(params){
+		// var arr = [0,1,2,3]
+		// var arr2 = _.map(arr,function(d){return params.mapX(d)})
  		// console.log("mapping",_.map(params.data,function(datum){return moment(datum).fromNow()}))
 		var xAxis = d3.svg.axis()
 		.scale(params.mapX) //where to orient numbers
+		// .tickValues(arr2)
 		// .tickValues(_.map(params.data,function(datum){return moment(datum).fromNow()}))
 	    .tickFormat(function(d) {return moment(d).fromNow()})
 		.orient('bottom') 
@@ -65,22 +72,28 @@ graph.controller('GraphController',
 
 	//clear graph first
 	var generateCircles = function(params){
-		var emojiByInteger = ['😄', '😊', '😌', '😐', '😕', '😒', '😞', '😣'];
+		// var emojiImages = ['😄', '😊', '😌', '😐', '😕', '😒', '😞', '😣'];
 
-		params.svg.selectAll(".emojiText").remove()
-		params.svg.selectAll(".emojiText").data(params.data,function(e,index){return index})
+		// var emojiImages = _.map(return Twemoji.getTwemojiSrc[+d["emotion"]]})
+
+		params.svg.selectAll(".emojiImage").remove()
+		params.svg.selectAll(".emojiImage").data(params.data,function(e,index){return index})
 		.enter()
-		.append("text")
-		.attr('class','emojiText')
+		.append("svg:image")
+	    .attr('width', 40)
+	    .attr('height', 48)
+		.attr('class','emojiImage')
 		.attr('x',function(d){
 			return params.mapX(new Date(d["createdAt"]))
 		})
 		.attr('y',function(d){return params.mapY(+d["emotion"])})
-		.text(function(d){
-			return emojiByInteger[+d["emotion"]];
-		})
-		.attr("font-family", "sans-serif")
-		.attr("font-size", "30px")
+		.attr("xlink:href",function(d){return Twemoji.getTwemojiSrc(+d["emotion"],36)})
+		// .text(function(d){
+			// return Twemoji.getTwemojiSrc[+d["emotion"]];
+			// return emojiByInteger[+d["emotion"]];
+		// })
+		// .attr("font-family", "sans-serif")
+		// .attr("font-size", "30px")
 		.on("mouseover", function(d) {
 			d3.select(this).attr('opacity',0.3)
 		})
@@ -91,7 +104,7 @@ graph.controller('GraphController',
 			d3.select('#graphText').text(d.text)
 		})
 		.append('title')
-		.text(function(d){return moment(d["createdAt"]).fromNow()+" emotion"+d["emotion"]})	
+		.text(function(d){return d['text']})	
 	}
 
 	var generateLine = function(params){
