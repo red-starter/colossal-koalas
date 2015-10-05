@@ -2,9 +2,9 @@ angular.module('greenfeels.services', [])
 
 .factory('Prompts', ['$http', function($http) {
   var firstPrompts = [
-    'Hi! How are you doing?',
-    'Hey! How are you feeling?',
-    'Hey! Wanna record how you\'re feeling?'
+  'Hi! How are you doing?',
+  'Hey! How are you feeling?',
+  'Hey! Wanna record how you\'re feeling?'
   ];
   // Get prompt #1 for intial state view of home page
   var getFirstPrompt = function() {
@@ -13,44 +13,44 @@ angular.module('greenfeels.services', [])
 
   var secondPrompts = [
     [ // 😄
-      'Awesome! Do you want to record any thoughts?',
-      'That\'s great! Is there anything you want to write down?'
+    'Awesome! Do you want to record any thoughts?',
+    'That\'s great! Is there anything you want to write down?'
     ],
     [ // 😊
-      'Good! Is there anything you\'d like to write down?',
-      'Good! Want to write something about your mood?'
+    'Good! Is there anything you\'d like to write down?',
+    'Good! Want to write something about your mood?'
     ],
     [ // 😌
-      'Would you like to record any of your thoughts?',
-      'Is there anything you want to write down?',
-      'Are there any details about your mood that you want to record?',
-      'Would you like to write about how you\'re feeling?'
+    'Would you like to record any of your thoughts?',
+    'Is there anything you want to write down?',
+    'Are there any details about your mood that you want to record?',
+    'Would you like to write about how you\'re feeling?'
     ],
     [ // 😐
-      'Would you like to record any of your thoughts?',
-      'Is there anything you want to write down?',
-      'Are there any details about your mood that you want to record?',
-      'Would you like to write about how you\'re feeling?'
+    'Would you like to record any of your thoughts?',
+    'Is there anything you want to write down?',
+    'Are there any details about your mood that you want to record?',
+    'Would you like to write about how you\'re feeling?'
     ],
     [ // 😕
-      'Would you like to record any of your thoughts?',
-      'Is there anything you want to write down?',
-      'Are there any details about your mood that you want to record?',
-      'Would you like to write about how you\'re feeling?'
+    'Would you like to record any of your thoughts?',
+    'Is there anything you want to write down?',
+    'Are there any details about your mood that you want to record?',
+    'Would you like to write about how you\'re feeling?'
     ],
     [ // 😒
-      'Is there anything you\'d like to write about how you\'re feeling?',
-      'Are there any details about your mood that you want to record?'
+    'Is there anything you\'d like to write about how you\'re feeling?',
+    'Are there any details about your mood that you want to record?'
     ],
     [ // 😞
-      'Is there anything you\'d like to write about how you\'re feeling?',
-      'Are there any details about your mood that you want to record?'
+    'Is there anything you\'d like to write about how you\'re feeling?',
+    'Are there any details about your mood that you want to record?'
     ],
     [ // 😣
-      'Is there anything you\'d like to write about how you\'re feeling?',
-      'Are there any details about your mood that you want to record?'
+    'Is there anything you\'d like to write about how you\'re feeling?',
+    'Are there any details about your mood that you want to record?'
     ] 
-  ];
+    ];
 
   // Get prompt #2 for selected state view of home page.
   // The `emotion` argument is the integer representing
@@ -83,6 +83,21 @@ angular.module('greenfeels.services', [])
     });
   };
 
+  var getEntry = function(id){
+    '/:username/entries/:entryid'
+    var username = $window.localStorage.getItem('moodlet.username');
+    if (!username) {
+      return;
+    }
+    return $http({
+      method: 'GET',
+      url: '/api/users/' + username + '/' + id
+    })
+    .then(function(resp) {
+      return resp.data;
+    });
+  }
+
   // Adds user's entry
   var addEntry = function(post) {
     var username = $window.localStorage.getItem('moodlet.username');
@@ -99,7 +114,8 @@ angular.module('greenfeels.services', [])
 
   return {
     getAll: getAll,
-    addEntry: addEntry
+    addEntry: addEntry,
+    getEntry:getEntry
   };
 }])
 
@@ -139,19 +155,19 @@ angular.module('greenfeels.services', [])
 
 }])
 
-  .factory('Twemoji', function() {
+.factory('Twemoji', function() {
     // Shared CDN host
     var urlBase = 'http://twemoji.maxcdn.com/';
     // Index corresponds to emotion value
     var imgs = [
-      '1f604.png',
-      '1f60a.png',
-      '1f60c.png',
-      '1f610.png',
-      '1f615.png',
-      '1f612.png',
-      '1f614.png',
-      '1f62b.png'
+    '1f604.png',
+    '1f60a.png',
+    '1f60c.png',
+    '1f610.png',
+    '1f615.png',
+    '1f612.png',
+    '1f614.png',
+    '1f62b.png'
     ];
     // Getter takes int(0 - 7) as emotion and
     // int(16, 36, or 72) as size of image in pixels.
@@ -167,7 +183,7 @@ angular.module('greenfeels.services', [])
 
   })
 
-  .factory('Spinner', function() {
+.factory('Spinner', function() {
 
     // Forgive the dangling commas. This was copied in from the generator.
     var opts = {
