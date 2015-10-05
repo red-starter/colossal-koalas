@@ -112,9 +112,23 @@ var pathHandlers = {
   '/:username/entries': {
 
     get: function(req, res) {
+      // Create variable to hold dynamic options for db query.
+      var options;
+      // Variable `lastSeen` supports the infinite scrolling of the journal page.
+      // If it's undefined, we just roll from the top; otherwise, we constrain to
+      // entries older than the `lastSeen` timestamp.
+      var lastSeen = req.headers['x-last-seen'];
+      console.log(lastSeen);
+
+      if (!lastSeen) {
+        options = {limit: 20, order:[['createdAt', 'DESC']]};
+      } else {
+        options = {where: {createdAt: {$lt: lastSeen}}, limit: 20, order: [['createdAt', 'DESC']]}
+      }
+
       db.User.findOne({where: {name: req.params.username}})
         .then(function(user) {
-          return user.getEntries();
+          return user.getEntries(options);
         })
         .then(function(entries) {
           res.json(entries);
