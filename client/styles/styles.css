@@ -254,7 +254,9 @@ textarea {
 /* Graph page */
 
 #graph1 {
-  margin: 20px 0 80px;
+  display: inline-block;
+  float: left;
+  margin: 20px 20px 80px;
 }
 
 .graph-header {
@@ -263,12 +265,33 @@ textarea {
   /*padding-top: 50px;*/
 }
 
-svg {
+/*svg {
   display: block;
   margin: 0 auto;
   width: 800;
-}
+}*/
 
 .emojiImage {
   cursor: pointer;
+}
+
+.emojiImage:hover {
+
+}
+
+/* Text container */
+#graphText {
+  display: inline-block;
+  float: left;
+}
+
+.emojiText {
+  width: 300px;
+  margin: 0 auto;
+  padding: 10px 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  font-size: 24px;
+  margin: 250px 30px 0;
+  /*padding: 10px 0;*/
 }
