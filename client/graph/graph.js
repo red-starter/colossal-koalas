@@ -102,7 +102,8 @@ graph.controller('GraphController',
 			d3.select(this).attr('class','emojiImage')
 		})
 		.on('click',function(d){
-			d3.select('#graphText').select('.emojiText').text(d.text);
+			d3.selectAll('.emojiText').remove();
+			d3.select('#graphText').append('div').attr('class','emojiText').text(d.text);
 		})
 		.append('title')
 		.text(function(d){return d['text']})	
