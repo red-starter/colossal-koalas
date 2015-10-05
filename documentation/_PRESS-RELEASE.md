@@ -34,7 +34,7 @@ Once the project moves into development, the press release can be used as a touc
   > All it takes to get started on Moodlet is a username and password. After that, a user can record their moods as often or as infrequently as they desire, or is convenient within their schedule. It takes only a few seconds to submit each entry within the microjournal.
 
 ## Customer Quote ##
-  > "Moodlet has lowered the activation energy for reflection and self-introspection with its easy-to-use, user-friendly application. After using Moodlet, I have become more aware and inquisitive of changes in emotional and mental states. Pro-tip: Use Moodlet!" - Kyle Cho
+  > "Moodlet has lowered the activation energy for reflection and self-introspection with its easy-to-use, user-friendly application. After using Moodlet, I have become more aware and inquisitive of changes in my emotional and mental states. Pro-tip: Use Moodlet!" - Kyle Cho
 
 ## Closing and Call to Action ##
   > Moodlet is an open-source application. If you're interested in contributing to Moodlet, please read our contributing document.
