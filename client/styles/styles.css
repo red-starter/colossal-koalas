@@ -3,15 +3,23 @@ html {
 }
 
 body {
-  background-color: #84B9CD;
-  background: rgba(132,185,204,1);
-  background: -moz-linear-gradient(top, rgba(132,185,204,1) 0%, rgba(84,150,178,1) 100%);
-  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(132,185,204,1)), color-stop(100%, rgba(84,150,178,1)));
-  background: -webkit-linear-gradient(top, rgba(132,185,204,1) 0%, rgba(84,150,178,1) 100%);
-  background: -o-linear-gradient(top, rgba(132,185,204,1) 0%, rgba(84,150,178,1) 100%);
-  background: -ms-linear-gradient(top, rgba(132,185,204,1) 0%, rgba(84,150,178,1) 100%);
-  background: linear-gradient(to bottom, rgba(132,185,204,1) 0%, rgba(84,150,178,1) 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#84b9cc', endColorstr='#5496b2', GradientType=0 );
+  /*background: #000;*/
+  background: rgba(134,174,204,0.9);
+  background: -moz-linear-gradient(-45deg, rgba(134,174,204,0.9) 0%, rgba(212,228,239,1) 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(134,174,204,0.9)), color-stop(100%, rgba(212,228,239,1)));
+  background: -webkit-linear-gradient(-45deg, rgba(134,174,204,0.9) 0%, rgba(212,228,239,1) 100%);
+  background: -o-linear-gradient(-45deg, rgba(134,174,204,0.9) 0%, rgba(212,228,239,1) 100%);
+  background: -ms-linear-gradient(-45deg, rgba(134,174,204,0.9) 0%, rgba(212,228,239,1) 100%);
+  background: linear-gradient(135deg, rgba(134,174,204,0.9) 0%, rgba(212,228,239,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#86aecc', endColorstr='#d4e4ef', GradientType=1 );
+/*  background: rgba(51,157,184,0.57);
+  background: -moz-linear-gradient(top, rgba(51,157,184,0.57) 0%, rgba(88,187,214,0.79) 52%, rgba(51,157,184,1) 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(51,157,184,0.57)), color-stop(52%, rgba(88,187,214,0.79)), color-stop(100%, rgba(51,157,184,1)));
+  background: -webkit-linear-gradient(top, rgba(51,157,184,0.57) 0%, rgba(88,187,214,0.79) 52%, rgba(51,157,184,1) 100%);
+  background: -o-linear-gradient(top, rgba(51,157,184,0.57) 0%, rgba(88,187,214,0.79) 52%, rgba(51,157,184,1) 100%);
+  background: -ms-linear-gradient(top, rgba(51,157,184,0.57) 0%, rgba(88,187,214,0.79) 52%, rgba(51,157,184,1) 100%);
+  background: linear-gradient(to bottom, rgba(51,157,184,0.57) 0%, rgba(88,187,214,0.79) 52%, rgba(51,157,184,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#339db8', endColorstr='#339db8', GradientType=0 );*/
   background-size: cover;
   background-attachment: fixed;
   background-repeat: none;
@@ -34,6 +42,9 @@ h1 {
   font-weight: 100;
   margin: 0;
   text-align: center;
+  background: linear-gradient(330deg, #dc3c3c 0%, #27d8d8 33%, #9952e0 67%, #dc3c3c 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 #signup h1, #signin h1 {
@@ -55,7 +66,7 @@ input {
 }
 
 input, button {
-  border: 1px solid #272C41;
+  border: 1px solid #707070;
   border-radius: 5px;
   padding: 8px;
 }
@@ -87,6 +98,9 @@ button {
   left: 30px;
   position: absolute;
   top: 20px;
+  background: linear-gradient(330deg, #27d8bb 5%, #9952e0 70%, #9952e0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .nav {
@@ -99,7 +113,7 @@ button {
   border-right: 1px black solid;
   float: left;
   /* This moves the prompt down - find better way */
-  margin-bottom: 150px;
+  margin-bottom: 50px;
   padding: 0 15px;
 }
 
@@ -132,6 +146,7 @@ ul {
 }
 
 .prompt-one {
+  padding-top: 100px;
   margin-bottom: 35px;
 }
 
@@ -161,11 +176,11 @@ img {
 /* Home page selected */
 
 .selected {
+  /*padding-top: 150px;*/
   display: block;
   margin: 0 auto;
   width: 60%;
   text-align: center;
-  /*position: relative;*/
 }
 
 .feels-form {
@@ -177,8 +192,7 @@ textarea {
   display: block;
   width: 400px;
   font-size: 20px;
-  /*font-weight: 100;*/
-  border: 1px solid #272C41;
+  border: 1px solid #707070;
   border-radius: 5px;
   padding: 8px;
   margin-left: auto;
@@ -189,25 +203,25 @@ textarea {
 .submit-feels {
   width: 100px;
   margin-top: 20px;
-}
-
-.selected .prompt {
-  /*top: 50;*/
-  /*font-size: 30px;*/
+  border: 1px solid #707070;
 }
 
 /* Journal page */
 
+#journal h1 {
+  font-size: 60px;
+  clear: both;
+  /*padding-top: 50px;*/
+}
+
 .journal-entry {
   width: 50%;
   margin: 0 auto;
-  /*border-bottom: 1px solid #fff;*/
   padding: 20px;
 }
 
 .journal-entries {
   margin-top: 20px;
-  /*margin-bottom: 50px;*/
 }
 
 .journal-entries li:last-child {
@@ -234,3 +248,13 @@ textarea {
 }
 
 /* Graph page */
+
+.graph-header {
+  font-size: 60px;
+  clear: both;
+  /*padding-top: 50px;*/
+}
+
+#graph1 {
+  margin-left: 300px;
+}

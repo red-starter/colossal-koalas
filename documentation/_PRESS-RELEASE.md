@@ -36,7 +36,7 @@ Once the project moves into development, the press release can be used as a touc
   > All it takes to get started on Moodlet is a username and password. After that, a user can record their moods as often or as infrequently as they desire, or is convenient within their schedule. It takes only a few seconds to submit each entry within the microjournal.
 
 ## Customer Quote ##
-  > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  > "Moodlet has decreased my resistance to self-introspection with its easy-to-use, user-friendly application."
 
 ## Closing and Call to Action ##
-  > Wrap it up and give pointers where the reader should go next.
+  > If you're interested in contributing to Moodlet, please read our contributing document.

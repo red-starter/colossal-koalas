@@ -25,7 +25,7 @@ var dbEnvironment = process.env.NODE_ENV;
 if (dbEnvironment === 'test') {
   schema = config.testSchema;
 } else {
-  schema = config.mainSchema
+  schema = config.mainSchema;
 }
 
 // Initiate sequelize instance (representing the connection
