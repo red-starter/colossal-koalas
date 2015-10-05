@@ -14,6 +14,7 @@ graph.controller('GraphController',
 				spinner.stop();
 				//Initialize graph parameters
 				var params = initializeGraphParameters(data);
+				// console.log(params.data)
 				generateAxis(params);
 				generateLine(params);
 				generateEmojis(params);
@@ -47,7 +48,7 @@ graph.controller('GraphController',
 			return moment(element).fromNow();
 		});
 
-		params.mapX = d3.time.scale()
+		params.mapX = d3.scale.linear()
 		.domain([new Date(d3.min(params.timeRange)), new Date(d3.max(params.timeRange))])
 		.range([params.options.marginSides,params.options.width - params.options.marginSides]);
 		params.mapY = d3.scale.linear()
@@ -57,20 +58,13 @@ graph.controller('GraphController',
 		return params;
 	};
 	var generateAxis = function(params){
-		// var arr = [0,1,2,3]
-		// var arr2 = _.map(arr,function(d){return params.mapX(d)})
  		// console.log("mapping",_.map(params.data,function(datum){return moment(datum).fromNow()}))
- 		var hashy = {};
  		var xAxis = d3.svg.axis()
 		.scale(params.mapX) //where to orient numbers
 		// .tickValues(params.momentRange)
 		.tickFormat(function(d) {
 			var time = moment(d).fromNow();
-			console.log(time,params.momentRange);
-			if (hashy[time]){
-				return null
-			}
-			hashy[time]=true;
+			// console.log(time,params.momentRange);
 			return time;
 		})
 		.orient('bottom') 
@@ -106,30 +100,62 @@ graph.controller('GraphController',
 			return -35+params.mapY(+d["emotion"])
 		})
 		.attr("xlink:href",function(d){return Twemoji.getTwemojiSrc(+d["emotion"],36)})
+
+		.on("mouseover", function(d) {
+			d3.select(this).style({
+				"box-sizing": "border-box",
+				"border": "150px",
+				"padding": "20px",
+				"background-color": "#fff"	
+			})
+			d3.select(this).attr('opacity',0.8)
+		})
+		.on("mouseout", function(d) {
+			d3.select(this).style({'null':null});
+			d3.select(this).attr('opacity',1)
+		})
 		.on('click',function(d){
 			d3.selectAll('.emojiText').remove();
-			d3.select('#graphText').append('div').attr('class','emojiText').text(d.text);
+			d3.selectAll('.emojiLink').remove();
+			d3.select('#graphText')
+			.append('div')
+			.attr('class','emojiText')
+			.text(d.text)
+			.append('button')
+			.on('click',function(){
+				Entries.getEntry(d.id).then(function(data){
+					console.log(data)
+				})
+			})
+			.text('getEntry')
+
+			d3.select('.emojiText')
+			.append('button')
+			.on('click',function(){
+				Entries.deleteEntry(d.id).then(function(data){
+					console.log(data)
+				})
+			})
+			.text('deleteEntry')
+
+			d3.select('.emojiText')
+			.append('textarea')
+			.attr('rows','4')
+			.attr('cols','20')
+			.attr('class','updateText')
+			.text(d.text)
+
+			d3.select('.emojiText')			
+			.append('button')
+			.on('click',function(){
+				Entries.updateEntry(d.id,d3.select('.updateText').text()).then(function(data){
+					console.log(data)
+				})
+			})
+			.text('updateEntry')
 		})
 		.append('title')
 		.text(function(d){return d['text']})
-		
-		params.svg.selectAll(".circle").data(params.data,function(e,index){return index})
-		.enter()	
-		.append("circle")
-		.attr("cx", function(d){
-			return params.mapX(new Date(d["createdAt"]))
-		})
-		.attr("cy", function(d){
-			return -15+params.mapY(+d["emotion"])
-		})
-		.attr("r", 19)
-		.attr('opacity',0)
-		.on("mouseover", function(d) {
-			d3.select(this).attr('class','graph-hover')
-		})
-		.on("mouseout", function(d) {
-			d3.select(this).attr('class','')
-		})
 	}
 
 	var generateLine = function(params){
