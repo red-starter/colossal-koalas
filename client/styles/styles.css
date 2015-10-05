@@ -139,8 +139,9 @@ button {
   right: 30px;
   position: absolute;
   top: 20px;
+}
 
-.nav a:hover{
+.nav a:hover {
   font-weight: 700;
 }
 
