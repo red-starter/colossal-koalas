@@ -16,7 +16,6 @@ graph.controller('GraphController',
 				var params = initializeGraphParameters(data);
 				generateAxis(params);
 				generateLine(params);
-				generateCircles(params); 
 				generateEmojis(params);
 			})    	
 	}() 	//immediately invoke
@@ -93,7 +92,7 @@ graph.controller('GraphController',
 		d3.selectAll('.emojiText').remove();
 		params.svg.selectAll(".emojiImage").remove();
 
-
+		
 		params.svg.selectAll(".emojiImage").data(params.data,function(e,index){return index})
 		.enter()
 		.append("svg:image")
@@ -107,14 +106,9 @@ graph.controller('GraphController',
 			return -35+params.mapY(+d["emotion"])
 		})
 		.attr("xlink:href",function(d){return Twemoji.getTwemojiSrc(+d["emotion"],36)})
-		.on('click',function(d){
-			d3.selectAll('.emojiText').remove();
-			d3.select('#graphText').append('div').attr('class','emojiText').text(d.text);
-		})
-		.append('title')
-		.text(function(d){return d['text']})
 		
-		params.svg.selectAll(".circle").data(params.data,function(e,index){return index})
+
+		params.svg.selectAll("circle").data(params.data,function(e,index){return index})
 		.enter()	
 		.append("circle")
 		.attr("cx", function(d){
@@ -123,14 +117,16 @@ graph.controller('GraphController',
 		.attr("cy", function(d){
 			return -15+params.mapY(+d["emotion"])
 		})
-		.attr("r", 19)
+		.attr("r", 22)
 		.attr('opacity',0)
-		.on("mouseover", function(d) {
-			d3.select(this).attr('class','graph-hover')
-		})
-		.on("mouseout", function(d) {
-			d3.select(this).attr('class','')
-		})
+    .on('click',function(d){
+    	d3.selectAll('circle').attr('stroke-width', '0').attr('opacity', 0).attr('fill', '1')
+    	d3.selectAll('.emojiText').remove();
+    	d3.select('#graphText').append('div').attr('class','emojiText').text(d.text);
+      d3.select(this).attr('stroke','white').attr('stroke-width', '6').attr('opacity', 1).attr('fill', 'none')
+    })
+    .append('title')
+    .text(function(d){return d['text']})
 	}
 
 	var generateLine = function(params){
