@@ -59,7 +59,7 @@ graph.controller('GraphController',
 	    .tickFormat(function(d) {
 	    	var time = moment(d).fromNow();
 	    	console.log(time,params.momentRange);
-	    	if (hashy[time] || !params.momentHash[time]){
+	    	if (hashy[time]){
 	    		return null
 	    	}
 	    	hashy[time]=true;
@@ -96,10 +96,10 @@ graph.controller('GraphController',
 		})
 		.attr("xlink:href",function(d){return Twemoji.getTwemojiSrc(+d["emotion"],36)})
 		.on("mouseover", function(d) {
-			d3.select(this).attr('opacity',0.7)
+			d3.select(this).attr('class','graph-hover emojiImage')
 		})
 		.on("mouseout", function(d) {
-			d3.select(this).attr('opacity',1)
+			d3.select(this).attr('class','emojiImage')
 		})
 		.on('click',function(d){
 			d3.select('#graphText').select('.emojiText').text(d.text);
