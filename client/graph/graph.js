@@ -66,7 +66,7 @@ graph.controller('GraphController',
 		// .tickValues(params.momentRange)
 		.tickFormat(function(d) {
 			var time = moment(d).fromNow();
-			console.log(time,params.momentRange);
+			// console.log(time,params.momentRange);
 			if (hashy[time]){
 				return null
 			}
@@ -120,9 +120,12 @@ graph.controller('GraphController',
 		.attr("r", 22)
 		.attr('opacity',0)
     .on('click',function(d){
-    	d3.selectAll('circle').attr('stroke-width', '0').attr('opacity', 0).attr('fill', '1')
+    	// circle must have fill in order to be clicked
+    	d3.selectAll('circle').attr('stroke-width', '0').attr('opacity', 0).attr('fill', 'white')
+
     	d3.selectAll('.emojiText').remove();
-    	d3.select('#graphText').append('div').attr('class','emojiText').text(d.text);
+    	d3.select('#graphText').append('div').attr('class','emojiText').html('<div style="font-size: 16px">'+moment(d.createdAt).format('MMM Do YYYY')+'</div>' + '\n' + d.text);
+
       d3.select(this).attr('stroke','white').attr('stroke-width', '6').attr('opacity', 1).attr('fill', 'none')
     })
     .append('title')
