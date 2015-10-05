@@ -81,7 +81,8 @@ graph.controller('GraphController',
 
 	//clear graph first
 	var generateEmojis = function(params){
-		params.svg.selectAll(".emojiImage").remove()
+		d3.selectAll('.emojiText').remove();
+		params.svg.selectAll(".emojiImage").remove();
 		params.svg.selectAll(".emojiImage").data(params.data,function(e,index){return index})
 		.enter()
 		.append("svg:image")
