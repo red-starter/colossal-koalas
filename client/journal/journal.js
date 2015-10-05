@@ -11,22 +11,29 @@ journal.controller('JournalController', ['$scope', 'Entries', 'Twemoji', 'Spinne
     // Create journal model
     $scope.journal = {};
 
-    var emojiByInteger = ['😄', '😊', '😌', '😐', '😕', '😒', '😞', '😣'];
-
     $scope.getEntries = function() {
 
+      // First, create spinner with this method from the service.
       var spinner = Spinner.create();
+      // Then, call `.spin` from the spinner instance and pass in
+      // the element you want the spinner to appear in
       spinner.spin(document.querySelector('.journal-spinner'));
 
       Entries.getAll()
         .then(function(resp) {
+          // Stop the spinner and make it disappear with `.stop()`
           spinner.stop();
+          // Grab the entries off the response.
           $scope.journal.entries = resp;
+          // The entries' data isn't yet in a beautiful format for
+          // the user's eyes. We use a map to mutate each entry in place.
+          // (A forEach would probably do here, since it's using side effects anyway.)
           $scope.journal.entries.map(function(entry) {
-            entry.emoji = emojiByInteger[entry.emotion];
             entry.displayDate = moment(entry.createdAt).format('h:mm a dddd MMMM Do YYYY')
             return entry;
           });
+          // Cache the timestamp of the lastmost entry, for when we load
+          // more responses later.
           lastSeen = resp[resp.length - 1].createdAt;
         })
         .catch(function(err) {
@@ -35,15 +42,19 @@ journal.controller('JournalController', ['$scope', 'Entries', 'Twemoji', 'Spinne
     };
 
     $scope.getMoreEntries = function() {
+      // Spinner again
       var spinner = Spinner.create();
       spinner.spin(document.querySelector('.journal-spinner'));
 
+      // Here, we can pass in the cached `lastSeen` to tell
+      // the server to filter the entries it sends back to ones
+      // older than that timestamp. See `server/routes.js:114`
       Entries.getAll(lastSeen)
         .then(function(resp) {
+          // Same as above
           spinner.stop();
           var entries = resp;
           entries = entries.map(function(entry) {
-                      entry.emoji = emojiByInteger[entry.emotion];
                       entry.displayDate = moment(entry.createdAt).format('h:mm a dddd MMMM Do YYYY')
                       return entry;
                     });
