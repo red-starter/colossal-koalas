@@ -9,7 +9,7 @@ graph.controller('GraphController',
 				var params = initializeGraphParameters(data);
 				generateAxis(params);
 				generateLine(params);
-				generateCircles(params);
+				generateEmojis(params);
 			})      	
 	}() 	//immediately invoke
 
@@ -29,10 +29,18 @@ graph.controller('GraphController',
 		.attr("width",params.options.width)
 		.attr("height",params.options.height)
 
-		var timeRange = _.pluck(data,'createdAt')
+		params.timeRange = _.pluck(data,'createdAt')
+		params.momentHash = {};
+		_.each(params.timeRange,function(element){
+			var time = moment(element).fromNow();
+			params.momentHash[time] =true;
+		})
+		params.momentRange = _.map(params.timeRange,function(element){
+			return moment(element).fromNow();
+		})
 
 		params.mapX = d3.time.scale()
-		.domain([new Date(d3.min(timeRange)), new Date(d3.max(timeRange))])
+		.domain([new Date(d3.min(params.timeRange)), new Date(d3.max(params.timeRange))])
 		.range([params.options.marginSides,params.options.width - params.options.marginSides]);
 		params.mapY = d3.scale.linear()
 		.domain(d3.extent(_.pluck(data,'emotion')))
@@ -44,11 +52,19 @@ graph.controller('GraphController',
 		// var arr = [0,1,2,3]
 		// var arr2 = _.map(arr,function(d){return params.mapX(d)})
  		// console.log("mapping",_.map(params.data,function(datum){return moment(datum).fromNow()}))
+ 		var hashy = {};
 		var xAxis = d3.svg.axis()
 		.scale(params.mapX) //where to orient numbers
-		// .tickValues(arr2)
-		// .tickValues(_.map(params.data,function(datum){return moment(datum).fromNow()}))
-	    .tickFormat(function(d) {return moment(d).fromNow()})
+		// .tickValues(params.momentRange)
+	    .tickFormat(function(d) {
+	    	var time = moment(d).fromNow();
+	    	console.log(time,params.momentRange);
+	    	if (hashy[time] || !params.momentHash[time]){
+	    		return null
+	    	}
+	    	hashy[time]=true;
+	    	return time;
+	    })
 		.orient('bottom') 
 
 		//clear previous append
@@ -64,7 +80,7 @@ graph.controller('GraphController',
 	}
 
 	//clear graph first
-	var generateCircles = function(params){
+	var generateEmojis = function(params){
 		params.svg.selectAll(".emojiImage").remove()
 		params.svg.selectAll(".emojiImage").data(params.data,function(e,index){return index})
 		.enter()
@@ -86,7 +102,7 @@ graph.controller('GraphController',
 			d3.select(this).attr('opacity',1)
 		})
 		.on('click',function(d){
-			d3.select('#graphText').append('div').attr('class','emojiText').text(d.text)
+			d3.select('#graphText').select('.emojiText').text(d.text);
 		})
 		.append('title')
 		.text(function(d){return d['text']})	
