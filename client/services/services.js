@@ -75,27 +75,27 @@ angular.module('greenfeels.services', [])
     }
 
     return $http({
-      token: $window.localStorage.getItem('moodlet'),
       method: 'GET',
-      url: '/api/users/' + username + '/entries' // this might not be right - need to figure out how to write proper url
+      url: '/api/users/' + username + '/entries',
+      headers: {'x-access-token': $window.localStorage.getItem('moodlet')}
     })
     .then(function(resp) {
       return resp.data;
     });
   };
 
-  var methodEntry = function(method){
-    return function(id,body){
+  var methodEntry = function(method) {
+    return function(id, body) {
       '/:username/entries/:entryid'
       var username = $window.localStorage.getItem('moodlet.username');
       if (!username) {
         return;
       }
       return $http({
-        token: $window.localStorage.getItem('moodlet'),
         method: method,
-        url: '/api/users/' + username + '/' + id,
-        body:body
+        url: '/api/users/' + username + '/' + 'entries' + '/' + id,
+        headers: {'x-access-token': $window.localStorage.getItem('moodlet')},
+        body: body
       })
       .then(function(resp) {
         return resp.data;
@@ -103,9 +103,9 @@ angular.module('greenfeels.services', [])
     }
   }
 
-  var getEntry = methodEntry('get');
-  var updateEntry = methodEntry('put')
-  var deleteEntry = methodEntry('delete')
+  var getEntry = methodEntry('GET');
+  var updateEntry = methodEntry('PUT');
+  var deleteEntry = methodEntry('DELETE');
 
   // Adds user's entry
   var addEntry = function(post) {
@@ -114,9 +114,9 @@ angular.module('greenfeels.services', [])
       return;
     }
     return $http({
-      token: $window.localStorage.getItem('moodlet'),
       method: 'POST',
-      url: '/api/users/' + username + '/entries', // this might not be right - need to figure out how to write proper url
+      url: '/api/users/' + username + '/entries',
+      headers: {'x-access-token': $window.localStorage.getItem('moodlet')},
       data: post
     });
   };
