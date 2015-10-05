@@ -60,8 +60,6 @@ graph.controller('GraphController',
 		.call(xAxis)
 		.selectAll("text")  
             .style("text-anchor", "end")
-            // .attr("dx", "-.8em")
-            // .attr("dy", ".15em")
             .attr("transform", "rotate(-25)" );
 	}
 
@@ -88,7 +86,7 @@ graph.controller('GraphController',
 			d3.select(this).attr('opacity',1)
 		})
 		.on('click',function(d){
-			d3.select('#graphText').text(d.text)
+			d3.select('#graphText').append('div').attr('class','emojiText').text(d.text)
 		})
 		.append('title')
 		.text(function(d){return d['text']})	
