@@ -68,7 +68,8 @@ angular.module('greenfeels.services', [])
 
 .factory('Entries', ['$http', '$window', function($http, $window) {
   // Retrieves all of user's entries
-  var getAll = function() {
+  var getAll = function(lastSeen) {
+    console.log(lastSeen);
     var username = $window.localStorage.getItem('moodlet.username');
     if (!username) {
       return;
@@ -77,7 +78,10 @@ angular.module('greenfeels.services', [])
     return $http({
       method: 'GET',
       url: '/api/users/' + username + '/entries',
-      headers: {'x-access-token': $window.localStorage.getItem('moodlet')}
+      headers: {
+        'x-access-token': $window.localStorage.getItem('moodlet'),
+        'x-last-seen': lastSeen
+      }
     })
     .then(function(resp) {
       return resp.data;
