@@ -75,6 +75,7 @@ angular.module('greenfeels.services', [])
     }
 
     return $http({
+      token: $window.localStorage.getItem('moodlet'),
       method: 'GET',
       url: '/api/users/' + username + '/entries' // this might not be right - need to figure out how to write proper url
     })
@@ -83,20 +84,28 @@ angular.module('greenfeels.services', [])
     });
   };
 
-  var getEntry = function(id){
-    '/:username/entries/:entryid'
-    var username = $window.localStorage.getItem('moodlet.username');
-    if (!username) {
-      return;
+  var methodEntry = function(method){
+    return function(id,body){
+      '/:username/entries/:entryid'
+      var username = $window.localStorage.getItem('moodlet.username');
+      if (!username) {
+        return;
+      }
+      return $http({
+        token: $window.localStorage.getItem('moodlet'),
+        method: method,
+        url: '/api/users/' + username + '/' + id,
+        body:body
+      })
+      .then(function(resp) {
+        return resp.data;
+      });      
     }
-    return $http({
-      method: 'GET',
-      url: '/api/users/' + username + '/' + id
-    })
-    .then(function(resp) {
-      return resp.data;
-    });
   }
+
+  var getEntry = methodEntry('get');
+  var updateEntry = methodEntry('put')
+  var deleteEntry = methodEntry('delete')
 
   // Adds user's entry
   var addEntry = function(post) {
@@ -104,18 +113,19 @@ angular.module('greenfeels.services', [])
     if (!username) {
       return;
     }
-    
     return $http({
+      token: $window.localStorage.getItem('moodlet'),
       method: 'POST',
       url: '/api/users/' + username + '/entries', // this might not be right - need to figure out how to write proper url
       data: post
     });
   };
-
   return {
     getAll: getAll,
     addEntry: addEntry,
-    getEntry:getEntry
+    getEntry: getEntry,
+    updateEntry: updateEntry,
+    deleteEntry: deleteEntry
   };
 }])
 
