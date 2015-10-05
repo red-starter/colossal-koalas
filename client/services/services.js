@@ -78,7 +78,7 @@ angular.module('greenfeels.services', [])
       token: $window.localStorage.getItem('moodlet'),
       method: 'GET',
       url: '/api/users/' + username + '/entries',
-      'x-access-token': $window.localStorage.getItem('moodlet')
+      headers: {'x-access-token': $window.localStorage.getItem('moodlet')}
     })
     .then(function(resp) {
       return resp.data;
@@ -118,7 +118,7 @@ angular.module('greenfeels.services', [])
       token: $window.localStorage.getItem('moodlet'),
       method: 'POST',
       url: '/api/users/' + username + '/entries',
-      'x-access-token': $window.localStorage.getItem('moodlet'),
+      headers: {'x-access-token': $window.localStorage.getItem('moodlet')},
       data: post
     });
   };
