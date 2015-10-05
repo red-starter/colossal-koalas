@@ -7,7 +7,7 @@ graph.controller('GraphController',
 			Entries.getAll()
 			.then(function(data){
 				var params = initializeGraphParameters(data);
-				console.log(params.data)
+				// console.log(params.data)
 				generateAxis(params);
 				generateLine(params);
 				generateEmojis(params);
@@ -56,7 +56,7 @@ graph.controller('GraphController',
 		// .tickValues(params.momentRange)
 		.tickFormat(function(d) {
 			var time = moment(d).fromNow();
-			console.log(time,params.momentRange);
+			// console.log(time,params.momentRange);
 			return time;
 		})
 		.orient('bottom') 
@@ -113,36 +113,41 @@ graph.controller('GraphController',
 			.append('div')
 			.attr('class','emojiText')
 			.text(d.text)
-			.append('a')
+			.append('button')
 			.on('click',function(){
 				Entries.getEntry(d.id).then(function(data){
 					console.log(data)
 				})
 			})
-			// .attr('href',)
-			.text('go Home')
+			.text('getEntry')
 
+			d3.select('.emojiText')
+			.append('button')
+			.on('click',function(){
+				Entries.deleteEntry(d.id).then(function(data){
+					console.log(data)
+				})
+			})
+			.text('deleteEntry')
+
+			d3.select('.emojiText')
+			.append('textarea')
+			.attr('rows','4')
+			.attr('cols','20')
+			.attr('class','updateText')
+			.text(d.text)
+
+			d3.select('.emojiText')			
+			.append('button')
+			.on('click',function(){
+				Entries.updateEntry(d.id,d3.select('.updateText').text()).then(function(data){
+					console.log(data)
+				})
+			})
+			.text('updateEntry')
 		})
 		.append('title')
 		.text(function(d){return d['text']})
-		
-		params.svg.selectAll(".circle").data(params.data,function(e,index){return index})
-		.enter()	
-		.append("circle")
-		.attr("cx", function(d){
-			return params.mapX(new Date(d["createdAt"]))
-		})
-		.attr("cy", function(d){
-			return -15+params.mapY(+d["emotion"])
-		})
-		.attr("r", 19)
-		.attr('opacity',0)
-		.on("mouseover", function(d) {
-			d3.select(this).attr('class','graph-hover')
-		})
-		.on("mouseout", function(d) {
-			d3.select(this).attr('class','')
-		})
 	}
 
 	var generateLine = function(params){
