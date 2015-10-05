@@ -16,9 +16,11 @@ graph.controller('GraphController',
 				var params = initializeGraphParameters(data);
 				generateAxis(params);
 				generateLine(params);
-				generateCircles(params);
-			});
-		}(); //Immediately invoke
+				generateCircles(params); 
+				generateEmojis(params);
+			})    	
+	}() 	//immediately invoke
+
 
 	var initializeGraphParameters = function(data){
 		//container 
@@ -36,10 +38,18 @@ graph.controller('GraphController',
 		.attr("width",params.options.width)
 		.attr("height",params.options.height)
 
-		var timeRange = _.pluck(data,'createdAt')
+		params.timeRange = _.pluck(data,'createdAt')
+		params.momentHash = {};
+		_.each(params.timeRange,function(element){
+			var time = moment(element).fromNow();
+			params.momentHash[time] =true;
+		})
+		params.momentRange = _.map(params.timeRange,function(element){
+			return moment(element).fromNow();
+		})
 
 		params.mapX = d3.time.scale()
-		.domain([new Date(d3.min(timeRange)), new Date(d3.max(timeRange))])
+		.domain([new Date(d3.min(params.timeRange)), new Date(d3.max(params.timeRange))])
 		.range([params.options.marginSides,params.options.width - params.options.marginSides]);
 		params.mapY = d3.scale.linear()
 		.domain(d3.extent(_.pluck(data,'emotion')))
@@ -51,11 +61,19 @@ graph.controller('GraphController',
 		// var arr = [0,1,2,3]
 		// var arr2 = _.map(arr,function(d){return params.mapX(d)})
  		// console.log("mapping",_.map(params.data,function(datum){return moment(datum).fromNow()}))
-		var xAxis = d3.svg.axis()
+ 		var hashy = {};
+ 		var xAxis = d3.svg.axis()
 		.scale(params.mapX) //where to orient numbers
-		// .tickValues(arr2)
-		// .tickValues(_.map(params.data,function(datum){return moment(datum).fromNow()}))
-	    .tickFormat(function(d) {return moment(d).fromNow()})
+		// .tickValues(params.momentRange)
+		.tickFormat(function(d) {
+			var time = moment(d).fromNow();
+			console.log(time,params.momentRange);
+			if (hashy[time]){
+				return null
+			}
+			hashy[time]=true;
+			return time;
+		})
 		.orient('bottom') 
 
 		//clear previous append
@@ -66,18 +84,21 @@ graph.controller('GraphController',
 		.attr('transform','translate(0,'+ (params.options.height - params.options.marginVertical) +')')
 		.call(xAxis)
 		.selectAll("text")  
-            .style("text-anchor", "end")
-            .attr("transform", "rotate(-25)" );
+		.style("text-anchor", "end")
+		.attr("transform", "rotate(-25)" );
 	}
 
 	//clear graph first
-	var generateCircles = function(params){
-		params.svg.selectAll(".emojiImage").remove()
+	var generateEmojis = function(params){
+		d3.selectAll('.emojiText').remove();
+		params.svg.selectAll(".emojiImage").remove();
+
+
 		params.svg.selectAll(".emojiImage").data(params.data,function(e,index){return index})
 		.enter()
 		.append("svg:image")
-	    .attr('width', 40)
-	    .attr('height', 40)
+		.attr('width', 40)
+		.attr('height', 40)
 		.attr('class','emojiImage')
 		.attr('x',function(d){
 			return -20+params.mapX(new Date(d["createdAt"]))
@@ -86,17 +107,30 @@ graph.controller('GraphController',
 			return -35+params.mapY(+d["emotion"])
 		})
 		.attr("xlink:href",function(d){return Twemoji.getTwemojiSrc(+d["emotion"],36)})
-		.on("mouseover", function(d) {
-			d3.select(this).attr('opacity',0.7)
-		})
-		.on("mouseout", function(d) {
-			d3.select(this).attr('opacity',1)
-		})
 		.on('click',function(d){
-			d3.select('#graphText').append('div').attr('class','emojiText').text(d.text)
+			d3.selectAll('.emojiText').remove();
+			d3.select('#graphText').append('div').attr('class','emojiText').text(d.text);
 		})
 		.append('title')
-		.text(function(d){return d['text']})	
+		.text(function(d){return d['text']})
+		
+		params.svg.selectAll(".circle").data(params.data,function(e,index){return index})
+		.enter()	
+		.append("circle")
+		.attr("cx", function(d){
+			return params.mapX(new Date(d["createdAt"]))
+		})
+		.attr("cy", function(d){
+			return -15+params.mapY(+d["emotion"])
+		})
+		.attr("r", 19)
+		.attr('opacity',0)
+		.on("mouseover", function(d) {
+			d3.select(this).attr('class','graph-hover')
+		})
+		.on("mouseout", function(d) {
+			d3.select(this).attr('class','')
+		})
 	}
 
 	var generateLine = function(params){

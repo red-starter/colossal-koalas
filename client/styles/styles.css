@@ -110,7 +110,7 @@ button {
 }
 
 .nav li {
-  border-right: 1px black solid;
+  border-right: 1px #272C41 solid;
   float: left;
   /* This moves the prompt down - find better way */
   margin-bottom: 50px;
@@ -139,6 +139,9 @@ button {
   right: 30px;
   position: absolute;
   top: 20px;
+
+.nav a:hover{
+  font-weight: 700;
 }
 
 /* Home page initial */
@@ -219,8 +222,9 @@ textarea {
 /* Journal page */
 
 #journal h1 {
-  font-size: 60px;
   clear: both;
+  font-size: 60px;
+  margin-bottom: 50px;
   /*padding-top: 50px;*/
 }
 
@@ -246,7 +250,7 @@ textarea {
 
 .text {
   font-size: 24px;
-  padding: 10px 0;
+  padding: 10px;
   border-radius: 8px 8px 8px 50px;
   background-color: #fff;
 }
@@ -259,12 +263,33 @@ textarea {
 
 /* Graph page */
 
+#graph1 {
+  display: inline-block;
+  float: left;
+  margin: 20px 20px 50px;
+}
+
 .graph-header {
   font-size: 60px;
   clear: both;
   /*padding-top: 50px;*/
 }
 
-#graph1 {
-  margin-left: 300px;
+.emojiImage {
+  cursor: pointer;
+}
+
+/* Text container */
+#graphText {
+  display: inline-block;
+  float: left;
+}
+
+.emojiText {
+  background-color: #fff;
+  border-radius: 8px;
+  font-size: 24px;
+  margin: 200px 30px 0;
+  padding: 10px 10px;
+  width: 300px;
 }
