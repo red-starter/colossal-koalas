@@ -64,4 +64,4 @@ Several useful developer scripts are configured in `gulpfile.js`. You must confi
 
 ### Roadmap
 
-View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
+View the project roadmap [here](https://github.com/colossal-koalas/colossal-koalas/issues)

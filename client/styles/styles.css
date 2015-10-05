@@ -98,7 +98,7 @@ button {
   left: 30px;
   position: absolute;
   top: 20px;
-  background: linear-gradient(330deg, #27d8bb 5%, #9952e0 70%, #9952e0 100%);
+  background: linear-gradient(330deg, #23c29b 5%, #9952e0 75%, #9952e0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -130,6 +130,15 @@ button {
   text-decoration: none;
   text-transform: uppercase;
 }
+
+.username {
+  display: inline;
+  font-size: 35px;
+  font-weight: 100;
+  color: #5d8aa8;
+  right: 30px;
+  position: absolute;
+  top: 20px;
 
 .nav a:hover{
   font-weight: 700;

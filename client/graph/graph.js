@@ -1,17 +1,26 @@
 var graph = angular.module('greenfeels.graph',[]);
 
 graph.controller('GraphController',
-	['Entries', 'Twemoji', function(Entries, Twemoji) {
+	['Entries', 'Twemoji', 'Spinner', function(Entries, Twemoji, Spinner) {
 
 		var getData = function(){
+			//Create and start spinning spinner
+			var spinner = Spinner.create();
+      spinner.spin(document.querySelector('.graph-page'));
+
 			Entries.getAll()
 			.then(function(data){
+				//Stop spinner
+				spinner.stop();
+				//Initialize graph parameters
 				var params = initializeGraphParameters(data);
 				generateAxis(params);
 				generateLine(params);
+				generateCircles(params); 
 				generateEmojis(params);
-			})      	
+			})    	
 	}() 	//immediately invoke
+
 
 	var initializeGraphParameters = function(data){
 		//container 
@@ -146,4 +155,4 @@ graph.controller('GraphController',
 		.ease("linear")
 		.attr("stroke-dashoffset", 0);
 	}
-}])
+}]);
