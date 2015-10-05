@@ -6,21 +6,26 @@ graph.controller('GraphController',
 		var getData = function(){
 			//Create and start spinning spinner
 			var spinner = Spinner.create();
-      spinner.spin(document.querySelector('#graph1'));
+			spinner.spin(document.querySelector('#graph1'));
 
 			Entries.getAll()
 			.then(function(data){
 				//Stop spinner
 				spinner.stop();
 				//Initialize graph parameters
-				var params = initializeGraphParameters(data);
-				// console.log(params.data)
-				generateAxis(params);
-				generateLine(params);
-				generateEmojis(params);
-			});
-		}(); //immediately invoke
+				renderGraph(data);
 
+			})      	
+	}() 	//immediately invoke
+
+	var renderGraph = function(data){
+		var params = initializeGraphParameters(data);
+		// console.log(params.data)
+		generateAxis(params);
+		generateLine(params);
+		generateEmojis(params);
+
+	}
 
 	var initializeGraphParameters = function(data){
 		//container 
@@ -121,22 +126,7 @@ graph.controller('GraphController',
 			.append('div')
 			.attr('class','emojiText')
 			.text(d.text)
-			.append('button')
-			.on('click',function(){
-				Entries.getEntry(d.id).then(function(data){
-					console.log(data)
-				})
-			})
-			.text('getEntry')
 
-			d3.select('.emojiText')
-			.append('button')
-			.on('click',function(){
-				Entries.deleteEntry(d.id).then(function(data){
-					console.log(data)
-				})
-			})
-			.text('deleteEntry')
 
 			d3.select('.emojiText')
 			.append('textarea')
@@ -153,6 +143,15 @@ graph.controller('GraphController',
 				})
 			})
 			.text('updateEntry')
+			
+			d3.select('.emojiText')
+			.append('button')
+			.on('click',function(){
+				Entries.deleteEntry(d.id).then(function(data){
+					console.log(data)
+				})
+			})
+			.text('deleteEntry')
 		})
 		.append('title')
 		.text(function(d){return d['text']})
