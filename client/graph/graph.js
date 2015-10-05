@@ -55,7 +55,7 @@ graph.controller('GraphController',
  		var hashy = {};
 		var xAxis = d3.svg.axis()
 		.scale(params.mapX) //where to orient numbers
-		// .tickValues(_.map(params.data,function(datum){return moment(datum).fromNow()}))
+		// .tickValues(params.momentRange)
 	    .tickFormat(function(d) {
 	    	var time = moment(d).fromNow();
 	    	console.log(time,params.momentRange);
@@ -102,7 +102,7 @@ graph.controller('GraphController',
 			d3.select(this).attr('opacity',1)
 		})
 		.on('click',function(d){
-			d3.select('#graphText').attr('class','emojiText').text(d.text);
+			d3.select('#graphText').select('.emojiText').text(d.text);
 		})
 		.append('title')
 		.text(function(d){return d['text']})	
