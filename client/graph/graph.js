@@ -21,11 +21,8 @@ graph.controller('GraphController',
 		params.options ={
 			width:800,
 			height:600,
-			margin:100,
-			marginLeft:50,
-			marginTop:50,
-			marginRight:50,
-			marginBottom:50
+			marginVertical:100,
+			marginSides:50
 		};
 		//svg selector 
 		params.svg = d3.select("#graph1").append("svg")
@@ -36,10 +33,10 @@ graph.controller('GraphController',
 
 		params.mapX = d3.time.scale()
 		.domain([new Date(d3.min(timeRange)), new Date(d3.max(timeRange))])
-		.range([params.options.margin,params.options.width-params.options.margin]);
+		.range([params.options.marginSides,params.options.width - params.options.marginSides]);
 		params.mapY = d3.scale.linear()
 		.domain(d3.extent(_.pluck(data,'emotion')))
-		.range([params.options.margin,params.options.height - params.options.margin]);
+		.range([params.options.marginVertical,params.options.height - params.options.marginVertical]);
 
 		return params;
 	}
@@ -59,12 +56,10 @@ graph.controller('GraphController',
 		// use svg selector, add axis to svg as a collection of g elements
 		params.svg.append("g")
 		.attr('class','axis')
-		.attr('transform','translate(0,'+ (params.options.height- params.options.margin) +')')
+		.attr('transform','translate(0,'+ (params.options.height - params.options.marginVertical) +')')
 		.call(xAxis)
 		.selectAll("text")  
             .style("text-anchor", "end")
-            // .attr("dx", "-.8em")
-            // .attr("dy", ".15em")
             .attr("transform", "rotate(-25)" );
 	}
 
@@ -81,7 +76,7 @@ graph.controller('GraphController',
 			return -20+params.mapX(new Date(d["createdAt"]))
 		})
 		.attr('y',function(d){
-			return -20+params.mapY(+d["emotion"])
+			return -35+params.mapY(+d["emotion"])
 		})
 		.attr("xlink:href",function(d){return Twemoji.getTwemojiSrc(+d["emotion"],36)})
 		.on("mouseover", function(d) {
@@ -91,7 +86,7 @@ graph.controller('GraphController',
 			d3.select(this).attr('opacity',1)
 		})
 		.on('click',function(d){
-			d3.select('#graphText').text(d.text)
+			d3.select('#graphText').append('div').attr('class','emojiText').text(d.text)
 		})
 		.append('title')
 		.text(function(d){return d['text']})	
