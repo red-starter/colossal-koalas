@@ -131,6 +131,10 @@ button {
   text-transform: uppercase;
 }
 
+.nav a:hover{
+  font-weight: 700;
+}
+
 /* Home page initial */
 
 ul {
@@ -249,12 +253,18 @@ textarea {
 
 /* Graph page */
 
+#graph1 {
+  margin: 20px 0 80px;
+}
+
 .graph-header {
   font-size: 60px;
   clear: both;
   /*padding-top: 50px;*/
 }
 
-#graph1 {
-  margin-left: 300px;
+svg {
+  display: block;
+  margin: 0 auto;
+  width: 800;
 }
