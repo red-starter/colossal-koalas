@@ -1,7 +1,7 @@
-var home = angular.module('greenfeels.home', []);
+var home = angular.module('greenfeels.home', ['ngAnimate']);
 
-home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries', 'Twemoji',
-  function($scope, $state, Prompts, Entries, Twemoji) {
+home.controller('HomeController', ['$scope', '$state', '$animate', 'Prompts', 'Entries', 'Twemoji',
+  function($scope, $state, $animate, Prompts, Entries, Twemoji) {
     // Expose our Twemoji service within the scope.
     // This is used to conveniently generate the `src`
     // attributes of the <img> tags within the buttons.
@@ -20,7 +20,9 @@ home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries', 'Tw
     // and captures the code of the selected emotion on the tentative entry model.
     $scope.selectHandler = function($event) {
       $state.transitionTo('home.selected');
+      clearSelectedStates();
       var emotion = $event.currentTarget.attributes['data-emotion-id'].value;
+      $event.currentTarget.classList.add('selected-emoji');
       $scope.entry.emotion = emotion;
       $scope.secondPrompt = Prompts.getSecondPrompt(emotion);
     };
@@ -31,5 +33,12 @@ home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries', 'Tw
       $scope.entry = {};
       $state.transitionTo('journal');
     };
+
+    function clearSelectedStates() {
+      var selected = document.getElementsByClassName('selected-emoji');
+      for (var i = 0; i < selected.length; i++) {
+        selected[i].classList.remove('selected-emoji');
+      }
+    }
 
   }]);

@@ -1,5 +1,5 @@
 var app = angular.module('greenfeels',
-  ['greenfeels.services', 'greenfeels.home', 'greenfeels.journal', 'greenfeels.auth','greenfeels.graph','ui.router']); // need to add greenfeels.graph when ready
+  ['greenfeels.services', 'greenfeels.home', 'greenfeels.journal', 'greenfeels.auth','greenfeels.graph','ui.router', 'ngAnimate']);
 
 app.config(['$stateProvider', '$urlRouterProvider',
   function($stateProvider, $urlRouterProvider) {
