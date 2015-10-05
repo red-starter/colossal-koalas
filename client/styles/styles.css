@@ -110,7 +110,7 @@ button {
 }
 
 .nav li {
-  border-right: 1px black solid;
+  border-right: 1px #272C41 solid;
   float: left;
   /* This moves the prompt down - find better way */
   margin-bottom: 50px;
