@@ -6,7 +6,7 @@ graph.controller('GraphController',
 		var getData = function(){
 			//Create and start spinning spinner
 			var spinner = Spinner.create();
-      spinner.spin(document.querySelector('.graph-page'));
+      spinner.spin(document.querySelector('#graph1'));
 
 			Entries.getAll()
 			.then(function(data){
