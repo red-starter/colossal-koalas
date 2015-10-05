@@ -1,88 +1,29 @@
-“Life Calendar” -- life expectancy w/ stats
+Moodlet -- 
 
-- Milestones
-  - Basics
-    - Start UI in Angular
-    - Server with database, tracking users who have many feelposts
-    - Front page with a friendly, variable prompt, asking user to express their mental state on a spectrum of emoji
-    - Variable prompt after selection of emoji, friendlily inviting user to record some thoughts about the emotion they picked
-    - At least one visualization of this data after collection
-  - Stretch
+- Product
+  - MVP
+    - Authentication
+    - Journal - get and post journal entries
+    - Graph - visualize journal entries
+  - Stretch Goals
     - Machine learning for different tones in extension prompts
-    - Mobile reminders?
+    - Mobile reminders
     - Sentiment analysis
     - Reflection reminders from past
     - Refactor to React
     - Mobile app
-- Project Backlog
-  - Set up project file structure and organization
-    - Decide convention of filenames
-    - Set up build tasks
-      - Decide on linting
-  - Maintain documentation
-  - Maintain test suite
-  - Set up server
-    - Set up database
-    - Connect to database
-    - Design route handlers
-      - Design database queries
-    - Consider deployment, environment variables, etc.
-  - API
-    - Form of data from client
-      - Storage on client vs. storage in DB
-    - Routes and verbs to server
-  - Authentication
-    - Set up Passport
-    - Design session handling
-  - Implement front end
-    - ui-router states
-    - Front page
-      - index.html, .js
-      - Controller
-      - Write prompts
-      - Emoji selector
-      - Variable response to selected emotion
-      - Input field for text
-      - Submit button
-    - Journal view
-      - journal.html, .js
-      - Controller
-      - Horizontal slices of entries
-      - Retrieval from DB and formatting for display
-    - Graph view
-      - graph.html, .js
-      - Design graph format
-      - Controller
-      - D3 display, SVG element
-- Stack
-  - Angular vs. React vs. Backbone
-    - Backbone
-      - Pros: familiarity, simplicity
-      - Cons: don’t want to use it, bad, unproductive
-    - Angular
-      - Pros: fast, easy, looks nice, might be on test, works with D3
-      - Cons: doesn’t scale well, can be confusing, 
-    - React
-      - Pros: more intuitive organization and structure
-      - Cons: have to learn it
+
+- Testing
+  - Unit tests
+  - Integration tests
+
+- Product Backlog - click [here] (https://github.com/colossal-koalas/colossal-koalas/issues) to see open issues
+
+- Tech Stack
+  - Angular 
   - D3
   - Mocha + Chai
-  - Node, Express, Passport
-  - Sequelize vs. native driver
-  - Postgres vs. MySQL vs. Firebase
+  - Node, Express
+  - Sequelize
+  - Postgres
   - Gulp
-- Design Principles
-  - Two halves: 
-    - user interaction, input, health, etc.
-    - [COMPLETE] visualization of data, life expectancy, risk, etc.
-- Brainstorm Notes
-  - How habits affect life expectancy
-  - Dark, funny
-  - Perspective on habits
-  - “Positive” messages from one area of screen (popup bubbles?), “negative” messages from another area of screen
-    - Use conversational metaphor for reflecting on choices and keeping a log of thoughts, decisions etc.
-  - Statistics on risks visualized through the days of the calendar
-  - Asks what you had for lunch, what you did over the weekend, etc.
-    - Time context, place context
-    - API for data collection? Fitbit?
-  - NOT social -- highly personal
