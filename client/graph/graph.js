@@ -121,12 +121,35 @@ graph.controller('GraphController',
 		})
 
 		.on('click',function(d){
+			
+
+		})
+		.append('title')
+		.text(function(d){return d['text']})
+
+		params.svg.selectAll("circle").data(params.data,function(e,index){return index})
+		.enter()    
+		.append("circle")
+		.attr("cx", function(d){
+			return params.mapX(new Date(d["createdAt"]))
+		})
+		.attr("cy", function(d){
+			return -15+params.mapY(+d["emotion"])
+		})
+		.attr("r", 22)
+		.attr('opacity',0)
+		.on('click',function(d){
+			d3.selectAll('circle').attr('stroke-width', '0').attr('opacity', 0).attr('fill', 'white')
+
 			d3.selectAll('.emojiText').remove();
 			d3.selectAll('.emojiLink').remove();
+
+			d3.select(this).attr('stroke','white').attr('stroke-width', '6').attr('opacity', 1).attr('fill', 'none')
+			
 			d3.select('#graphText')
 			.append('div')
 			.attr('class','emojiText')
-			.text(d.text)
+			.html('<div style="font-size: 16px">'+moment(d.createdAt).format('MMM Do YYYY')+'</div>' + '\n' + d.text+'\n')
 			.append('button')
 			.text('updateText')
 			.on('click',function(){
@@ -159,31 +182,33 @@ graph.controller('GraphController',
 				.text('deleteEntry')
 			})
 
+
+
 		})
-		.append('title')
-		.text(function(d){return d['text']})
-	}
+.append('title')
+.text(function(d){return d['text']})
+}
 
-	var generateLine = function(params){
-		var line = d3.svg.line()
-		.interpolate("monotone")
-		.x(function(d,i) {return params.mapX(new Date(d["createdAt"]))})
-		.y(function(d,i) {return params.mapY(+d["emotion"])})
+var generateLine = function(params){
+	var line = d3.svg.line()
+	.interpolate("monotone")
+	.x(function(d,i) {return params.mapX(new Date(d["createdAt"]))})
+	.y(function(d,i) {return params.mapY(+d["emotion"])})
 
-		var path = params.svg.append("path")
-		.attr("d", line(params.data))
-		.attr("stroke", "steelblue")
-		.attr("stroke-width", "2")
-		.attr("fill", "none");
+	var path = params.svg.append("path")
+	.attr("d", line(params.data))
+	.attr("stroke", "steelblue")
+	.attr("stroke-width", "2")
+	.attr("fill", "none");
 
-		var totalLength = path.node().getTotalLength();
+	var totalLength = path.node().getTotalLength();
 
-		path
-		.attr("stroke-dasharray", totalLength + " " + totalLength)
-		.attr("stroke-dashoffset", totalLength)
-		.transition()
-		.duration(2000)
-		.ease("linear")
-		.attr("stroke-dashoffset", 0);
-	}
+	path
+	.attr("stroke-dasharray", totalLength + " " + totalLength)
+	.attr("stroke-dashoffset", totalLength)
+	.transition()
+	.duration(2000)
+	.ease("linear")
+	.attr("stroke-dashoffset", 0);
+}
 }]);
