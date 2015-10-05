@@ -53,18 +53,18 @@ graph.controller('GraphController',
 		// var arr2 = _.map(arr,function(d){return params.mapX(d)})
  		// console.log("mapping",_.map(params.data,function(datum){return moment(datum).fromNow()}))
  		var hashy = {};
-		var xAxis = d3.svg.axis()
+ 		var xAxis = d3.svg.axis()
 		.scale(params.mapX) //where to orient numbers
 		// .tickValues(params.momentRange)
-	    .tickFormat(function(d) {
-	    	var time = moment(d).fromNow();
-	    	console.log(time,params.momentRange);
-	    	if (hashy[time]){
-	    		return null
-	    	}
-	    	hashy[time]=true;
-	    	return time;
-	    })
+		.tickFormat(function(d) {
+			var time = moment(d).fromNow();
+			console.log(time,params.momentRange);
+			if (hashy[time]){
+				return null
+			}
+			hashy[time]=true;
+			return time;
+		})
 		.orient('bottom') 
 
 		//clear previous append
@@ -75,19 +75,31 @@ graph.controller('GraphController',
 		.attr('transform','translate(0,'+ (params.options.height - params.options.marginVertical) +')')
 		.call(xAxis)
 		.selectAll("text")  
-            .style("text-anchor", "end")
-            .attr("transform", "rotate(-25)" );
+		.style("text-anchor", "end")
+		.attr("transform", "rotate(-25)" );
 	}
 
 	//clear graph first
 	var generateEmojis = function(params){
 		d3.selectAll('.emojiText').remove();
 		params.svg.selectAll(".emojiImage").remove();
+
+		params.svg.selectAll(".circle").data(params.data,function(e,index){return index})
+		.enter()	
+		.append("circle")
+		.attr("cx", function(d){
+			return params.mapX(new Date(d["createdAt"]))
+		})
+		.attr("cy", function(d){
+			return -15+params.mapY(+d["emotion"])
+		})
+		.attr("r", 18)
+
 		params.svg.selectAll(".emojiImage").data(params.data,function(e,index){return index})
 		.enter()
 		.append("svg:image")
-	    .attr('width', 40)
-	    .attr('height', 40)
+		.attr('width', 40)
+		.attr('height', 40)
 		.attr('class','emojiImage')
 		.attr('x',function(d){
 			return -20+params.mapX(new Date(d["createdAt"]))
@@ -107,7 +119,8 @@ graph.controller('GraphController',
 			d3.select('#graphText').append('div').attr('class','emojiText').text(d.text);
 		})
 		.append('title')
-		.text(function(d){return d['text']})	
+		.text(function(d){return d['text']})
+		
 	}
 
 	var generateLine = function(params){
