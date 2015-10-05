@@ -59,7 +59,7 @@ graph.controller('GraphController',
 	    .tickFormat(function(d) {
 	    	var time = moment(d).fromNow();
 	    	console.log(time,params.momentRange);
-	    	if (hashy[time] || !params.momentHash[time]){
+	    	if (hashy[time]){
 	    		return null
 	    	}
 	    	hashy[time]=true;
@@ -81,7 +81,8 @@ graph.controller('GraphController',
 
 	//clear graph first
 	var generateEmojis = function(params){
-		params.svg.selectAll(".emojiImage").remove()
+		d3.selectAll('.emojiText').remove();
+		params.svg.selectAll(".emojiImage").remove();
 		params.svg.selectAll(".emojiImage").data(params.data,function(e,index){return index})
 		.enter()
 		.append("svg:image")
@@ -96,13 +97,14 @@ graph.controller('GraphController',
 		})
 		.attr("xlink:href",function(d){return Twemoji.getTwemojiSrc(+d["emotion"],36)})
 		.on("mouseover", function(d) {
-			d3.select(this).attr('opacity',0.7)
+			d3.select(this).attr('class','graph-hover emojiImage')
 		})
 		.on("mouseout", function(d) {
-			d3.select(this).attr('opacity',1)
+			d3.select(this).attr('class','emojiImage')
 		})
 		.on('click',function(d){
-			d3.select('#graphText').select('.emojiText').text(d.text);
+			d3.selectAll('.emojiText').remove();
+			d3.select('#graphText').append('div').attr('class','emojiText').text(d.text);
 		})
 		.append('title')
 		.text(function(d){return d['text']})	
