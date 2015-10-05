@@ -119,6 +119,7 @@ graph.controller('GraphController',
 			d3.select(this).style({'null':null});
 			d3.select(this).attr('opacity',1)
 		})
+
 		.on('click',function(d){
 			d3.selectAll('.emojiText').remove();
 			d3.selectAll('.emojiLink').remove();
@@ -126,32 +127,38 @@ graph.controller('GraphController',
 			.append('div')
 			.attr('class','emojiText')
 			.text(d.text)
-
-
-			d3.select('.emojiText')
-			.append('textarea')
-			.attr('rows','4')
-			.attr('cols','20')
-			.attr('class','updateText')
-			.text(d.text)
-
-			d3.select('.emojiText')			
 			.append('button')
+			.text('updateText')
 			.on('click',function(){
-				Entries.updateEntry(d.id,d3.select('.updateText').text()).then(function(data){
-					console.log(data)
+				d3.select('.emojiText')
+				.append('textarea')
+				.attr('rows','4')
+				.attr('cols','20')
+				.attr('class','updateText')
+				.text(d.text)
+
+				d3.select(this).remove();
+
+				d3.select('.emojiText')			
+				.append('button')
+				.on('click',function(){
+					Entries.updateEntry(d.id,d3.select('.updateText').text()).then(function(data){
+						console.log(data)
+					})
 				})
-			})
-			.text('updateEntry')
-			
-			d3.select('.emojiText')
-			.append('button')
-			.on('click',function(){
-				Entries.deleteEntry(d.id).then(function(data){
-					console.log(data)
+				.text('updateEntry')
+
+				
+				d3.select('.emojiText')
+				.append('button')
+				.on('click',function(){
+					Entries.deleteEntry(d.id).then(function(data){
+						console.log(data)
+					})
 				})
+				.text('deleteEntry')
 			})
-			.text('deleteEntry')
+
 		})
 		.append('title')
 		.text(function(d){return d['text']})
