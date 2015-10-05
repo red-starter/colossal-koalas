@@ -268,3 +268,7 @@ svg {
   margin: 0 auto;
   width: 800;
 }
+
+.emojiImage {
+  cursor: pointer;
+}
