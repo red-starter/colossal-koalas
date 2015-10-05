@@ -16,10 +16,9 @@ graph.controller('GraphController',
 				var params = initializeGraphParameters(data);
 				generateAxis(params);
 				generateLine(params);
-				generateCircles(params); 
 				generateEmojis(params);
-			})    	
-	}() 	//immediately invoke
+			});
+		}(); //immediately invoke
 
 
 	var initializeGraphParameters = function(data){
@@ -36,17 +35,17 @@ graph.controller('GraphController',
 		//svg selector 
 		params.svg = d3.select("#graph1").append("svg")
 		.attr("width",params.options.width)
-		.attr("height",params.options.height)
+		.attr("height",params.options.height);
 
-		params.timeRange = _.pluck(data,'createdAt')
+		params.timeRange = _.pluck(data,'createdAt');
 		params.momentHash = {};
 		_.each(params.timeRange,function(element){
 			var time = moment(element).fromNow();
 			params.momentHash[time] =true;
-		})
+		});
 		params.momentRange = _.map(params.timeRange,function(element){
 			return moment(element).fromNow();
-		})
+		});
 
 		params.mapX = d3.time.scale()
 		.domain([new Date(d3.min(params.timeRange)), new Date(d3.max(params.timeRange))])
@@ -56,7 +55,7 @@ graph.controller('GraphController',
 		.range([params.options.marginVertical,params.options.height - params.options.marginVertical]);
 
 		return params;
-	}
+	};
 	var generateAxis = function(params){
 		// var arr = [0,1,2,3]
 		// var arr2 = _.map(arr,function(d){return params.mapX(d)})
