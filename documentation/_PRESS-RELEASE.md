@@ -16,8 +16,6 @@ Oh, and I also like to write press-releases in what I call "Oprah-speak" for mai
 Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
  -->
  
-
-## Sub-Heading ##
   > A platform for mood-tracking, microjournaling, self-reflection, and mindfulness.
 
 ## Summary ##
@@ -36,7 +34,7 @@ Once the project moves into development, the press release can be used as a touc
   > All it takes to get started on Moodlet is a username and password. After that, a user can record their moods as often or as infrequently as they desire, or is convenient within their schedule. It takes only a few seconds to submit each entry within the microjournal.
 
 ## Customer Quote ##
-  > "Moodlet has decreased my resistance to self-introspection with its easy-to-use, user-friendly application."
+  > "Moodlet has lowered the activation energy for reflection and self-introspection with its easy-to-use, user-friendly application. After using Moodlet, I have become more aware and inquisitive of changes in emotional and mental states. Pro-tip: Use Moodlet!" - Kyle Cho
 
 ## Closing and Call to Action ##
-  > If you're interested in contributing to Moodlet, please read our contributing document.
+  > Moodlet is an open-source application. If you're interested in contributing to Moodlet, please read our contributing document.
