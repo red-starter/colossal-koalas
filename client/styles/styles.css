@@ -161,15 +161,16 @@ ul {
 }
 
 .prompt-one {
-  padding-top: 100px;
-  margin-bottom: 35px;
+  padding-top: 5px;
+  padding-bottom: 10px;
 }
 
 .emotion-spectrum {
   display: block;
   width: 500px;
   margin: 0 auto;
-  margin-bottom: 50px;
+  margin-top: 20px;
+  margin-bottom: 30px;
   clear: both;
 }
 
@@ -189,22 +190,35 @@ img {
 }
 
 .home [ui-view].ng-enter {
-  transition: 0.5s linear all;
-  opacity: 0.2;
+  transition: 0.4s linear all;
+  opacity: 0;
 }
 
 .home [ui-view].ng-enter-active {
   opacity: 1;
 }
 
-.home [ui-view].ng-leave {
-  transition: 0.5s linear all;
-  opacity: 1;
+.home [ui-view="initial"].ng-leave {
+  transition-property: opacity, max-height;
+  transition-duration: 0.3s, 0.5s;
+  transition-delay: 0s, 0.2s;
+  transition-timing-function: ease, ease;
+  max-height: 150px;
 }
 
-.home [ui-view].ng-leave-active {
+.home [ui-view="initial"].ng-leave-active {
+  max-height: 0;
   opacity: 0;
 }
+
+.home [ui-view="selected"].ng-leave {
+  transition: 0.4s linear all;
+}
+
+.home [ui-view="selected"].ng-leave-active {
+  opacity: 0;
+}
+
 
 /* Home page selected */
 

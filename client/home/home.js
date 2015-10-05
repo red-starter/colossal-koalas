@@ -1,7 +1,19 @@
-var home = angular.module('greenfeels.home', []);
+var home = angular.module('greenfeels.home', ['ngAnimate']);
 
-home.controller('HomeController', ['$scope', '$state', 'Prompts', 'Entries', 'Twemoji',
-  function($scope, $state, Prompts, Entries, Twemoji) {
+// home.animation('.fade', [function() {
+//   return {
+//     enter: function(element, done) {
+//       Velocity(element, 'fadeIn', {duration: 400}, {complete: done});
+//     },
+//     leave: function(element, done) {
+//       Velocity(element, {opacity: 0, duration: 300});
+//       Velocity(element, 'slideUp', {duration: 500}, {complete: done});
+//     }
+//   }
+// }]);
+
+home.controller('HomeController', ['$scope', '$state', '$animate', 'Prompts', 'Entries', 'Twemoji',
+  function($scope, $state, $animate, Prompts, Entries, Twemoji) {
     // Expose our Twemoji service within the scope.
     // This is used to conveniently generate the `src`
     // attributes of the <img> tags within the buttons.
