@@ -75,7 +75,6 @@ angular.module('greenfeels.services', [])
     }
 
     return $http({
-      token: $window.localStorage.getItem('moodlet'),
       method: 'GET',
       url: '/api/users/' + username + '/entries',
       headers: {'x-access-token': $window.localStorage.getItem('moodlet')}
@@ -93,9 +92,9 @@ angular.module('greenfeels.services', [])
         return;
       }
       return $http({
-        token: $window.localStorage.getItem('moodlet'),
         method: method,
         url: '/api/users/' + username + '/' + id,
+        headers: {'x-access-token': $window.localStorage.getItem('moodlet')},
         body:body
       })
       .then(function(resp) {
@@ -115,7 +114,6 @@ angular.module('greenfeels.services', [])
       return;
     }
     return $http({
-      token: $window.localStorage.getItem('moodlet'),
       method: 'POST',
       url: '/api/users/' + username + '/entries',
       headers: {'x-access-token': $window.localStorage.getItem('moodlet')},
