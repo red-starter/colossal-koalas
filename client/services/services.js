@@ -84,8 +84,8 @@ angular.module('greenfeels.services', [])
     });
   };
 
-  var methodEntry = function(method){
-    return function(id,body){
+  var methodEntry = function(method) {
+    return function(id, body) {
       '/:username/entries/:entryid'
       var username = $window.localStorage.getItem('moodlet.username');
       if (!username) {
@@ -93,9 +93,9 @@ angular.module('greenfeels.services', [])
       }
       return $http({
         method: method,
-        url: '/api/users/' + username + '/' + id,
+        url: '/api/users/' + username + '/' + 'entries' + '/' + id,
         headers: {'x-access-token': $window.localStorage.getItem('moodlet')},
-        body:body
+        body: body
       })
       .then(function(resp) {
         return resp.data;
@@ -103,9 +103,9 @@ angular.module('greenfeels.services', [])
     }
   }
 
-  var getEntry = methodEntry('get');
-  var updateEntry = methodEntry('put')
-  var deleteEntry = methodEntry('delete')
+  var getEntry = methodEntry('GET');
+  var updateEntry = methodEntry('PUT');
+  var deleteEntry = methodEntry('DELETE');
 
   // Adds user's entry
   var addEntry = function(post) {
