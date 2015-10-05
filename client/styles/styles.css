@@ -200,9 +200,9 @@ img {
 
 .home [ui-view="initial"].ng-leave {
   transition-property: opacity, max-height;
-  transition-duration: 0.3s, 0.5s;
-  transition-delay: 0s, 0.2s;
-  transition-timing-function: ease, ease;
+  transition-duration: 0.3s, 0.2s;
+  transition-delay: 0s, 0.1s;
+  transition-timing-function: ease, linear;
   max-height: 150px;
 }
 

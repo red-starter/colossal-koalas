@@ -28,7 +28,6 @@ home.controller('HomeController', ['$scope', '$state', '$animate', 'Prompts', 'E
     };
 
     $scope.submit = function() {
-      // TODO: Use submit service to submit the entry to the server
       Entries.addEntry(JSON.stringify($scope.entry));
       $scope.entry = {};
       $state.transitionTo('journal');

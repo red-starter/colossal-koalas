@@ -5,12 +5,41 @@ var db = require('./database/interface');
 var router = require('express').Router();
 var app = require('./server'); //required server so we could have access to the secret set in server.js
 
+//verify token
+function verifyToken(req, res, next) {
+  //check post parameters or header or url parameters for token
+  var token = req.headers['x-access-token'];
+
+  console.log(token);
+
+  //decode token
+  if (token) {
+    //verify secret and check expression 
+    jwt.verify(token, secret, function(err, decoded) {
+      if (err) {
+        return res.json({ success: false, message: 'Failed to authenticate token.'});
+      } else {
+        //if token is verified sucessfully, save to request for use in other routes
+        req.decoded = decoded;
+        next();
+      }
+    });
+  } else {
+
+    //if there is no token, return an error
+    return res.status(403).send({
+      success: false,
+      message: 'No token provided.'
+    });
+  }
+}
+
 // All of these endpoints will be mounted onto `/api/users`
 var pathHandlers = {
 
   // Sign up new user to api/users
   '': {
-    post:function(req, res, next) {
+    post: function(req, res, next) {
       var username = req.body.username;
       var password = req.body.password;
       // Check to see if a user with this name already exists.
@@ -168,7 +197,11 @@ for (path in pathHandlers) {
   routePath = router.route(path);
 
   for (method in pathHandlers[path]) {
-    routePath[method]( pathHandlers[path][method] );
+    if (path === '' || path === '/signin') {
+      routePath[method]( pathHandlers[path][method] );
+    } else {
+      routePath[method]( verifyToken, pathHandlers[path][method] );
+    }
   }
 
 }
