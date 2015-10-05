@@ -17,8 +17,6 @@ graph.controller('GraphController',
 		//container 
 		var params = {};
 		params.data = data;
-		// console.log(data);
-		// data.unshift({emotion:0,text:'the beggining',createdAt:new Date()})
 		//create svg
 		params.options ={
 			width:800,
@@ -72,30 +70,22 @@ graph.controller('GraphController',
 
 	//clear graph first
 	var generateCircles = function(params){
-		// var emojiImages = ['😄', '😊', '😌', '😐', '😕', '😒', '😞', '😣'];
-
-		// var emojiImages = _.map(return Twemoji.getTwemojiSrc[+d["emotion"]]})
-
 		params.svg.selectAll(".emojiImage").remove()
 		params.svg.selectAll(".emojiImage").data(params.data,function(e,index){return index})
 		.enter()
 		.append("svg:image")
 	    .attr('width', 40)
-	    .attr('height', 48)
+	    .attr('height', 40)
 		.attr('class','emojiImage')
 		.attr('x',function(d){
-			return params.mapX(new Date(d["createdAt"]))
+			return -20+params.mapX(new Date(d["createdAt"]))
 		})
-		.attr('y',function(d){return params.mapY(+d["emotion"])})
+		.attr('y',function(d){
+			return -20+params.mapY(+d["emotion"])
+		})
 		.attr("xlink:href",function(d){return Twemoji.getTwemojiSrc(+d["emotion"],36)})
-		// .text(function(d){
-			// return Twemoji.getTwemojiSrc[+d["emotion"]];
-			// return emojiByInteger[+d["emotion"]];
-		// })
-		// .attr("font-family", "sans-serif")
-		// .attr("font-size", "30px")
 		.on("mouseover", function(d) {
-			d3.select(this).attr('opacity',0.3)
+			d3.select(this).attr('opacity',0.7)
 		})
 		.on("mouseout", function(d) {
 			d3.select(this).attr('opacity',1)
