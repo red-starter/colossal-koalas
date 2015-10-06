@@ -302,6 +302,17 @@ textarea {
   background-color: #fff;
 }
 
+.journal-entry + .journal-entry {
+  clear: left;
+}
+
+.button-container {
+  clear: both;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
 /* Graph page */
 
 #graph1 {
