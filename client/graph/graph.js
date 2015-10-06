@@ -117,7 +117,7 @@ graph.controller('GraphController',
 				"padding": "20px",
 				"background-color": "#fff"	
 			})
-			d3.select(this).attr('opacity',0.8)
+			// d3.select(this).attr('opacity',0.8)
 		})
 		.on("mouseout", function(d) {
 			d3.select(this).style({'null':null});
