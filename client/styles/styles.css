@@ -342,6 +342,35 @@ circle {
   border-radius: 8px;
   font-size: 24px;
   margin: 200px 30px 0;
-  padding: 10px 10px;
-  width: 450px;
+  padding: 15px 20px;
+  width: 300px;
+}
+
+.emojiText textarea {
+  max-width: 250px;
+  margin-bottom: 15px;
+}
+
+.graph-date {
+  font-size: 16px;
+}
+
+.graph-text {
+  margin-top: 15px;
+}
+
+.graph-button {
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 30px;
+}
+
+.update-button:last-child {
+  margin-left: 10px;
+  /*margin-right: 25px;*/
+}
+
+.update-button {
+  margin-top: 15px;
+  width: 120px;
 }
