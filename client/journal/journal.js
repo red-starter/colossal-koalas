@@ -53,6 +53,7 @@ journal.controller('JournalController', ['$scope', 'Entries', 'Twemoji', 'Spinne
         .then(function(resp) {
           // Same as above
           spinner.stop();
+          if (resp.length === 0) return;
           var entries = resp;
           entries = entries.map(function(entry) {
                       entry.displayDate = moment(entry.createdAt).format('h:mm a dddd MMMM Do YYYY')
