@@ -149,9 +149,10 @@ graph.controller('GraphController',
 			d3.select('#graphText')
 			.append('div')
 			.attr('class','emojiText')
-			.html('<div style="font-size: 16px">'+moment(d.createdAt).format('MMM Do YYYY')+'</div>' + '\n' + d.text+'\n')
-			.append('button')
-			.text('updateText')
+			.html('<div class="graph-date">'+moment(d.createdAt).format('MMM Do YYYY')+'</div>' + '\n' + '<div class="graph-text">'+d.text+'</div>'+'\n')
+			.append('div')
+			.attr('class', 'graph-button')
+			.text('Update')
 			.on('click',function(){
 				d3.select('.emojiText')
 				.append('textarea')
@@ -164,22 +165,24 @@ graph.controller('GraphController',
 
 				d3.select('.emojiText')			
 				.append('button')
+				.attr('class', 'update-button')
 				.on('click',function(){
 					Entries.updateEntry(d.id,d3.select('.updateText').text()).then(function(data){
 						console.log(data)
 					})
 				})
-				.text('updateEntry')
+				.text('Update Entry')
 
 				
 				d3.select('.emojiText')
 				.append('button')
+				.attr('class', 'update-button')
 				.on('click',function(){
 					Entries.deleteEntry(d.id).then(function(data){
 						console.log(data)
 					})
 				})
-				.text('deleteEntry')
+				.text('Delete Entry')
 			})
 
 
