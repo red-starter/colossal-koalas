@@ -10,6 +10,10 @@ graph.controller('GraphController',
 
 			Entries.getAll()
 			.then(function(data){
+
+				data.sort(function(a,b){
+					return new Date(a.createdAt) - new Date(b.createdAt)
+				})
 				//Stop spinner
 				spinner.stop();
 				//Initialize graph parameters
